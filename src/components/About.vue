@@ -1,5 +1,5 @@
 <template>
-  <div style="text-align: center;">
+  <div style="text-align: center; height: 100%; display: flex; justify-content: space-evenly; flex-direction: column;">
     <div>
       <p>
         Author：@Kranca / Gomacker
@@ -74,6 +74,15 @@
           <a href="https://wf-calendar.miaowm5.com/" target="_blank">弹射日历</a>
         </p>
       </div>
+    </div>
+    <div style="color: darkgray; font-style: italic;">
+      <p>“这种感觉真不可思议，</p>
+      <p>三途河或许并没有拉远我们的距离，</p>
+      <p>只是你的温度停驻在眼眸中，</p>
+      <p>未来永远只留在了我的心里。”</p>
+      <p>Cocoa</p>
+      <p>~2022-12-23</p>
+      <p>Pray for you</p>
     </div>
   </div>
 </template>
