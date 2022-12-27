@@ -1,5 +1,4 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 import {Expand, Calendar, Menu, Search, Management, InfoFilled} from "@element-plus/icons-vue";
 
 
@@ -40,14 +39,14 @@ export default {
 <!--              <span style="font-size: 64px;">qsqa</span>-->
 <!--            </div>-->
             <el-menu default-active="1">
-              <el-menu-item index="menu-main-page" @click="this.$router.push('/')">
+              <el-menu-item index="menu-main-page" @click="$router.push('/')">
                 主页
               </el-menu-item>
-              <el-menu-item index="menu-future-vision" @click="this.$router.push('/future_vision')">
+              <el-menu-item index="menu-future-vision" @click="$router.push('/future_vision')">
                 <el-icon><Calendar /></el-icon>
                 千里眼
               </el-menu-item>
-              <el-menu-item index="menu-calculator" @click="this.$router.push('/calculator')">
+              <el-menu-item index="menu-calculator" @click="$router.push('/calculator')">
                 <el-icon><Menu /></el-icon>
                 Calculator(Alpha)
               </el-menu-item>
@@ -55,15 +54,15 @@ export default {
                 <el-icon><Search /></el-icon>
                 查盘器
               </el-menu-item>
-              <el-menu-item index="menu-summary-table" @click="this.$router.push('/summary_table_list')">
+              <el-menu-item index="menu-summary-table" @click="$router.push('/summary_table_list')">
                 <el-icon><Management /></el-icon>
                 一图流
               </el-menu-item>
-              <el-menu-item index="menu-summary-editor" @click="this.$router.push('/summary_table_editor')">
+              <el-menu-item index="menu-summary-editor" @click="$router.push('/summary_table_editor')">
                 <el-icon><Management /></el-icon>
                 一图流编辑器(Alpha)
               </el-menu-item>
-              <el-menu-item index="about" @click="this.$router.push('/about')">
+              <el-menu-item index="about" @click="$router.push('/about')">
                 <el-icon><InfoFilled /></el-icon>
                 关于
               </el-menu-item>

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import '@/assets/summary_table.css';
+// import '@/assets/summary_table.css';
 export default {
   name: "SummaryTable"
 }

@@ -6,24 +6,18 @@ import {ref} from "vue";
 import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
+import {unit_data} from "@/components/party_manager";
 
-const page_name = 'Calculator'
-const unit_list = ref({})
-const menu_folded = ref(false)
-// class Unit{
-//   constructor(data) {
-//     this.extractor_id = data['WfExId']
-//   }
-// }
-axios.get(
-    // 'http://127.0.0.1:8000/unit_data',
-    'api/unit_data/',
-    {
-    }
-).then(res => {
-  // unit_list.value = new Map(Object.entries(res.data))
-  unit_list.value = res.data
-})
+let menu_folded = ref(false)
+
+// const unit_list = ref({})
+// axios.get(
+//     'api/unit_data/',
+//     {
+//     }
+// ).then(res => {
+//   unit_list.value = res.data
+// })
 </script>
 <script>
 import {ref} from "vue";
@@ -55,7 +49,7 @@ export default {
 <template>
 <!--  <el-scrollbar>-->
 <!--  {{ Object.keys(unit_list).length }}-->
-    <UnitCard v-if="Object.keys(unit_list).length > 0" :id_="1" :unit="unit_list['1']"/>
+  <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>
 <!--  </el-scrollbar>-->
   <el-button
     style="
@@ -83,35 +77,31 @@ export default {
     always
     >
       <div style="margin: 2px;"></div>
-  <!--    <div-->
-  <!--        v-for="(unit, i) in unit_list"-->
-  <!--        class="wfo-slot"-->
-  <!--        :class="[is_select('u' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"-->
-  <!--        :id="'wfo-u' + i"-->
-  <!--        @click="select('u' + i)"-->
-  <!--    >-->
-        <el-image
-            v-for="(unit, i) in unit_list"
+      <div style="display: flex; flex-wrap: wrap;">
+        <div
+            v-for="(unit, i) in unit_data"
             class="wfo-slot"
             :class="[is_select('u' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"
             :id="'wfo-u' + i"
             @click="select('u' + i)"
-
-            :src="'http://127.0.0.1:8000/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'"
-            :title="i + ': ' + unit['WfExId']"
-            loading="lazy"
-            @dragstart.prevent
         >
-          <div slot="placeholder">
-            <el-icon><Picture/></el-icon>
-          </div>
-          <div slot="error">
-            fbd
-            <el-icon><CircleClose /></el-icon>
-          </div>
-        </el-image>
+          <el-image
+              :src="'http://127.0.0.1:8000/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'"
+              :title="i + ': ' + unit['WfExId']"
+              loading="lazy"
+              @dragstart.prevent
+          >
+            <div slot="placeholder">
+              <el-icon><Picture/></el-icon>
+            </div>
+            <div slot="error">
+              fbd
+              <el-icon><CircleClose /></el-icon>
+            </div>
+          </el-image>
+        </div>
+      </div>
     </el-scrollbar>
-<!--    </div>-->
 <!--    {{ unit }}-->
   </div>
 <!--  {{ unit_list['1'] }}-->
@@ -120,7 +110,8 @@ export default {
 
 <style scoped>
 .wfo-slot{
-  margin: -1px 2px;
+  margin: 2px;
+  /*display: inline-block;*/
   /*margin: 2px;*/
   /*transition: margin 0.6s;*/
   background-color: #fff;

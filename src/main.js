@@ -6,6 +6,8 @@ import App from './App.vue'
 import './assets/main.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
+import {unit_data, armament_data} from "@/components/party_manager";
+
 const Calculator = () => import("@/components/Calculator.vue")
 // import Calculator from "@/components/Calculator.vue";
 const MainPage = () => import("@/components/MainPage.vue")

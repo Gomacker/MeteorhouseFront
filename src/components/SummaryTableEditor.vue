@@ -59,7 +59,7 @@
             <el-form-item v-if="obj.type === 'SubTitle'" label="内容">
               <el-input v-model="obj.data.content"/>
             </el-form-item>
-            <el-row v-if="obj.type === 'Row'" :gutter="20">
+            <el-row v-if="obj.type === 'Row'" :gutter="8">
               <el-col v-for="(col, j) in obj.data.elements" :span="(() => {
                 if(col.type === 'TextRegion' && col.data.full) {
                   return 24
@@ -67,7 +67,7 @@
                   return 12
                 }
               })()">
-                <el-card>
+                <el-card body-style="padding: 12px 12px;">
                   <el-form-item label="类型">
                     <el-select v-model="col.type" filterable>
                       <el-option value="TextRegion"/>
@@ -75,25 +75,14 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item v-if="col.type === 'TextRegion'" label="内容">
-                    <el-input type="textarea" v-model="col.data.content"/>
+                    <el-input type="textarea" :rows="4" v-model="col.data.content"/>
                   </el-form-item>
+                  <PartyCard v-if="col.type === 'Party'" :party="col.data.party"></PartyCard>
                   {{ col }}
                 </el-card>
               </el-col>
             </el-row>
           </el-form>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <el-card style="background: pink;">
-          <div>aa</div>
-        </el-card>
-      </el-col>
-      <el-col :span="a ? 24 : 12" style="transition: all 0.4s ease;">
-        <el-card style="background: pink;">
-          <div>
-            <el-switch v-model="a"></el-switch>
-          </div>
         </el-card>
       </el-col>
       <el-col :span="12">
@@ -108,9 +97,10 @@
 </template>
 
 <script>
-import '@/assets/summary_table.css';
+// import '@/assets/summary_table.css';
 import {Plus} from '@element-plus/icons-vue';
 import {ref} from "vue";
+import PartyCard from "@/components/PartyCardAnise.vue";
 // const table_data = ref({})
 // const main_color = ref('#ffffff')
 // const sub_color = ref('#000000')
@@ -315,10 +305,9 @@ export default {
   data() {
     return{
       table_data: table_data,
-      a: false
     }
   },
-  components: {Plus}
+  components: {PartyCard, Plus}
 }
 </script>
 
