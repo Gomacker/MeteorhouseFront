@@ -1,6 +1,7 @@
 import axios from "axios";
 import {ref} from "vue";
 
+
 export const unit_data = ref({})
 export const armament_data = ref({})
 
@@ -22,6 +23,26 @@ axios.get(
     armament_data.value = res.data
 })
 
-export const getUnitPicUrl = function (unit) {
+export function getUnitPicUrl(unit) {
     return 'http://127.0.0.1:8000/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'
+}
+
+export function getArmamentPicUrl(armament) {
+    // console.log(armament, armament.hasOwnProperty('WfExId'))
+    if (armament &&
+        Object.hasOwn(armament, 'WfExId')) {
+        return 'http://127.0.0.1:8000/static/worldflipper/generated/armament/normal/' + armament['WfExId'] + '.png'
+    }else {
+        return 'http://127.0.0.1:8000/static/worldflipper/unit/blank.png'
+    }
+}
+
+export function getArmamentCorePicUrl(armament) {
+    // console.log(armament, armament.hasOwnProperty('WfExId'))
+    if (armament &&
+        Object.hasOwn(armament, 'WfExId')) {
+        return 'http://127.0.0.1:8000/static/worldflipper/generated/armament/core/' + armament['WfExId'] + '.png'
+    }else {
+        return 'http://127.0.0.1:8000/static/worldflipper/unit/blank.png'
+    }
 }

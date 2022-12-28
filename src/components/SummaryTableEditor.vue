@@ -77,7 +77,7 @@
                   <el-form-item v-if="col.type === 'TextRegion'" label="内容">
                     <el-input type="textarea" :rows="4" v-model="col.data.content"/>
                   </el-form-item>
-                  <PartyCard v-if="col.type === 'Party'" :party="col.data.party"></PartyCard>
+                  <PartyCard v-if="col.type === 'Party'" :party="col.data.party"/>
                   {{ col }}
                 </el-card>
               </el-col>
