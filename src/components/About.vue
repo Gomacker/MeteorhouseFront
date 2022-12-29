@@ -22,7 +22,7 @@
       <p>
         问题反馈：烤肠社芙芙屋
         <a href="https://jq.qq.com/?_wv=1027&amp;k=3rmVdxmZ" target="_blank">
-          <img style="width: 16px;" src="https://im.qq.com/favicon.ico" alt="">
+          <img style="width: 16px; vertical-align: middle;" src="https://im.qq.com/favicon.ico" alt="">
         </a>
       </p>
       <div style="display:none;">
