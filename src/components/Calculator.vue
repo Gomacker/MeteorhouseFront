@@ -6,18 +6,10 @@ import {ref} from "vue";
 import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
-import {unit_data} from "@/components/party_manager";
+import {unit_data, armament_data} from "@/components/party_manager";
 
 let menu_folded = ref(false)
 
-// const unit_list = ref({})
-// axios.get(
-//     'api/unit_data/',
-//     {
-//     }
-// ).then(res => {
-//   unit_list.value = res.data
-// })
 </script>
 <script>
 import {ref} from "vue";
@@ -47,10 +39,16 @@ export default {
 
 
 <template>
-<!--  <el-scrollbar>-->
-<!--  {{ Object.keys(unit_list).length }}-->
-  <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>
-<!--  </el-scrollbar>-->
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <span style="color: blue;">{{ Object.keys(unit_data).length }} units loaded</span>
+    <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
+    <span style="color: blue;">Other Info here</span>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
+      <div style=""></div>
+      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>
+      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>
+    </div>
+  </div>
   <el-button
     style="
       position: absolute;
@@ -104,7 +102,6 @@ export default {
     </el-scrollbar>
 <!--    {{ unit }}-->
   </div>
-<!--  {{ unit_list['1'] }}-->
 </template>
 
 

@@ -39,6 +39,7 @@
 <!--        {{ index }}: {{ obj }}-->
         <el-card class="sub-color-background">
           <el-form>
+            {{ index }}
             <el-form-item label="类型">
               <el-select v-model="obj.type" filterable>
                 <el-option value="SubTitle"/>
