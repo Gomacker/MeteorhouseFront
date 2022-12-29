@@ -6,7 +6,7 @@ import {ref} from "vue";
 import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
-import {unit_data} from "@/components/party_manager";
+import {getUnitPicUrl, unit_data} from "@/components/party_manager";
 
 let menu_folded = ref(false)
 
@@ -86,7 +86,7 @@ export default {
             @click="select('u' + i)"
         >
           <el-image
-              :src="'http://127.0.0.1:8000/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'"
+              :src="getUnitPicUrl(unit)"
               :title="i + ': ' + unit['WfExId']"
               loading="lazy"
               @dragstart.prevent
