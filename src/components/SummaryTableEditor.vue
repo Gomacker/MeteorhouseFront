@@ -101,7 +101,7 @@
 // import '@/assets/summary_table.css';
 import {Plus} from '@element-plus/icons-vue';
 import {ref} from "vue";
-import PartyCard from "@/components/PartyCardAnise.vue";
+import PartyCard from "@/components/calculator/PartyCardAnise.vue";
 // const table_data = ref({})
 // const main_color = ref('#ffffff')
 // const sub_color = ref('#000000')
