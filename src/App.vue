@@ -1,6 +1,5 @@
 <script setup>
 import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, UserFilled} from "@element-plus/icons-vue";
-import tpic from './assets/test.jpg'
 
 </script>
 <script>
@@ -26,7 +25,7 @@ export default {
         <div style="flex: 1;"/>
         <div style="display: flex; align-items: center; user-select: none; cursor:pointer;">
           <el-button v-if="false" text @click="$router.push('/login')">登录</el-button>
-          <el-avatar class="avatar" :src="tpic" size="default"></el-avatar>
+          <el-avatar class="avatar" src="" size="default"></el-avatar>
           <span style="margin: 0 8px;">Gomacker</span>
         </div>
 <!--        </div>-->

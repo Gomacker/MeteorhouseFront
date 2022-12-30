@@ -7,6 +7,7 @@ import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
 import {getUnitPicUrl, unit_data, armament_data} from "@/components/party_manager";
+import PartyCard from "@/components/calculator/PartyCardAnise.vue";
 
 let menu_folded = ref(false)
 
@@ -44,9 +45,10 @@ export default {
     <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
     <span style="color: blue;">Other Info here</span>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
-      <div style=""></div>
-      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>
-      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>
+      <div class="party-editor">
+      </div>
+<!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
+<!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
     </div>
   </div>
   <el-button
@@ -124,6 +126,21 @@ export default {
   cursor: pointer;
 
 }
+.party-editor{
+  width: 480px;
+  height: 205px;
+  background: white;
+  border: 6px gray solid;
+  box-sizing: content-box;
+  border-radius: 6px;
+  transition: box-shadow 0.2s linear;
+  /*box-shadow: none;*/
+}
+
+.party-editor:hover{
+  box-shadow: black 0 0 8px;
+}
+
 .wfo-menu{
   background-color: lightgray;
   position: absolute;
