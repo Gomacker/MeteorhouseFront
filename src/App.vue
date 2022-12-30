@@ -1,6 +1,6 @@
 <script setup>
-import {Expand, Calendar, Menu, Search, Management, InfoFilled} from "@element-plus/icons-vue";
-
+import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, UserFilled} from "@element-plus/icons-vue";
+import tpic from './assets/test.jpg'
 
 </script>
 <script>
@@ -17,19 +17,22 @@ export default {
 <!--    <button @click="count++">Count is: {{ count }}</button>-->
     <el-container style="height: 100%">
       <el-header style="background: linear-gradient(to right, #fa8afa, yellow); display: flex; z-index: 10;">
+<!--        <div style="display: flex; justify-content: space-between;">-->
         <el-page-header title=" " :icon="Expand" @back="sidebar_hidden = !sidebar_hidden">
           <template #content>
-<!--            <div @click="this.$router.push('/')">Meteorhouse Library</div>-->
             <router-link style="color: black" to="/">Meteorhouse Library (Alpha)</router-link>
           </template>
         </el-page-header>
-<!--        <el-button style="position: absolute; right: 16px"-->
-<!--                   @click="sidebar_hidden = !sidebar_hidden">-->
-<!--          sidebar_hidden: {{ sidebar_hidden }}-->
-<!--        </el-button>-->
+        <div style="flex: 1;"/>
+        <div style="display: flex; align-items: center; user-select: none; cursor:pointer;">
+          <el-button v-if="false" text @click="$router.push('/login')">登录</el-button>
+          <el-avatar class="avatar" :src="tpic" size="default"></el-avatar>
+          <span style="margin: 0 8px;">Gomacker</span>
+        </div>
+<!--        </div>-->
       </el-header>
       <el-container>
-        <el-aside class="sidebar" v-bind:class="{hidden: sidebar_hidden}" width="200px">
+        <el-aside class="sidebar" v-bind:class="{hidden: sidebar_hidden}" width="200px" style="user-select: none;">
           <el-scrollbar
               style="height: 100%"
               view-style="height: 100%; display: flex; flex-direction: column;"
@@ -48,7 +51,7 @@ export default {
               </el-menu-item>
               <el-menu-item index="menu-calculator" @click="$router.push('/calculator')">
                 <el-icon><Menu /></el-icon>
-                Calculator(Alpha)
+                Kalculator(Alpha)
               </el-menu-item>
               <el-menu-item disabled="disabled" index="menu-party-searcher">
                 <el-icon><Search /></el-icon>
@@ -61,6 +64,14 @@ export default {
               <el-menu-item index="menu-summary-editor" @click="$router.push('/summary_table_editor')">
                 <el-icon><Management /></el-icon>
                 一图流编辑器(Alpha)
+              </el-menu-item>
+              <el-menu-item disabled="disabled" index="menu-party-searcher">
+                <el-icon><PictureFilled /></el-icon>
+                素材包
+              </el-menu-item>
+              <el-menu-item disabled="disabled" index="menu-party-searcher">
+                <el-icon><UserFilled /></el-icon>
+                我的
               </el-menu-item>
               <el-menu-item index="about" @click="$router.push('/about')">
                 <el-icon><InfoFilled /></el-icon>
@@ -117,23 +128,28 @@ main {
   background: #f8f8f8;
 }
 
+.avatar {
+  box-sizing: content-box;
+  border: 2px white solid;
+  transition: 0.2s border ease;
+}
+
+.avatar:hover {
+  border: 2px #b45af3 solid;
+}
+
 .sidebar {
   top: 0;
   left: 0;
   background: white;
-  /*position: fixed;*/
   position: absolute;
-  /*position: relative;*/
   z-index: 9;
   height: 100%;
-  /*background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), #1f1e33);*/
   box-shadow: black 0 0 8px;
   transition: left 0.4s ease, opacity 0.4s ease;
-  /*transition: margin-left 0.4s ease, opacity 0.4s ease;*/
 }
 .hidden {
   left: -200px;
-  /*margin-left: -200px;*/
   opacity: 0;
 }
 

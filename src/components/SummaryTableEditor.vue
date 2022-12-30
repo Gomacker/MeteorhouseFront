@@ -1,5 +1,16 @@
 
 <template>
+  <el-form>
+    <el-form-item label="一图ID">
+      <el-select filterable>
+        <el-option value="fire" style="padding: 0 0 0 20px;">
+          <div style="background: linear-gradient(to right, transparent, orange)">
+            a
+          </div>
+        </el-option>
+      </el-select>
+    </el-form-item>
+  </el-form>
   <div class="editor-body">
     <el-row :gutter="20" style="justify-content: center;">
       <el-col :span="24">
@@ -69,6 +80,7 @@
                 }
               })()">
                 <el-card body-style="padding: 12px 12px;">
+                  {{ j }}
                   <el-form-item label="类型">
                     <el-select v-model="col.type" filterable>
                       <el-option value="TextRegion"/>
@@ -80,15 +92,29 @@
                   </el-form-item>
                   <PartyCard v-if="col.type === 'Party'" :party="col.data.party"/>
                   {{ col }}
+                  <div style="display: flex; justify-content: space-between;">
+                    <el-button type="danger" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
+                    <el-button-group>
+                      <el-button size="small"><el-icon><ArrowLeft /></el-icon></el-button>
+                      <el-button size="small"><el-icon><ArrowRight /></el-icon></el-button>
+                    </el-button-group>
+                  </div>
                 </el-card>
               </el-col>
             </el-row>
           </el-form>
+          <div style="display: flex; justify-content: space-between;">
+            <el-button type="danger" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
+            <el-button-group>
+              <el-button size="small"><el-icon><ArrowLeft /></el-icon></el-button>
+              <el-button size="small"><el-icon><ArrowRight /></el-icon></el-button>
+            </el-button-group>
+          </div>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-button type="primary" plain round style="width: 100%">
-          <el-icon><Plus /></el-icon>
+          <el-icon><Plus/></el-icon>
         </el-button>
       </el-col>
     </el-row>
@@ -99,7 +125,7 @@
 
 <script>
 // import '@/assets/summary_table.css';
-import {Plus} from '@element-plus/icons-vue';
+import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue';
 import {ref} from "vue";
 import PartyCard from "@/components/calculator/PartyCardAnise.vue";
 // const table_data = ref({})
@@ -308,7 +334,7 @@ export default {
       table_data: table_data,
     }
   },
-  components: {PartyCard, Plus}
+  components: {PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled}
 }
 </script>
 
