@@ -8,6 +8,7 @@ import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
 import {getUnitPicUrl, unit_data, armament_data} from "@/components/party_manager";
 import PartyCard from "@/components/calculator/PartyCardAnise.vue";
+import '@/assets/summary_table.css'
 
 let menu_folded = ref(false)
 
@@ -46,6 +47,62 @@ export default {
     <span style="color: blue;">Other Info here</span>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
       <div class="party-editor">
+        <div class="party" style="display: flex;">
+          <div class="union">
+            <div class="wfo-slot main">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Leader</div>
+            </div>
+            <div class="wfo-slot armament">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Arma</div>
+            </div>
+            <div class="wfo-slot unison">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Unison</div>
+            </div>
+            <div class="wfo-slot core">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Core</div>
+            </div>
+          </div>
+          <div class="union">
+            <div class="wfo-slot main">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Main</div>
+            </div>
+            <div class="wfo-slot armament">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Arma</div>
+            </div>
+            <div class="wfo-slot unison">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Unison</div>
+            </div>
+            <div class="wfo-slot core">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Core</div>
+            </div>
+          </div>
+          <div class="union">
+            <div class="wfo-slot main">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Main</div>
+            </div>
+            <div class="wfo-slot armament">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Arma</div>
+            </div>
+            <div class="wfo-slot unison">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Unison</div>
+            </div>
+            <div class="wfo-slot core">
+              <img src="" alt=""/>
+              <div style="text-align: center;">Core</div>
+            </div>
+          </div>
+        </div>
       </div>
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
@@ -80,7 +137,7 @@ export default {
       <div style="display: flex; flex-wrap: wrap;">
         <div
             v-for="(unit, i) in unit_data"
-            class="wfo-slot"
+            class="wfo-obj"
             :class="[is_select('u' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"
             :id="'wfo-u' + i"
             @click="select('u' + i)"
@@ -108,7 +165,7 @@ export default {
 
 
 <style scoped>
-.wfo-slot{
+.wfo-obj{
   margin: 2px;
   /*display: inline-block;*/
   /*margin: 2px;*/
@@ -165,7 +222,7 @@ export default {
 .ele-wind::before{background-image: url("api/static/worldflipper/icon/wind.png");}
 .ele-light::before{background-image: url("api/static/worldflipper/icon/light.png");}
 .ele-dark::before{background-image: url("api/static/worldflipper/icon/dark.png");}
-.wfo-slot::before{
+.wfo-obj::before{
   content: '';
   width: 16px;
   height: 16px;
@@ -181,7 +238,7 @@ export default {
   top: -2px;
   right: -2px;
 }
-.wfo-slot:deep(img){
+.wfo-obj:deep(img){
   border-radius: 4px;
 }
 </style>

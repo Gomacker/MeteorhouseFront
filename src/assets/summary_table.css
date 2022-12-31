@@ -111,15 +111,15 @@
     width: 62px;
     cursor: pointer;
 }
-/*.wfo-slot {*/
-/*    border: 3px solid white;*/
-/*    border-radius: 3px;*/
-/*    margin: 2px;*/
-/*    position: absolute;*/
-/*    !* background-color: aqua; *!*/
-/*    background-color: white;*/
-/*    box-shadow: 0 0 2px black;*/
-/*}*/
+.wfo-slot {
+    border: 3px solid white;
+    border-radius: 3px;
+    margin: 2px;
+    position: absolute;
+    /* background-color: aqua; */
+    background-color: white;
+    box-shadow: 0 0 2px black;
+}
 .wfo-slot-mb {
     border-radius: 3px;
     margin: 2px;
