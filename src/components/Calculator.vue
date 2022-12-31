@@ -6,7 +6,7 @@ import {ref} from "vue";
 import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
-import {getUnitPicUrl, unit_data, armament_data} from "@/components/party_manager";
+import {getUnitPicUrl, unit_data, armament_data, getArmamentPicUrl} from "@/components/party_manager";
 import PartyCard from "@/components/calculator/PartyCardAnise.vue";
 
 let menu_folded = ref(false)
@@ -16,10 +16,11 @@ let menu_folded = ref(false)
 import {ref} from "vue";
 
 const selected = ref(null)
+const sel_arma_list = ref(false)
 export default {
   data() {
     return {
-      selected: selected
+      sel_arma_list: sel_arma_list
     }
   },
   methods: {
@@ -64,6 +65,7 @@ export default {
   >
     Fold
   </el-button>
+
   <div class="wfo-menu"
        :class="{fold: menu_folded}"
   >
@@ -76,8 +78,10 @@ export default {
     "
     always
     >
-      <div style="margin: 2px;"></div>
-      <div style="display: flex; flex-wrap: wrap;">
+      <div style="margin: 2px;">
+        <el-button @click="sel_arma_list = !sel_arma_list"></el-button>
+      </div>
+      <div :style="{display: (!sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
         <div
             v-for="(unit, i) in unit_data"
             class="wfo-slot"
@@ -101,6 +105,30 @@ export default {
           </el-image>
         </div>
       </div>
+      <div :style="{display: (sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
+        <div
+            v-for="(armament, i) in armament_data"
+            class="wfo-slot"
+            :class="[is_select('a' + i) ? 'selected' : '', 'ele-' + armament['Element'].toLowerCase()]"
+            :id="'wfo-a' + i"
+            @click="select('a' + i)"
+        >
+          <el-image
+              :src="getArmamentPicUrl(armament)"
+              :title="i + ': ' + armament['WfExId']"
+              loading="lazy"
+              @dragstart.prevent
+          >
+            <div slot="placeholder">
+              <el-icon><Picture/></el-icon>
+            </div>
+            <div slot="error">
+              fbd
+              <el-icon><CircleClose /></el-icon>
+            </div>
+          </el-image>
+        </div>
+      </div>
     </el-scrollbar>
 <!--    {{ unit }}-->
   </div>
@@ -108,6 +136,12 @@ export default {
 
 
 <style scoped>
+
+.wfo-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .wfo-slot{
   margin: 2px;
   /*display: inline-block;*/

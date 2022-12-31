@@ -1,5 +1,5 @@
 <script setup>
-import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, UserFilled} from "@element-plus/icons-vue";
+import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, UserFilled, List} from "@element-plus/icons-vue";
 
 </script>
 <script>
@@ -52,7 +52,7 @@ export default {
                 <el-icon><Menu /></el-icon>
                 Kalculator(Alpha)
               </el-menu-item>
-              <el-menu-item disabled="disabled" index="menu-party-searcher">
+              <el-menu-item disabled index="menu-party-searcher">
                 <el-icon><Search /></el-icon>
                 查盘器
               </el-menu-item>
@@ -64,13 +64,17 @@ export default {
                 <el-icon><Management /></el-icon>
                 一图流编辑器(Alpha)
               </el-menu-item>
-              <el-menu-item disabled="disabled" index="menu-party-searcher">
+              <el-menu-item disabled index="">
                 <el-icon><PictureFilled /></el-icon>
                 素材包
               </el-menu-item>
-              <el-menu-item disabled="disabled" index="menu-party-searcher">
+              <el-menu-item disabled index="">
                 <el-icon><UserFilled /></el-icon>
                 我的
+              </el-menu-item>
+              <el-menu-item index="menu-resource-manager" @click="$router.push('/resource_manager')">
+                <el-icon><List /></el-icon>
+                资源管理
               </el-menu-item>
               <el-menu-item index="about" @click="$router.push('/about')">
                 <el-icon><InfoFilled /></el-icon>

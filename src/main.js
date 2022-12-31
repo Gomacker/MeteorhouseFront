@@ -17,6 +17,7 @@ const SummaryTableEditor = () => import("@/components/SummaryTableEditor.vue")
 const FutureVision = () => import("@/components/FutureVision.vue")
 const About = () => import("@/components/About.vue")
 const Login = () => import("@/components/Login.vue")
+const ResourceManager = () => import("@/components/ResourceManager.vue")
 import {createRouter, createWebHashHistory, createWebHistory} from "vue-router";
 // import VueRouter from "vue-router";
 
@@ -28,6 +29,7 @@ const routes = [
     {path: '/summary_table_editor', component: SummaryTableEditor},
     {path: '/about', component: About},
     {path: '/login', component: Login},
+    {path: '/resource_manager', component: ResourceManager},
 ]
 
 const router = createRouter({
