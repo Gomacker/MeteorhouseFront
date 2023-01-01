@@ -48,62 +48,62 @@ export default {
     <span style="color: blue;">Other Info here</span>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
-        <div class="party" style="display: flex; border: 6px solid gray;">
-          <div class="union">
-            <div class="wfo-slot main">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Leader</div>
-            </div>
-            <div class="wfo-slot armament">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Arma</div>
-            </div>
-            <div class="wfo-slot unison">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Unison</div>
-            </div>
-            <div class="wfo-slot core">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Core</div>
-            </div>
+      <div class="party" style="display: flex; border: 6px solid gray;">
+        <div class="union">
+          <div class="wfo-slot main">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Leader</div>
           </div>
-          <div class="union">
-            <div class="wfo-slot main">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Main</div>
-            </div>
-            <div class="wfo-slot armament">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Arma</div>
-            </div>
-            <div class="wfo-slot unison">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Unison</div>
-            </div>
-            <div class="wfo-slot core">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Core</div>
-            </div>
+          <div class="wfo-slot armament">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Arma</div>
           </div>
-          <div class="union">
-            <div class="wfo-slot main">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Main</div>
-            </div>
-            <div class="wfo-slot armament">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Arma</div>
-            </div>
-            <div class="wfo-slot unison">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Unison</div>
-            </div>
-            <div class="wfo-slot core">
-              <img src="" alt=""/>
-              <div style="text-align: center;">Core</div>
-            </div>
+          <div class="wfo-slot unison">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Unison</div>
+          </div>
+          <div class="wfo-slot core">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Core</div>
           </div>
         </div>
+        <div class="union">
+          <div class="wfo-slot main">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Main</div>
+          </div>
+          <div class="wfo-slot armament">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Arma</div>
+          </div>
+          <div class="wfo-slot unison">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Unison</div>
+          </div>
+          <div class="wfo-slot core">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Core</div>
+          </div>
+        </div>
+        <div class="union">
+          <div class="wfo-slot main">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Main</div>
+          </div>
+          <div class="wfo-slot armament">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Arma</div>
+          </div>
+          <div class="wfo-slot unison">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Unison</div>
+          </div>
+          <div class="wfo-slot core">
+            <img src="" alt=""/>
+            <div style="text-align: center;">Core</div>
+          </div>
+        </div>
+      </div>
 <!--      </div>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
@@ -157,7 +157,7 @@ export default {
             </div>
             <div slot="error">
               fbd
-              <el-icon><CircleClose /></el-icon>
+              <el-icon><CircleClose/></el-icon>
             </div>
           </el-image>
         </div>
