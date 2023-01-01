@@ -47,8 +47,8 @@ export default {
     <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
     <span style="color: blue;">Other Info here</span>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
-      <div class="party-editor">
-        <div class="party" style="display: flex;">
+<!--      <div class="party-editor">-->
+        <div class="party" style="display: flex; border: 6px solid gray;">
           <div class="union">
             <div class="wfo-slot main">
               <img src="" alt=""/>
@@ -104,7 +104,7 @@ export default {
             </div>
           </div>
         </div>
-      </div>
+<!--      </div>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
     </div>
@@ -126,18 +126,18 @@ export default {
   <div class="wfo-menu"
        :class="{fold: menu_folded}"
   >
+    <div style="margin: 4px; height: 10%; overflow: hidden;" :style="{display: menu_folded ? 'none' : ''}">
+      <el-button @click="sel_arma_list = !sel_arma_list">{{ sel_arma_list ? '装备' : '角色'}}</el-button>
+    </div>
     <el-scrollbar style="
     display: flex;
     flex-wrap: wrap;
-    padding-right: 8px;
+    padding-right: 4px;
     /*overflow-y: scroll;*/
-    height: 100%;
+    height: 90%;
     "
     always
     >
-      <div style="margin: 2px;">
-        <el-button @click="sel_arma_list = !sel_arma_list"></el-button>
-      </div>
       <div :style="{display: (!sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
         <div
             v-for="(unit, i) in unit_data"
@@ -165,7 +165,7 @@ export default {
       <div :style="{display: (sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
         <div
             v-for="(armament, i) in armament_data"
-            class="wfo-slot"
+            class="wfo-obj"
             :class="[is_select('a' + i) ? 'selected' : '', 'ele-' + armament['Element'].toLowerCase()]"
             :id="'wfo-a' + i"
             @click="select('a' + i)"
@@ -199,7 +199,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.wfo-slot{
+.wfo-obj{
   margin: 2px;
   /*display: inline-block;*/
   /*margin: 2px;*/
@@ -233,6 +233,7 @@ export default {
 }
 
 .wfo-menu{
+  z-index: 20;
   background-color: lightgray;
   position: absolute;
   left: 0;
