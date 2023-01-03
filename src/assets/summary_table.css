@@ -119,6 +119,7 @@
     /* background-color: aqua; */
     background-color: white;
     box-shadow: 0 0 2px black;
+    cursor: pointer;
 }
 .wfo-slot-mb {
     border-radius: 3px;

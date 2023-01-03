@@ -38,11 +38,46 @@ export default {
     }
   },
   methods: {
-    select(i){
-      if (this.is_select(i)) {
+    select(sel){
+      if (this.is_select(sel)) {
         selected.value = null
       }else {
-        selected.value = i
+        if (!selected.value) {
+          selected.value = sel
+        }
+        else if (selected.value.startsWith('party-')) {
+        }
+        else if (selected.value.startsWith('object-')) {
+          if (sel.startsWith('object-')) {
+            selected.value = sel
+          }
+          if (sel.startsWith('party-')) {
+            let i = '', j = -1;
+            if (sel.startsWith('party-union1-')) i='union1';
+            else if (sel.startsWith('party-union2-')) i='union2';
+            else if (sel.startsWith('party-union3-')) i='union3';
+            if (sel.endsWith('main')) j = 0;
+            else if (sel.endsWith('unison')) j = 1;
+            else if (sel.endsWith('armament')) j = 2;
+            else if (sel.endsWith('core')) j = 3;
+
+            if (j === 0 || j === 1) {
+              if (selected.value.startsWith('object-unit-')) {
+                calculate_party.value[i][j] = eval(selected.value.slice(12))
+                selected.value = null
+              }
+            }
+            else if (j === 2 || j === 3) {
+              if (selected.value.startsWith('object-armament-')) {
+                calculate_party.value[i][j] = eval(selected.value.slice(16))
+                selected.value = null
+              }
+            }
+
+          }
+        }
+        else {}
+        // selected.value = i
       }
     },
     is_select(i){
@@ -61,26 +96,33 @@ export default {
     <span style="color: blue;">Other Info here</span>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
-      <div class="party" style="display: flex; border: 6px solid gray;">
+      <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray;" @dragstart.prevent>
         <div class="union">
           <div class="wfo-slot main"
                :class="[is_select('party-union1-main') ? 'selected' : '',
                unit_data.hasOwnProperty(calculate_party['union1'][0]) ? 'ele-' + unit_data[calculate_party['union1'][0]]['Element'].toLowerCase() : '']"
                @click="select('party-union1-main')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union1'][0]])" alt=""/>
-            <div style="text-align: center;">Leader</div>
+            <div style="text-align: center;">队长</div>
           </div>
-          <div class="wfo-slot armament">
+          <div class="wfo-slot armament"
+               :class="[is_select('party-union1-armament') ? 'selected' : '']"
+               @click="select('party-union1-armament')">
             <img :src="getArmamentPicUrl(armament_data[calculate_party['union1'][2]])" alt=""/>
-            <div style="text-align: center;">Arma</div>
+            <div style="text-align: center;">装备</div>
           </div>
-          <div class="wfo-slot unison">
+          <div class="wfo-slot unison"
+               :class="[is_select('party-union1-unison') ? 'selected' : '',
+               unit_data.hasOwnProperty(calculate_party['union1'][1]) ? 'ele-' + unit_data[calculate_party['union1'][1]]['Element'].toLowerCase() : '']"
+               @click="select('party-union1-unison')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union1'][1]])" alt=""/>
-            <div style="text-align: center;">Unison</div>
+            <div style="text-align: center;">辅助角色</div>
           </div>
-          <div class="wfo-slot core">
+          <div class="wfo-slot core"
+               :class="[is_select('party-union1-core') ? 'selected' : '']"
+               @click="select('party-union1-core')">
             <img :src="getArmamentCorePicUrl(armament_data[calculate_party['union1'][3]])" alt=""/>
-            <div style="text-align: center;">Core</div>
+            <div style="text-align: center;">魂珠</div>
           </div>
         </div>
         <div class="union">
@@ -89,46 +131,63 @@ export default {
                unit_data.hasOwnProperty(calculate_party['union2'][0]) ? 'ele-' + unit_data[calculate_party['union2'][0]]['Element'].toLowerCase() : '']"
                @click="select('party-union2-main')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union2'][0]])" alt=""/>
-            <div style="text-align: center;">Main</div>
+            <div style="text-align: center;">主要角色</div>
           </div>
-          <div class="wfo-slot armament">
+          <div class="wfo-slot armament"
+               :class="[is_select('party-union2-armament') ? 'selected' : '']"
+               @click="select('party-union2-armament')">
             <img :src="getArmamentPicUrl(armament_data[calculate_party['union2'][2]])" alt=""/>
-            <div style="text-align: center;">Arma</div>
+            <div style="text-align: center;">装备</div>
           </div>
-          <div class="wfo-slot unison">
+          <div class="wfo-slot unison"
+               :class="[is_select('party-union2-unison') ? 'selected' : '',
+               unit_data.hasOwnProperty(calculate_party['union2'][1]) ? 'ele-' + unit_data[calculate_party['union2'][1]]['Element'].toLowerCase() : '']"
+               @click="select('party-union2-unison')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union2'][1]])" alt=""/>
-            <div style="text-align: center;">Unison</div>
+            <div style="text-align: center;">辅助角色</div>
           </div>
-          <div class="wfo-slot core">
+          <div class="wfo-slot core"
+               :class="[is_select('party-union2-core') ? 'selected' : '']"
+               @click="select('party-union2-core')">
             <img :src="getArmamentCorePicUrl(armament_data[calculate_party['union2'][3]])" alt=""/>
-            <div style="text-align: center;">Core</div>
+            <div style="text-align: center;">魂珠</div>
           </div>
         </div>
         <div class="union">
-          <div class="wfo-slot main">
+          <div class="wfo-slot main"
+               :class="[is_select('party-union3-main') ? 'selected' : '',
+               unit_data.hasOwnProperty(calculate_party['union3'][0]) ? 'ele-' + unit_data[calculate_party['union3'][0]]['Element'].toLowerCase() : '']"
+               @click="select('party-union3-main')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union3'][0]])" alt=""/>
-            <div style="text-align: center;">Main</div>
+            <div style="text-align: center;">主要角色</div>
           </div>
-          <div class="wfo-slot armament">
+          <div class="wfo-slot armament"
+               :class="[is_select('party-union3-armament') ? 'selected' : '']"
+               @click="select('party-union3-armament')">
             <img :src="getArmamentPicUrl(armament_data[calculate_party['union3'][2]])" alt=""/>
-            <div style="text-align: center;">Arma</div>
+            <div style="text-align: center;">装备</div>
           </div>
-          <div class="wfo-slot unison">
+          <div class="wfo-slot unison"
+               :class="[is_select('party-union3-unison') ? 'selected' : '',
+               unit_data.hasOwnProperty(calculate_party['union3'][1]) ? 'ele-' + unit_data[calculate_party['union3'][1]]['Element'].toLowerCase() : '']"
+               @click="select('party-union3-unison')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union3'][1]])" alt=""/>
-            <div style="text-align: center;">Unison</div>
+            <div style="text-align: center;">辅助角色</div>
           </div>
-          <div class="wfo-slot core">
+          <div class="wfo-slot core"
+               :class="[is_select('party-union3-core') ? 'selected' : '']"
+               @click="select('party-union3-core')">
             <img :src="getArmamentCorePicUrl(armament_data[calculate_party['union3'][3]])" alt=""/>
-            <div style="text-align: center;">Core</div>
+            <div style="text-align: center;">魂珠</div>
           </div>
         </div>
       </div>
 <!--      </div>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
-      <div style="display: flex; flex-direction: column; margin: 16px;">
-        <div><el-button @click="">aa</el-button></div>
-        <el-input type="textarea" rows="6" style="width: 480px; margin: 16px;" v-model="calculate_party_output" @input=""></el-input>
+      <div id="calculator-output" style="display: flex; flex-direction: column; margin: 16px;">
+        <div><el-button @click="calculate_party_output = JSON.stringify(calculate_party)">输出</el-button></div>
+        <el-input type="textarea" rows="6" style="width: 480px; padding: 16px 0;" v-model="calculate_party_output"></el-input>
       </div>
     </div>
   </div>
@@ -165,9 +224,9 @@ export default {
         <div
             v-for="(unit, i) in unit_data"
             class="wfo-obj"
-            :class="[is_select('u' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"
+            :class="[is_select('object-unit-' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"
             :id="'wfo-u' + i"
-            @click="select('u' + i)"
+            @click="select('object-unit-' + i)"
         >
           <el-image
               :src="getUnitPicUrl(unit)"
@@ -189,9 +248,9 @@ export default {
         <div
             v-for="(armament, i) in armament_data"
             class="wfo-obj"
-            :class="[is_select('a' + i) ? 'selected' : '', 'ele-' + armament['Element'].toLowerCase()]"
+            :class="[is_select('object-armament-' + i) ? 'selected' : '', 'ele-' + armament['Element'].toLowerCase()]"
             :id="'wfo-a' + i"
-            @click="select('a' + i)"
+            @click="select('object-armament-' + i)"
         >
           <el-image
               :src="getArmamentPicUrl(armament)"
