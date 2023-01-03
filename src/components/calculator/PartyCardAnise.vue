@@ -108,6 +108,7 @@ export default {
 }
 .party-card-anise:deep(.main) {
   position: absolute;
+  height: fit-content;
   top: 2%;
   left: 2%;
   background-color: #fff;
@@ -123,6 +124,7 @@ export default {
 }
 .party-card-anise:deep(.unison) {
   position: absolute;
+  height: fit-content;
   /*top: 55%;*/
   /*left: 53%;*/
   bottom: 2%;
@@ -140,6 +142,7 @@ export default {
 }
 .party-card-anise:deep(.armament) {
   position: absolute;
+  height: fit-content;
   top: 8%;
   /*left: 58%;*/
   right: 2%;
@@ -156,6 +159,7 @@ export default {
 }
 .party-card-anise:deep(.core) {
   position: absolute;
+  height: fit-content;
   /*top: 60%;*/
   left: 7.5%;
   bottom: 2%;

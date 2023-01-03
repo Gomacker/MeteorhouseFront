@@ -6,22 +6,35 @@ import {ref} from "vue";
 import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
-import {getUnitPicUrl, unit_data, armament_data, getArmamentPicUrl} from "@/components/party_manager";
+import {
+  getUnitPicUrl,
+  unit_data,
+  armament_data,
+  getArmamentPicUrl,
+  getArmamentCorePicUrl
+} from "@/components/party_manager";
 import PartyCard from "@/components/calculator/PartyCardAnise.vue";
 import '@/assets/summary_table.css'
 
 let menu_folded = ref(false)
 
+// function a(r){
+//   console.log(r);
+// }
 </script>
 <script>
 import {ref} from "vue";
 
 const selected = ref(null)
 const sel_arma_list = ref(false)
+const calculate_party = ref({'union1': [1, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
+const calculate_party_output = ref('')
 export default {
   data() {
     return {
-      sel_arma_list: sel_arma_list
+      sel_arma_list: sel_arma_list,
+      calculate_party: calculate_party,
+      calculate_party_output: calculate_party_output
     }
   },
   methods: {
@@ -50,56 +63,62 @@ export default {
 <!--      <div class="party-editor">-->
       <div class="party" style="display: flex; border: 6px solid gray;">
         <div class="union">
-          <div class="wfo-slot main">
-            <img src="" alt=""/>
+          <div class="wfo-slot main"
+               :class="[is_select('party-union1-main') ? 'selected' : '',
+               unit_data.hasOwnProperty(calculate_party['union1'][0]) ? 'ele-' + unit_data[calculate_party['union1'][0]]['Element'].toLowerCase() : '']"
+               @click="select('party-union1-main')">
+            <img :src="getUnitPicUrl(unit_data[calculate_party['union1'][0]])" alt=""/>
             <div style="text-align: center;">Leader</div>
           </div>
           <div class="wfo-slot armament">
-            <img src="" alt=""/>
+            <img :src="getArmamentPicUrl(armament_data[calculate_party['union1'][2]])" alt=""/>
             <div style="text-align: center;">Arma</div>
           </div>
           <div class="wfo-slot unison">
-            <img src="" alt=""/>
+            <img :src="getUnitPicUrl(unit_data[calculate_party['union1'][1]])" alt=""/>
             <div style="text-align: center;">Unison</div>
           </div>
           <div class="wfo-slot core">
-            <img src="" alt=""/>
+            <img :src="getArmamentCorePicUrl(armament_data[calculate_party['union1'][3]])" alt=""/>
+            <div style="text-align: center;">Core</div>
+          </div>
+        </div>
+        <div class="union">
+          <div class="wfo-slot main"
+               :class="[is_select('party-union2-main') ? 'selected' : '',
+               unit_data.hasOwnProperty(calculate_party['union2'][0]) ? 'ele-' + unit_data[calculate_party['union2'][0]]['Element'].toLowerCase() : '']"
+               @click="select('party-union2-main')">
+            <img :src="getUnitPicUrl(unit_data[calculate_party['union2'][0]])" alt=""/>
+            <div style="text-align: center;">Main</div>
+          </div>
+          <div class="wfo-slot armament">
+            <img :src="getArmamentPicUrl(armament_data[calculate_party['union2'][2]])" alt=""/>
+            <div style="text-align: center;">Arma</div>
+          </div>
+          <div class="wfo-slot unison">
+            <img :src="getUnitPicUrl(unit_data[calculate_party['union2'][1]])" alt=""/>
+            <div style="text-align: center;">Unison</div>
+          </div>
+          <div class="wfo-slot core">
+            <img :src="getArmamentCorePicUrl(armament_data[calculate_party['union2'][3]])" alt=""/>
             <div style="text-align: center;">Core</div>
           </div>
         </div>
         <div class="union">
           <div class="wfo-slot main">
-            <img src="" alt=""/>
+            <img :src="getUnitPicUrl(unit_data[calculate_party['union3'][0]])" alt=""/>
             <div style="text-align: center;">Main</div>
           </div>
           <div class="wfo-slot armament">
-            <img src="" alt=""/>
+            <img :src="getArmamentPicUrl(armament_data[calculate_party['union3'][2]])" alt=""/>
             <div style="text-align: center;">Arma</div>
           </div>
           <div class="wfo-slot unison">
-            <img src="" alt=""/>
+            <img :src="getUnitPicUrl(unit_data[calculate_party['union3'][1]])" alt=""/>
             <div style="text-align: center;">Unison</div>
           </div>
           <div class="wfo-slot core">
-            <img src="" alt=""/>
-            <div style="text-align: center;">Core</div>
-          </div>
-        </div>
-        <div class="union">
-          <div class="wfo-slot main">
-            <img src="" alt=""/>
-            <div style="text-align: center;">Main</div>
-          </div>
-          <div class="wfo-slot armament">
-            <img src="" alt=""/>
-            <div style="text-align: center;">Arma</div>
-          </div>
-          <div class="wfo-slot unison">
-            <img src="" alt=""/>
-            <div style="text-align: center;">Unison</div>
-          </div>
-          <div class="wfo-slot core">
-            <img src="" alt=""/>
+            <img :src="getArmamentCorePicUrl(armament_data[calculate_party['union3'][3]])" alt=""/>
             <div style="text-align: center;">Core</div>
           </div>
         </div>
@@ -107,6 +126,10 @@ export default {
 <!--      </div>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
+      <div style="display: flex; flex-direction: column; margin: 16px;">
+        <div><el-button @click="">aa</el-button></div>
+        <el-input type="textarea" rows="6" style="width: 480px; margin: 16px;" v-model="calculate_party_output" @input=""></el-input>
+      </div>
     </div>
   </div>
   <el-button

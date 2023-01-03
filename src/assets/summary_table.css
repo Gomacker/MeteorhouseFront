@@ -204,6 +204,7 @@
     right: -2px;
     border-radius: 2px;
     background-color: white;
+    z-index: 10;
 }
 .main {
     z-index: 3;
