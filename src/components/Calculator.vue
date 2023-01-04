@@ -29,6 +29,18 @@ const selected = ref(null)
 const sel_arma_list = ref(false)
 const calculate_party = ref({'union1': [1, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
 const calculate_party_output = ref('')
+function get_pos(sel) {
+  let union = '', pos = -1;
+  if (sel.startsWith('party-union1-')) union='union1';
+  else if (sel.startsWith('party-union2-')) union='union2';
+  else if (sel.startsWith('party-union3-')) union='union3';
+  if (sel.endsWith('main')) pos = 0;
+  else if (sel.endsWith('unison')) pos = 1;
+  else if (sel.endsWith('armament')) pos = 2;
+  else if (sel.endsWith('core')) pos = 3;
+
+  return [union, pos]
+}
 export default {
   data() {
     return {
@@ -46,34 +58,60 @@ export default {
           selected.value = sel
         }
         else if (selected.value.startsWith('party-')) {
+          if (sel.startsWith('object-')) {
+            let p = get_pos(selected.value)
+
+            if (p[1] === 0 || p[1] === 1) {
+              if (sel.startsWith('object-unit-')) {
+                calculate_party.value[p[0]][p[1]] = eval(sel.slice(12))
+                selected.value = null
+              }
+            }
+            else if (p[1] === 2 || p[1] === 3) {
+              if (sel.startsWith('object-armament-')) {
+                calculate_party.value[p[0]][p[1]] = eval(sel.slice(16))
+                selected.value = null
+              }
+            }
+          }
+          else if (sel.startsWith('party-')) {
+            if (((selected.value.endsWith('main') || selected.value.endsWith('unison')) &&
+                (sel.endsWith('main') || sel.endsWith('unison')))
+                ||
+                ((selected.value.endsWith('armament') || selected.value.endsWith('core')) &&
+                (sel.endsWith('armament') || sel.endsWith('core')))
+            ) {
+              let pos1 = get_pos(selected.value)
+              let pos2 = get_pos(sel)
+              const temp = calculate_party.value[pos1[0]][pos1[1]]
+              calculate_party.value[pos1[0]][pos1[1]] = calculate_party.value[pos2[0]][pos2[1]]
+              calculate_party.value[pos2[0]][pos2[1]] = temp
+              selected.value = null
+            }
+            else {
+              selected.value = sel
+            }
+          }
         }
         else if (selected.value.startsWith('object-')) {
           if (sel.startsWith('object-')) {
             selected.value = sel
           }
           if (sel.startsWith('party-')) {
-            let i = '', j = -1;
-            if (sel.startsWith('party-union1-')) i='union1';
-            else if (sel.startsWith('party-union2-')) i='union2';
-            else if (sel.startsWith('party-union3-')) i='union3';
-            if (sel.endsWith('main')) j = 0;
-            else if (sel.endsWith('unison')) j = 1;
-            else if (sel.endsWith('armament')) j = 2;
-            else if (sel.endsWith('core')) j = 3;
+            let p = get_pos(sel)
 
-            if (j === 0 || j === 1) {
+            if (p[1] === 0 || p[1] === 1) {
               if (selected.value.startsWith('object-unit-')) {
-                calculate_party.value[i][j] = eval(selected.value.slice(12))
+                calculate_party.value[p[0]][p[1]] = eval(selected.value.slice(12))
                 selected.value = null
               }
             }
-            else if (j === 2 || j === 3) {
+            else if (p[1] === 2 || p[1] === 3) {
               if (selected.value.startsWith('object-armament-')) {
-                calculate_party.value[i][j] = eval(selected.value.slice(16))
+                calculate_party.value[p[0]][p[1]] = eval(selected.value.slice(16))
                 selected.value = null
               }
             }
-
           }
         }
         else {}
@@ -81,7 +119,6 @@ export default {
       }
     },
     is_select(i){
-      // console.log('sel:' + selected, 'i:' + i)
       return selected.value === i
     }
   }
@@ -96,7 +133,7 @@ export default {
     <span style="color: blue;">Other Info here</span>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
-      <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray;" @dragstart.prevent>
+      <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray; line-height: 1.15;" @dragstart.prevent>
         <div class="union">
           <div class="wfo-slot main"
                :class="[is_select('party-union1-main') ? 'selected' : '',
@@ -186,8 +223,8 @@ export default {
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
       <div id="calculator-output" style="display: flex; flex-direction: column; margin: 16px;">
-        <div><el-button @click="calculate_party_output = JSON.stringify(calculate_party)">输出</el-button></div>
-        <el-input type="textarea" rows="6" style="width: 480px; padding: 16px 0;" v-model="calculate_party_output"></el-input>
+        <div><el-button @click="calculate_party_output = JSON.stringify({party:calculate_party})">输出</el-button></div>
+        <el-input type="textarea" rows="4" style="width: 480px; padding: 16px 0;" v-model="calculate_party_output"></el-input>
       </div>
     </div>
   </div>
@@ -209,7 +246,7 @@ export default {
        :class="{fold: menu_folded}"
   >
     <div style="margin: 4px; height: 10%; overflow: hidden;" :style="{display: menu_folded ? 'none' : ''}">
-      <el-button @click="sel_arma_list = !sel_arma_list">{{ sel_arma_list ? '装备' : '角色'}}</el-button>
+      <el-button @click="sel_arma_list = !sel_arma_list">{{ sel_arma_list ? '角色' : '装备'}}</el-button>
     </div>
     <el-scrollbar style="
     display: flex;
@@ -220,7 +257,7 @@ export default {
     "
     always
     >
-      <div :style="{display: (!sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
+      <div :style="{display: sel_arma_list ? 'none' : 'flex'}" class="wfo-list">
         <div
             v-for="(unit, i) in unit_data"
             class="wfo-obj"
@@ -244,7 +281,7 @@ export default {
           </el-image>
         </div>
       </div>
-      <div :style="{display: (sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
+      <div :style="{display: (!sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
         <div
             v-for="(armament, i) in armament_data"
             class="wfo-obj"
@@ -330,15 +367,15 @@ export default {
   padding: 0 8px;
 }
 .selected{
-  border-color: red;
+  border-color: #c287ff;
 }
-.ele-none::before{background-image: url("api/static/worldflipper/icon/none.png");}
-.ele-fire::before{background-image: url("api/static/worldflipper/icon/fire.png");}
-.ele-water::before{background-image: url("api/static/worldflipper/icon/water.png");}
-.ele-thunder::before{background-image: url("api/static/worldflipper/icon/thunder.png");}
-.ele-wind::before{background-image: url("api/static/worldflipper/icon/wind.png");}
-.ele-light::before{background-image: url("api/static/worldflipper/icon/light.png");}
-.ele-dark::before{background-image: url("api/static/worldflipper/icon/dark.png");}
+.ele-none::before{background-image: url("/api/static/worldflipper/icon/none.png");}
+.ele-fire::before{background-image: url("/api/static/worldflipper/icon/fire.png");}
+.ele-water::before{background-image: url("/api/static/worldflipper/icon/water.png");}
+.ele-thunder::before{background-image: url("/api/static/worldflipper/icon/thunder.png");}
+.ele-wind::before{background-image: url("/api/static/worldflipper/icon/wind.png");}
+.ele-light::before{background-image: url("/api/static/worldflipper/icon/light.png");}
+.ele-dark::before{background-image: url("/api/static/worldflipper/icon/dark.png");}
 .wfo-obj::before{
   content: '';
   width: 16px;

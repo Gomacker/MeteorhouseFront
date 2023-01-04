@@ -12,19 +12,21 @@ const Calculator = () => import("@/components/Calculator.vue")
 // import Calculator from "@/components/Calculator.vue";
 const MainPage = () => import("@/components/MainPage.vue")
 // import MainPage from "@/components/MainPage.vue";
+const SummaryTable = () => import("@/components/SummaryTable.vue")
 const SummaryTableList = () => import("@/components/SummaryTableList.vue")
 const SummaryTableEditor = () => import("@/components/SummaryTableEditor.vue")
 const FutureVision = () => import("@/components/FutureVision.vue")
 const About = () => import("@/components/About.vue")
 const Login = () => import("@/components/Login.vue")
 const ResourceManager = () => import("@/components/ResourceManager.vue")
-import {createRouter, createWebHashHistory, createWebHistory} from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 // import VueRouter from "vue-router";
 
 const routes = [
     {path: '/', component: MainPage},
     {path: '/future_vision', component: FutureVision},
     {path: '/calculator', component: Calculator},
+    {path: '/summary_table/:st_id', component: SummaryTable},
     {path: '/summary_table_list', component: SummaryTableList},
     {path: '/summary_table_editor', component: SummaryTableEditor},
     {path: '/about', component: About},

@@ -2,16 +2,29 @@
   <div id="st-body">
     <div id="banner">
       <div id="banner-title">
-        <p class="text_t">废墟魔像 超级 踢罐配队</p>
+        <p class="st-text">废墟魔像 超级 踢罐配队</p>
+        {{ $route.params.st_id }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import '@/assets/summary_table.css';
+import axios from "axios";
+import {ref} from "vue";
+
+let table_data = ref({})
+
+// axios.get('api/summary_table/' + $route.params.st_id + '/data').then(r => {
+//   table_data = r.data
+// })
 export default {
-  name: "SummaryTable"
+  name: "SummaryTable",
+  data() {
+    return {
+      table_data: table_data
+    }
+  }
 }
 </script>
 
@@ -39,7 +52,7 @@ export default {
 </style>
 
 <style scoped>
-.text_t{
+.st-text{
   background: var(--main-color);
   /*background-clip: text;*/
   /*-webkit-text-fill-color: white;*/
