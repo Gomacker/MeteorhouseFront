@@ -24,7 +24,12 @@ axios.get(
 })
 
 export function getUnitPicUrl(unit) {
-    return '/api/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'
+    if (unit &&
+        Object.hasOwn(unit, 'WfExId')) {
+        return '/api/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'
+    }else {
+        return '/api/static/worldflipper/unit/blank.png'
+    }
 }
 
 export function getArmamentPicUrl(armament) {

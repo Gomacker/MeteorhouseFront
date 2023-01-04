@@ -2,14 +2,28 @@
 <template>
   <el-form>
     <el-form-item label="一图ID">
-      <el-select filterable>
+      <el-select filterable v-model="table_id" @change="table_change">
         <el-option value="fire" style="padding: 0 0 0 20px;">
           <div style="background: linear-gradient(to right, transparent, orange)">
-            a
+            超火
+          </div>
+        </el-option>
+        <el-option value="re0" style="padding: 0 0 0 20px;">
+          <div style="background: linear-gradient(to right, transparent, orange)">
+            Re0
           </div>
         </el-option>
       </el-select>
     </el-form-item>
+<!--    <input style="-->
+<!--      background: var(&#45;&#45;main-color);-->
+<!--      /*background-clip: text;*/-->
+<!--      /*-webkit-text-fill-color: white;*/-->
+<!--      /*-webkit-text-stroke: 16px;*/-->
+<!--      -webkit-background-clip: text;-->
+<!--      -webkit-text-fill-color: #fff;-->
+<!--      -webkit-text-stroke:0.14em transparent;-->
+<!--">-->
   </el-form>
   <div class="editor-body">
     <el-row :gutter="20" style="justify-content: center;">
@@ -82,7 +96,7 @@
                 <el-card body-style="padding: 12px 12px;">
                   {{ j }}
                   <el-form-item label="类型">
-                    <el-select v-model="col.type" filterable>
+                    <el-select v-model="col.type" filterable @change="type_change([index, j], this)">
                       <el-option value="TextRegion"/>
                       <el-option value="Party"/>
                     </el-select>
@@ -128,10 +142,12 @@
 import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue';
 import {ref} from "vue";
 import PartyCard from "@/components/calculator/PartyCardAnise.vue";
+import axios from "axios";
 // const table_data = ref({})
 // const main_color = ref('#ffffff')
 // const sub_color = ref('#000000')
-const table_data = {
+// const table_data = ref({})
+let table_data_ = {
   property: {
     title: 'Test thaaaaaaaat',
     update_time: '2022-12-23',
@@ -325,13 +341,42 @@ const table_data = {
     }
   ]
 }
+
+// function table_change(st_id){
+//   axios.get('api/summary_table/' + st_id + '/data').then(r => {
+//     this.table_data = r.data
+//   })
+//   console.log(st_id)
+// }
+//
+// function type_change(e, e1){
+//   console.log(this.table_data.content[e[0]]["data"]["elements"][e[1]])
+//   console.log(e1)
+// }
+
+const table_id = ''
 // table_data.main_color = '#fff'
 // table_data.sub_color = '#000'
 export default {
   name: "SummaryTable",
   data() {
     return{
-      table_data: table_data,
+      table_data: table_data_,
+      // type_change: type_change,
+      // table_change: table_change,
+      table_id: table_id
+    }
+  },
+  methods: {
+    table_change(st_id){
+      axios.get('api/summary_table/' + st_id + '/data').then(r => {
+        this.table_data = r.data
+      })
+      console.log(st_id)
+    },
+    type_change(e, e1){
+      console.log(this.table_data.content[e[0]]["data"]["elements"][e[1]])
+      console.log(e1)
     }
   },
   components: {PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled}
