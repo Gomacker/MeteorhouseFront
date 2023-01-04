@@ -1,26 +1,29 @@
 
 <template>
-  <el-form>
-    <el-form-item label="一图ID">
-      <el-select filterable v-model="table_id" @change="table_change">
-        <el-option value="fire" style="padding: 0 0 0 20px;">
-          <div style="background: linear-gradient(to right, transparent, orange)">
-            超火
-          </div>
-        </el-option>
-        <el-option value="re0" style="padding: 0 0 0 20px;">
-          <div style="background: linear-gradient(to right, transparent, orange)">
-            Re0
-          </div>
-        </el-option>
-      </el-select>
-    </el-form-item>
-  </el-form>
-  <div>
-    <el-button type="primary" @click="">新建</el-button>
-    <el-button type="primary" @click="">保存</el-button>
+  <div style="box-shadow: black 0 0 4px; position: fixed; top: 80px; width: 70%; padding: 16px; z-index: 20; background: white;">
+    <el-form>
+      <el-form-item label="一图ID">
+        <el-select filterable v-model="table_id" @change="table_change">
+          <el-option value="fire" style="padding: 0 0 0 20px;">
+            <div style="background: linear-gradient(to right, transparent, orange)">
+              超火
+            </div>
+          </el-option>
+          <el-option value="re0" style="padding: 0 0 0 20px;">
+            <div style="background: linear-gradient(to right, transparent, orange)">
+              Re0
+            </div>
+          </el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <div>
+      <el-button type="primary" @click="">新建</el-button>
+      <el-button type="primary" @click="">保存</el-button>
+    </div>
   </div>
-  <div class="editor-body" v-if="table_data.hasOwnProperty('property')">
+  <div style="margin-top: 140px;">
+    <div class="editor-body" v-if="table_data.hasOwnProperty('property')">
     <el-row :gutter="20" style="justify-content: center;">
       <el-col :span="24">
         <el-card class="sub-color-background">
@@ -32,19 +35,19 @@
               <el-row :gutter="0" style="width: 100%">
                 <el-col :span="6">
                   <span class="el-form-item__label">主色</span>
-                  <el-color-picker v-model="table_data.property.main_color"/>
+                  <el-color-picker v-model="table_data.property['main_color']"/>
                 </el-col>
                 <el-col :span="6">
                   <span class="el-form-item__label">副色</span>
-                  <el-color-picker v-model="table_data.property.sub_color"/>
+                  <el-color-picker v-model="table_data.property['sub_color']"/>
                 </el-col>
               </el-row>
             </el-form-item>
             <el-form-item label="更新时间">
-              <el-date-picker v-model="table_data.property.update_time" value-format="YYYY-MM-DD"/>
+              <el-date-picker v-model="table_data.property['update_time']" value-format="YYYY-MM-DD"/>
             </el-form-item>
             <el-form-item label="小关于">
-              <el-input type="textarea" v-model="table_data.property.little_about"/>
+              <el-input type="textarea" v-model="table_data.property['little_about']"/>
             </el-form-item>
             <el-form-item label="Banner">
               <el-input placeholder="(css here)" v-model="table_data.property.banner"/>
@@ -81,7 +84,7 @@
             </el-form-item>
             <el-row v-if="obj.type === 'Row'" :gutter="8">
               <el-col v-for="(col, j) in obj.data.elements" :span="(() => {
-                if(col.type === 'TextRegion' && col.data.full) {
+                if(col.type === 'TextRegion' && col.data['full']) {
                   return 24
                 }else {
                   return 12
@@ -99,6 +102,12 @@
                     <el-input type="textarea" :rows="4" v-model="col.data.content"/>
                   </el-form-item>
                   <PartyCard v-if="col.type === 'Party'" :party="col.data.party"/>
+                  <el-input v-if="col.type === 'Party'" type="text"
+                            :value = "'aa'"
+                  ></el-input>
+                  <!--                            v-model="col.data.party"-->
+                  <!--                            :formatter="s => {return JSON.parse(s)}"-->
+                  <!--                            :parser="s => {return JSON.stringify(s)}"-->
                   {{ col }}
                   <div style="display: flex; justify-content: space-between;">
                     <el-button type="danger" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
@@ -128,6 +137,7 @@
     </el-row>
     {{ JSON.stringify(table_data, null, 2) }}
 <!--    <el-input v-model="table_data" disabled/>-->
+  </div>
   </div>
 </template>
 
@@ -181,7 +191,11 @@ export default {
       console.log(e1)
     }
   },
-  components: {PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled}
+  components: {PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
+  beforeUnmount() {
+    console.log('seuhioghouie')
+    this.table_data = {}
+  }
 }
 </script>
 
