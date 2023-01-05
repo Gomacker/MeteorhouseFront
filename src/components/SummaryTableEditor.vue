@@ -2,19 +2,19 @@
 <template>
   <div style="box-shadow: black 0 0 4px; position: fixed; top: 80px; width: 70%; padding: 16px; z-index: 20; background: white;">
     <el-form>
+      {{ table_id }}
+      {{ loaded_table_id }}
       <el-form-item label="一图ID">
-        <el-select filterable v-model="table_id" @change="table_change">
-          <el-option value="fire" style="padding: 0 0 0 20px;">
-            <div style="background: linear-gradient(to right, transparent, orange)">
-              超火
-            </div>
-          </el-option>
-          <el-option value="re0" style="padding: 0 0 0 20px;">
-            <div style="background: linear-gradient(to right, transparent, orange)">
-              Re0
-            </div>
-          </el-option>
+        <el-select filterable v-model="table_id">
+<!--          <el-option value="fire" style="padding: 0 0 0 20px;">-->
+<!--            <div style="background: linear-gradient(to right, transparent, orange)">-->
+<!--              超火-->
+<!--            </div>-->
+<!--          </el-option>-->
+          <el-option v-for="st in table_list" :value="st" @change="table_change"/>
         </el-select>
+        &nbsp;&nbsp;
+        <el-button type="default" @click="table_change(table_id)">读取</el-button>
       </el-form-item>
     </el-form>
     <div>
@@ -33,7 +33,7 @@ import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue
 import {ref} from "vue";
 import PartyCard from "@/components/calculator/PartyCardAnise.vue";
 import axios from "axios";
-import {table_data, table_change, type_change} from "@/components/summary_table_editor";
+import {loaded_table_id, table_data, table_change, type_change} from "@/components/summary_table_editor";
 import SummaryTableEditorBody from "@/components/SummaryTableEditorBody.vue";
 // const table_data = ref({})
 // const main_color = ref('#ffffff')
@@ -52,39 +52,40 @@ import SummaryTableEditorBody from "@/components/SummaryTableEditorBody.vue";
 //   console.log(this.table_data.content[e[0]]["data"]["elements"][e[1]])
 //   console.log(e1)
 // }
+const table_id = ref('')
+if (loaded_table_id && !table_id) {
+  table_id.value = loaded_table_id.value
+}
 
-const table_id = ''
+const table_list = ref([])
+
+axios.get(
+    '/api/summary_table_list/'
+).then(r => {
+      table_list.value = r.data['tables']
+    }
+)
+
 // table_data.main_color = '#fff'
 // table_data.sub_color = '#000'
 export default {
   name: "SummaryTable",
   data() {
     return{
+      table_list: table_list,
       table_data: table_data,
-      // type_change: type_change,
-      // table_change: table_change,
-      table_id: table_id
+      table_id: table_id,
+      loaded_table_id: loaded_table_id,
     }
   },
   methods: {
     axios,
     table_change,
     type_change
-    // table_change(st_id){
-    //   axios.get('/api/summary_table/' + st_id + '/data').then(r => {
-    //     this.table_data.value = r.data
-    //   })
-    //   console.log(st_id)
-    // },
-    // type_change(e, e1){
-    //   console.log(this.table_data.value['content'][e[0]]["data"]["elements"][e[1]])
-    //   console.log(e1)
-    // }
   },
   components: {SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
-  beforeDestroy() {
-    console.log('seuhioghouie')
-    // this.table_data = {}
+  beforeRouteLeave() {
+    // console.log('seuhioghouie')
   }
 }
 </script>

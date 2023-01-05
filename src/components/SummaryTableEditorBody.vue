@@ -29,7 +29,10 @@
               <el-input placeholder="(css here)" v-model="table_data.property.banner"/>
             </el-form-item>
             <el-form-item label="Background">
-              <el-input placeholder="(css here)" v-model="table_data.property.footer"/>
+              <el-input placeholder="(css here)" v-model="table_data.property.background"/>
+            </el-form-item>
+            <el-form-item label="Background">
+              <el-input type="textarea" v-model="table_data.property.footer" :rows="6"/>
             </el-form-item>
           </el-form>
         </el-card>
