@@ -7,6 +7,7 @@ import './assets/main.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 import {unit_data, armament_data} from "@/components/party_manager";
+import {table_data, table_change, type_change} from "@/components/summary_table_editor";
 
 const Calculator = () => import("@/components/Calculator.vue")
 // import Calculator from "@/components/Calculator.vue";

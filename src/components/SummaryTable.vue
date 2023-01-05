@@ -3,7 +3,7 @@
     <div id="banner">
       <div id="banner-title">
         <p class="st-text">废墟魔像 超级 踢罐配队</p>
-        {{ $route.params.st_id }}
+        {{ $route.params['st_id'] }}
       </div>
     </div>
   </div>
