@@ -19,7 +19,7 @@
     </el-form>
     <div>
       <el-button type="primary" @click="">新建</el-button>
-      <el-button type="primary" @click="">保存</el-button>
+      <el-button type="primary" @click="save_table">保存</el-button>
     </div>
   </div>
   <div style="margin-top: 140px;">
@@ -31,9 +31,9 @@
 // import '@/assets/summary_table.css';
 import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue';
 import {ref} from "vue";
-import PartyCard from "@/components/calculator/PartyCardAnise.vue";
+import PartyCard from "@/components/party/PartyCardAnise.vue";
 import axios from "axios";
-import {loaded_table_id, table_data, table_change, type_change} from "@/components/summary_table_editor";
+import {save_table, loaded_table_id, table_data, table_change, type_change} from "@/components/summary_table_editor";
 import SummaryTableEditorBody from "@/components/SummaryTableEditorBody.vue";
 // const table_data = ref({})
 // const main_color = ref('#ffffff')
@@ -81,7 +81,8 @@ export default {
   methods: {
     axios,
     table_change,
-    type_change
+    type_change,
+    save_table
   },
   components: {SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
   beforeRouteLeave() {
@@ -101,8 +102,5 @@ export default {
   --main-color: rgba(var(---main-color-value), 1);
   --sub-color: rgba(var(---sub-color-value), 1);
   --little-about-color: rgba(var(---main-color-value), 0.625);
-}
-.editor-body:deep(div){
-  margin: 2px 0;
 }
 </style>

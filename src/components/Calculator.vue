@@ -13,7 +13,7 @@ import {
   getArmamentPicUrl,
   getArmamentCorePicUrl
 } from "@/components/party_manager";
-import PartyCard from "@/components/calculator/PartyCardAnise.vue";
+import PartyCard from "@/components/party/PartyCardAnise.vue";
 import '@/assets/summary_table.css'
 
 let menu_folded = ref(false)
@@ -369,13 +369,13 @@ export default {
 .selected{
   border-color: #c287ff;
 }
-.ele-none::before{background-image: url("/api/static/worldflipper/icon/none.png");}
-.ele-fire::before{background-image: url("/api/static/worldflipper/icon/fire.png");}
-.ele-water::before{background-image: url("/api/static/worldflipper/icon/water.png");}
-.ele-thunder::before{background-image: url("/api/static/worldflipper/icon/thunder.png");}
-.ele-wind::before{background-image: url("/api/static/worldflipper/icon/wind.png");}
-.ele-light::before{background-image: url("/api/static/worldflipper/icon/light.png");}
-.ele-dark::before{background-image: url("/api/static/worldflipper/icon/dark.png");}
+.ele-none::before{background-image: url("/assets/worldflipper/icon/none.png");}
+.ele-fire::before{background-image: url("/assets/worldflipper/icon/fire.png");}
+.ele-water::before{background-image: url("/assets/worldflipper/icon/water.png");}
+.ele-thunder::before{background-image: url("/assets/worldflipper/icon/thunder.png");}
+.ele-wind::before{background-image: url("/assets/worldflipper/icon/wind.png");}
+.ele-light::before{background-image: url("/assets/worldflipper/icon/light.png");}
+.ele-dark::before{background-image: url("/assets/worldflipper/icon/dark.png");}
 .wfo-obj::before{
   content: '';
   width: 16px;

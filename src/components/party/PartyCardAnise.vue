@@ -17,58 +17,58 @@ defineProps({
   <!--        <div style="z-index: 1;">-->
   <!--          <img src="" style="position:absolute; width: 16px; height: 16px; background: red;" loading="lazy" alt=""/>-->
   <!--        </div>-->
-          <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['union1'][0]])"></el-image>
+          <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['party']['union1'][0]])"></el-image>
           <div style="text-align: center;">Leader</div>
         </div>
         <div class="unison">
   <!--        <div style="z-index: 1;">-->
   <!--          <img src="" style="position:absolute; width: 16px; height: 16px; background: red;" loading="lazy" alt=""/>-->
   <!--        </div>-->
-          <el-image style="width: 62px;" :src="getUnitPicUrl(unit_data[party['union1'][1]])"/>
+          <el-image style="width: 62px;" :src="getUnitPicUrl(unit_data[party['party']['union1'][1]])"/>
           <div style="text-align: center;">Unison</div>
         </div>
         <div class="armament">
-          <el-image style="width: 54px;" :src="getArmamentPicUrl(armament_data[party['union1'][2]])"/>
+          <el-image style="width: 54px;" :src="getArmamentPicUrl(armament_data[party['party']['union1'][2]])"/>
           <div style="text-align: center;">Arma</div>
         </div>
         <div class="core">
-          <el-image style="width: 54px;" :src="getArmamentCorePicUrl(armament_data[party['union1'][3]])"/>
+          <el-image style="width: 54px;" :src="getArmamentCorePicUrl(armament_data[party['party']['union1'][3]])"/>
           <div style="text-align: center;">Core</div>
         </div>
       </div>
       <div style="height: 190px; width: 150px;">
         <div class="main">
-          <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['union2'][0]])"></el-image>
+          <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['party']['union2'][0]])"></el-image>
           <div style="text-align: center;">Main</div>
         </div>
         <div class="unison">
-          <el-image style="width: 62px;" :src="getUnitPicUrl(unit_data[party['union2'][1]])"/>
+          <el-image style="width: 62px;" :src="getUnitPicUrl(unit_data[party['party']['union2'][1]])"/>
           <div style="text-align: center;">Unison</div>
         </div>
         <div class="armament">
-          <el-image style="width: 54px;" :src="getArmamentPicUrl(armament_data[party['union2'][2]])"/>
+          <el-image style="width: 54px;" :src="getArmamentPicUrl(armament_data[party['party']['union2'][2]])"/>
           <div style="text-align: center;">Arma</div>
         </div>
         <div class="core">
-          <el-image style="width: 54px;" :src="getArmamentCorePicUrl(armament_data[party['union2'][3]])"/>
+          <el-image style="width: 54px;" :src="getArmamentCorePicUrl(armament_data[party['party']['union2'][3]])"/>
           <div style="text-align: center;">Core</div>
         </div>
       </div>
       <div style="height: 190px; width: 150px;">
         <div class="main">
-          <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['union3'][0]])"></el-image>
+          <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['party']['union3'][0]])"></el-image>
           <div style="text-align: center;">Main</div>
         </div>
         <div class="unison">
-          <el-image style="width: 62px;" :src="getUnitPicUrl(unit_data[party['union3'][1]])"/>
+          <el-image style="width: 62px;" :src="getUnitPicUrl(unit_data[party['party']['union3'][1]])"/>
           <div style="text-align: center;">Unison</div>
         </div>
         <div class="armament">
-          <el-image style="width: 54px;" :src="getArmamentPicUrl(armament_data[party['union3'][2]])"/>
+          <el-image style="width: 54px;" :src="getArmamentPicUrl(armament_data[party['party']['union3'][2]])"/>
           <div style="text-align: center;">Arma</div>
         </div>
         <div class="core">
-          <el-image style="width: 54px;" :src="getArmamentCorePicUrl(armament_data[party['union3'][3]])"/>
+          <el-image style="width: 54px;" :src="getArmamentCorePicUrl(armament_data[party['party']['union3'][3]])"/>
           <div style="text-align: center;">Core</div>
         </div>
       </div>

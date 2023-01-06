@@ -84,10 +84,11 @@
                   <el-input v-if="col.type === 'Party'" type="textarea"
                             :model-value = "JSON.stringify(col.data.party)"
                             @input = "v => {
-                                try {
-                                  col.data.party = JSON.parse(v)
-                                }catch (e){}
-                              }"
+                              // try {
+                              //   col.data.party = JSON.parse(v)
+                              // }catch (e){}
+                              col.data.party = JSON.parse(v)
+                            }"
                             :rows = "3"
                   />
                   <!--                            v-model="col.data.party"-->
@@ -126,11 +127,12 @@
 
 <script>
 import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue';
-import PartyCard from "@/components/calculator/PartyCardAnise.vue";
-import {table_data} from "./summary_table_editor";
+import PartyCard from "@/components/party/PartyCardAnise.vue";
+import {table_data, type_change} from "./summary_table_editor";
 
 export default {
   name: "SummaryTableEditorBody",
+  methods: {type_change},
   data(){
     return {
       table_data: table_data
@@ -141,5 +143,11 @@ export default {
 </script>
 
 <style scoped>
-
+.editor-body {
+  max-width: 1036px;
+  margin: auto;
+}
+.editor-body:deep(div){
+  margin: 2px 0;
+}
 </style>

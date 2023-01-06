@@ -26,9 +26,9 @@ axios.get(
 export function getUnitPicUrl(unit) {
     if (unit &&
         Object.hasOwn(unit, 'WfExId')) {
-        return '/api/static/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'
+        return '/assets/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'
     }else {
-        return '/api/static/worldflipper/unit/blank.png'
+        return '/assets/worldflipper/unit/blank.png'
     }
 }
 
@@ -36,9 +36,9 @@ export function getArmamentPicUrl(armament) {
     // console.log(armament, armament.hasOwnProperty('WfExId'))
     if (armament &&
         Object.hasOwn(armament, 'WfExId')) {
-        return '/api/static/worldflipper/generated/armament/normal/' + armament['WfExId'] + '.png'
+        return '/assets/worldflipper/generated/armament/normal/' + armament['WfExId'] + '.png'
     }else {
-        return '/api/static/worldflipper/unit/blank.png'
+        return '/assets/worldflipper/unit/blank.png'
     }
 }
 
@@ -46,8 +46,8 @@ export function getArmamentCorePicUrl(armament) {
     // console.log(armament, armament.hasOwnProperty('WfExId'))
     if (armament &&
         Object.hasOwn(armament, 'WfExId')) {
-        return '/api/static/worldflipper/generated/armament/core/' + armament['WfExId'] + '.png'
+        return '/assets/worldflipper/generated/armament/core/' + armament['WfExId'] + '.png'
     }else {
-        return '/api/static/worldflipper/unit/blank.png'
+        return '/assets/worldflipper/unit/blank.png'
     }
 }

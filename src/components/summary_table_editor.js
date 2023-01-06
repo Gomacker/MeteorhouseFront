@@ -1,5 +1,7 @@
 import {ref} from "vue";
 import axios from "axios";
+import {ElMessage} from "element-plus";
+
 
 export const loaded_table_id = ref('')
 
@@ -15,4 +17,18 @@ export function table_change(st_id) {
 export function type_change(e, e1) {
     console.log(this.table_data.value['content'][e[0]]["data"]["elements"][e[1]])
     console.log(e1)
+}
+
+export function save_table() {
+    axios.post('/api/summary_table/' + loaded_table_id.value + '/save', {
+        table_data: JSON.stringify(table_data.value)
+    }).then(
+        () => {
+            ElMessage.success('保存成功')
+        }
+    ).catch(
+        () => {
+            ElMessage.error('保存失败')
+        }
+    )
 }
