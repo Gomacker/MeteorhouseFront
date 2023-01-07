@@ -15,9 +15,13 @@ import {
 } from "@/components/party_manager";
 import PartyCard from "@/components/party/PartyCardAnise.vue";
 import '@/assets/summary_table.css'
+const view_filter = ref(obj => {return true})
 
 let menu_folded = ref(false)
-
+// const viewed_unit_list = ref(Object.fromEntries(Object.entries(unit_data.value).filter((v, k) => {
+//   // console.log()
+//   return view_filter.value(v[1])
+// })))
 // function a(r){
 //   console.log(r);
 // }
@@ -247,6 +251,14 @@ export default {
   >
     <div style="margin: 4px; height: 10%; overflow: hidden;" :style="{display: menu_folded ? 'none' : ''}">
       <el-button @click="sel_arma_list = !sel_arma_list">{{ sel_arma_list ? '角色' : '装备'}}</el-button>
+      <el-button @click="view_filter = obj => {return true}">All</el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'None'}" size="small"><el-image src="/assets/worldflipper/icon/none.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Fire'}" size="small"><el-image src="/assets/worldflipper/icon/fire.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Water'}" size="small"><el-image src="/assets/worldflipper/icon/water.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Thunder'}" size="small"><el-image src="/assets/worldflipper/icon/thunder.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Wind'}" size="small"><el-image src="/assets/worldflipper/icon/wind.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Light'}" size="small"><el-image src="/assets/worldflipper/icon/light.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Dark'}" size="small"><el-image src="/assets/worldflipper/icon/dark.png" style="width: 16px;"/></el-button>
     </div>
     <el-scrollbar style="
     display: flex;
@@ -259,7 +271,7 @@ export default {
     >
       <div :style="{display: sel_arma_list ? 'none' : 'flex'}" class="wfo-list">
         <div
-            v-for="(unit, i) in unit_data"
+            v-for="(unit, i) in Object.fromEntries(Object.entries(unit_data).filter((v, k) => {return view_filter(v[1])}))"
             class="wfo-obj"
             :class="[is_select('object-unit-' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"
             :id="'wfo-u' + i"
@@ -283,7 +295,7 @@ export default {
       </div>
       <div :style="{display: (!sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
         <div
-            v-for="(armament, i) in armament_data"
+            v-for="(armament, i) in Object.fromEntries(Object.entries(armament_data).filter((v, k) => {return view_filter(v[1])}))"
             class="wfo-obj"
             :class="[is_select('object-armament-' + i) ? 'selected' : '', 'ele-' + armament['Element'].toLowerCase()]"
             :id="'wfo-a' + i"

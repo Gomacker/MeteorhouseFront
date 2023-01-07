@@ -16,12 +16,12 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000/api/',
+        target: 'http://127.0.0.1:10317/api/',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       },
       '/assets': {
-        target: 'http://127.0.0.1:8000/assets/',
+        target: 'http://127.0.0.1:10317/assets/',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/assets/, '')
       }

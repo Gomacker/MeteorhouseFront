@@ -39,8 +39,22 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
-
-
+Array.prototype.insert = function(index, value){
+    this.splice(index,0, value);
+}
+Array.prototype.remove=function(dx)
+{
+    if(isNaN(dx)||dx>this.length){return false;}
+    let i = 0, n = 0;
+    for(; i<this.length; i++)
+    {
+        if(this[i]!==this[dx])
+        {
+            this[n++]=this[i]
+        }
+    }
+    this.length-=1
+}
 const app = createApp(App)
 app.use(router)
 app.use(ElementPlus, {locale: zhCn})

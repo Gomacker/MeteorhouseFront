@@ -24,9 +24,9 @@ export default {
         </el-page-header>
         <div style="flex: 1;"/>
         <div style="display: flex; align-items: center; user-select: none; cursor:pointer;">
-          <el-button v-if="false" text @click="$router.push('/login')">登录</el-button>
-          <el-avatar class="avatar" src="" size="default"/>
-          <span style="margin: 0 8px;">Gomacker</span>
+          <el-button v-if="true" text @click="$router.push('/login')">登录</el-button>
+<!--          <el-avatar class="avatar" src="" size="default"/>-->
+<!--          <span style="margin: 0 8px;">Gomacker</span>-->
         </div>
 <!--        </div>-->
       </el-header>

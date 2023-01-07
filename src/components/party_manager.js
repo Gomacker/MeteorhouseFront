@@ -5,7 +5,7 @@ import {ref} from "vue";
 export const unit_data = ref({})
 export const armament_data = ref({})
 
-axios.get(
+axios.post(
     // 'http://127.0.0.1:8000/unit_data',
     '/api/unit_data/',
     {}
@@ -15,7 +15,7 @@ axios.get(
     // console.log(unit_data.value)
 })
 
-axios.get(
+axios.post(
     // 'http://127.0.0.1:8000/unit_data',
     '/api/armament_data/',
     {}

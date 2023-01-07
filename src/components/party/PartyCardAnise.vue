@@ -75,7 +75,7 @@ defineProps({
   <!--    <div style="flex: 1;">b</div>-->
   <!--    <div style="flex: 1;">c</div>-->
     </el-card>
-    {{ party }}
+<!--    {{ party }}-->
   </div>
 </template>
 

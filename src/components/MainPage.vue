@@ -29,7 +29,7 @@ const get_calendar = function () {
     <p># 千里眼(事件表)会往后放一放（前端与数据困难） #</p>
     <p># 编队计算模块会在能力数据解析完毕后放出 #</p>
     <p># 茶盘气数据格式接近完善，但仍需优化搜索和api整理 #</p>
-    <p># 一图预览页正在前后端相互搬东西 #</p>
+    <p># 一图预览页正在前后端相互搬东西（旧版暂时预览用: 域名:端口/api/summary_table/一图流ID/，比如:<a href="/api/summary_table/default/" target="_blank">/api/summary_table/default/</a>） #</p>
     <p style="color: green;"># TODO 正在优先完善一图流编辑器（先用表内的new来编辑，不新建） #</p>
     <p># 素材包能放嘛（指接近到干炸里脊的程度（ #</p>
     <p># 账号还没开始写😫 #</p>
@@ -49,8 +49,6 @@ const get_calendar = function () {
         <p>结束时间: {{ moment(new Date(cal['timeEnd'])).format('YYYY-MM-DD hh:mm:ss') }}</p>
       </div>
     </el-card>
-<!--      {{ cal }}-->
-<!--      <img src="https://wf-calendar.miaowm5.com/banner/ch/{{ cal.id }}.{{ cal.image }}">-->
   </div>
 </template>
 

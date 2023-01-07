@@ -20,7 +20,7 @@
               </el-row>
             </el-form-item>
             <el-form-item label="更新时间">
-              <el-date-picker v-model="table_data.property['update_time']" value-format="YYYY-MM-DD"/>
+              <el-date-picker v-model="table_data.property['update_time']" value-format="YYYY/MM/DD"/>
             </el-form-item>
             <el-form-item label="小关于">
               <el-input type="textarea" v-model="table_data.property['little_about']"/>
@@ -31,7 +31,7 @@
             <el-form-item label="Background">
               <el-input placeholder="(css here)" v-model="table_data.property.background"/>
             </el-form-item>
-            <el-form-item label="Background">
+            <el-form-item label="Footer">
               <el-input type="textarea" v-model="table_data.property.footer" :rows="6"/>
             </el-form-item>
           </el-form>
@@ -80,6 +80,13 @@
                   <el-form-item v-if="col.type === 'TextRegion'" label="内容">
                     <el-input type="textarea" :rows="4" v-model="col.data.content"/>
                   </el-form-item>
+                  <span v-if="col.type === 'TextRegion'">
+                    占据整行 <el-switch v-model="col.data['full']"/>
+                  </span>
+                  <span v-if="col.type === 'TextRegion'">
+                    小标题 <el-switch v-model="col.data['little_title']"/>
+                  </span>
+<!--                  {{ col.data }}-->
                   <PartyCard v-if="col.type === 'Party'" :party="col.data.party"/>
                   <el-input v-if="col.type === 'Party'" type="textarea"
                             :model-value = "JSON.stringify(col.data.party)"
@@ -96,10 +103,11 @@
                   <!--                            :parser="s => {return JSON.stringify(s)}"-->
                   <!--                  {{ col }}-->
                   <div style="display: flex; justify-content: space-between;">
-                    <el-button type="danger" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
+                    <el-button type="danger" @click="obj.data.elements.remove(j)" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
                     <el-button-group>
-                      <el-button size="small"><el-icon><ArrowLeft /></el-icon></el-button>
-                      <el-button size="small"><el-icon><ArrowRight /></el-icon></el-button>
+                      <el-button type="primary" @click="obj.data.elements.insert(j, {type: 'TextRegion', data: {}})" plain size="small"><el-icon><Plus/></el-icon></el-button>
+                      <el-button size="small" @click="obj.data.elements = move_to_previous(obj.data.elements, j)"><el-icon><ArrowLeft /></el-icon></el-button>
+                      <el-button size="small" @click="obj.data.elements = move_to_next(obj.data.elements, j)"><el-icon><ArrowRight /></el-icon></el-button>
                     </el-button-group>
                   </div>
                 </el-card>
@@ -107,32 +115,33 @@
             </el-row>
           </el-form>
           <div style="display: flex; justify-content: space-between;">
-            <el-button type="danger" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
+            <el-button type="danger" @click="table_data.content.remove(index)" size="small"><el-icon><DeleteFilled /></el-icon></el-button>
             <el-button-group>
-              <el-button size="small"><el-icon><ArrowLeft /></el-icon></el-button>
-              <el-button size="small"><el-icon><ArrowRight /></el-icon></el-button>
+              <el-button type="primary" @click="table_data.content.insert(index, {type: 'Row', data: {elements: [{type: 'TextRegion', data: {}}]}})" plain size="small"><el-icon><Plus/></el-icon></el-button>
+              <el-button size="small" @click="table_data.content = move_to_previous(table_data.content, index)"><el-icon><ArrowLeft /></el-icon></el-button>
+              <el-button size="small" @click="table_data.content = move_to_next(table_data.content, index)"><el-icon><ArrowRight /></el-icon></el-button>
             </el-button-group>
           </div>
         </el-card>
       </el-col>
       <el-col :span="12">
-        <el-button type="primary" plain round style="width: 100%">
+        <el-button type="primary" @click="table_data.content.insert(table_data.content.length, {type: 'Row', data: {elements: [{type: 'TextRegion', data: {}}]}})" plain round style="width: 100%">
           <el-icon><Plus/></el-icon>
         </el-button>
       </el-col>
     </el-row>
-<!--    {{ JSON.stringify(table_data, null, 2) }}-->
+    {{ JSON.stringify(table_data, null, 2) }}
   </div>
 </template>
 
 <script>
 import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue';
 import PartyCard from "@/components/party/PartyCardAnise.vue";
-import {table_data, type_change} from "./summary_table_editor";
+import {move_to_next, move_to_previous, table_data, type_change} from "./summary_table_editor";
 
 export default {
   name: "SummaryTableEditorBody",
-  methods: {type_change},
+  methods: {move_to_next, move_to_previous, type_change},
   data(){
     return {
       table_data: table_data
