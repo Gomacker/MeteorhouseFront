@@ -135,6 +135,10 @@ export default {
     <span style="color: blue;">{{ Object.keys(unit_data).length }} units loaded</span>
     <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
     <span style="color: blue;">Other Info here</span>
+    <div style="padding: 4px;">
+      <el-button type="success" plain>[debug](无头)上传队伍</el-button>
+      <el-button type="warning" plain>[debug]检查队伍存在性</el-button>
+    </div>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
       <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray; line-height: 1.15;" @dragstart.prevent>
