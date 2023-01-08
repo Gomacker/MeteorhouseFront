@@ -31,8 +31,8 @@ import {ref} from "vue";
 
 const selected = ref(null)
 const sel_arma_list = ref(false)
-const calculate_party = ref({'union1': [1, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
-const calculate_party_output = ref('')
+let calculate_party = ref({'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
+let calculate_party_output = ref('')
 function get_pos(sel) {
   let union = '', pos = -1;
   if (sel.startsWith('party-union1-')) union='union1';
@@ -65,7 +65,11 @@ export default {
           if (sel.startsWith('object-')) {
             let p = get_pos(selected.value)
 
-            if (p[1] === 0 || p[1] === 1) {
+            if (sel === 'object-empty') {
+              calculate_party.value[p[0]][p[1]] = 0
+              selected.value = null
+            }
+            else if (p[1] === 0 || p[1] === 1) {
               if (sel.startsWith('object-unit-')) {
                 calculate_party.value[p[0]][p[1]] = eval(sel.slice(12))
                 selected.value = null
@@ -104,7 +108,11 @@ export default {
           if (sel.startsWith('party-')) {
             let p = get_pos(sel)
 
-            if (p[1] === 0 || p[1] === 1) {
+            if (selected.value === 'object-empty') {
+              calculate_party.value[p[0]][p[1]] = 0
+              selected.value = null
+            }
+            else if (p[1] === 0 || p[1] === 1) {
               if (selected.value.startsWith('object-unit-')) {
                 calculate_party.value[p[0]][p[1]] = eval(selected.value.slice(12))
                 selected.value = null
@@ -136,8 +144,8 @@ export default {
     <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
     <span style="color: blue;">Other Info here</span>
     <div style="padding: 4px;">
-      <el-button type="success" plain>[debug](无头)上传队伍</el-button>
-      <el-button type="warning" plain>[debug]检查队伍存在性</el-button>
+      <el-button type="success" disabled plain>[debug](无头)上传队伍</el-button>
+      <el-button type="warning" disabled plain>[debug]检查队伍存在性</el-button>
     </div>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
@@ -231,7 +239,11 @@ export default {
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
 <!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
       <div id="calculator-output" style="display: flex; flex-direction: column; margin: 16px;">
-        <div><el-button @click="calculate_party_output = JSON.stringify({party:calculate_party})">输出</el-button></div>
+        <div>
+          <el-button @click="calculate_party_output = JSON.stringify({party:calculate_party})">输出</el-button>
+          <el-button @click="calculate_party = JSON.parse(calculate_party_output).party">读取</el-button>
+          <el-button type="danger" @click="calculate_party = {'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]}">重置</el-button>
+        </div>
         <el-input type="textarea" rows="4" style="width: 480px; padding: 16px 0;" v-model="calculate_party_output"></el-input>
       </div>
     </div>
@@ -273,7 +285,29 @@ export default {
     "
     always
     >
+
       <div :style="{display: sel_arma_list ? 'none' : 'flex'}" class="wfo-list">
+        <div
+            class="wfo-obj"
+            :class="[is_select('object-empty') ? 'selected' : '']"
+            id="wfo-empty"
+            @click="select('object-empty')"
+        >
+          <el-image
+              :src="getUnitPicUrl({})"
+              title="empty"
+              loading="lazy"
+              @dragstart.prevent
+          >
+            <div slot="placeholder">
+              <el-icon><Picture/></el-icon>
+            </div>
+            <div slot="error">
+              fbd
+              <el-icon><CircleClose/></el-icon>
+            </div>
+          </el-image>
+        </div>
         <div
             v-for="(unit, i) in Object.fromEntries(Object.entries(unit_data).filter((v, k) => {return view_filter(v[1])}))"
             class="wfo-obj"
@@ -298,6 +332,27 @@ export default {
         </div>
       </div>
       <div :style="{display: (!sel_arma_list) ? 'none' : 'flex'}" class="wfo-list">
+        <div
+            class="wfo-obj"
+            :class="[is_select('object-empty') ? 'selected' : '']"
+            id="wfo-empty"
+            @click="select('object-empty')"
+        >
+          <el-image
+              :src="getUnitPicUrl({})"
+              title="empty"
+              loading="lazy"
+              @dragstart.prevent
+          >
+            <div slot="placeholder">
+              <el-icon><Picture/></el-icon>
+            </div>
+            <div slot="error">
+              fbd
+              <el-icon><CircleClose/></el-icon>
+            </div>
+          </el-image>
+        </div>
         <div
             v-for="(armament, i) in Object.fromEntries(Object.entries(armament_data).filter((v, k) => {return view_filter(v[1])}))"
             class="wfo-obj"

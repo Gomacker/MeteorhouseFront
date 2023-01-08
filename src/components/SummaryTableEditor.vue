@@ -62,7 +62,7 @@ if (loaded_table_id && !table_id) {
 const table_list = ref([])
 
 axios.post(
-    '/api/summary_table_list/'
+    '/api/table_list/'
 ).then(r => {
       table_list.value = r.data['tables']
     }
