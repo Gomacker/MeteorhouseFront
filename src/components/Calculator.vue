@@ -149,7 +149,7 @@ export default {
     </div>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
-      <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray; line-height: 1.15;" @dragstart.prevent>
+      <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray;" @dragstart.prevent>
         <div class="union">
           <div class="wfo-slot main"
                :class="[is_select('party-union1-main') ? 'selected' : '',
