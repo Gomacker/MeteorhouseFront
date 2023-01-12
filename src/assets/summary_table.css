@@ -78,6 +78,7 @@
     box-sizing: content-box;
 }
 .party {
+    user-select: none;
     width: 480px;
     height: 205px;
     background: white;
