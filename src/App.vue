@@ -106,7 +106,7 @@ export default {
       >
         Author: @Kranca / Gomacker
         <a href="https://space.bilibili.com/11466987" target="_blank">
-          <img style="width: 16px; vertical-align: middle;" src="https://www.bilibili.com/favicon.ico" alt="">
+          <img style="display: inline-block; width: 16px; vertical-align: middle;" src="https://www.bilibili.com/favicon.ico" alt="">
         </a>
       </el-footer>
     </el-container>

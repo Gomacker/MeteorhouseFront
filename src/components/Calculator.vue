@@ -32,6 +32,7 @@ import {ref} from "vue";
 const selected = ref(null)
 const sel_arma_list = ref(false)
 let calculate_party = ref({'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
+let party_replacements = ref({'union1': [[], [], [], []], 'union2': [[], [], [], []], 'union3': [[], [], [], []]})
 let calculate_party_output = ref('')
 function get_pos(sel) {
   let union = '', pos = -1;
@@ -91,9 +92,16 @@ export default {
             ) {
               let pos1 = get_pos(selected.value)
               let pos2 = get_pos(sel)
-              const temp = calculate_party.value[pos1[0]][pos1[1]]
-              calculate_party.value[pos1[0]][pos1[1]] = calculate_party.value[pos2[0]][pos2[1]]
-              calculate_party.value[pos2[0]][pos2[1]] = temp
+              if (sel.split('-')[2] === 'replacement') {
+                const temp = calculate_party.value[pos1[0]][pos1[1]]
+                calculate_party.value[pos1[0]][pos1[1]] = calculate_party.value[pos2[0]][pos2[1]]
+                calculate_party.value[pos2[0]][pos2[1]] = temp
+              }
+              else {
+                const temp = calculate_party.value[pos1[0]][pos1[1]]
+                calculate_party.value[pos1[0]][pos1[1]] = calculate_party.value[pos2[0]][pos2[1]]
+                calculate_party.value[pos2[0]][pos2[1]] = temp
+              }
               selected.value = null
             }
             else {
@@ -149,6 +157,14 @@ export default {
     </div>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->
+      <div v-if="false" id="calculator-party-replacement" class="party" style="display: flex; border: 6px solid gray;" @dragstart.prevent>
+        <div class="union">
+        </div>
+        <div class="union">
+        </div>
+        <div class="union">
+        </div>
+      </div>
       <div id="calculator-party" class="party" style="display: flex; border: 6px solid gray;" @dragstart.prevent>
         <div class="union">
           <div class="wfo-slot main"
@@ -235,9 +251,6 @@ export default {
           </div>
         </div>
       </div>
-<!--      </div>-->
-<!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
-<!--      <UnitCard v-if="Object.keys(unit_data).length > 0" :id_="1" :unit="unit_data['1']"/>-->
       <div id="calculator-output" style="display: flex; flex-direction: column; margin: 16px;">
         <div>
           <el-button @click="calculate_party_output = JSON.stringify({party:calculate_party})">输出</el-button>
@@ -261,7 +274,6 @@ export default {
   >
     Fold
   </el-button>
-
   <div class="wfo-menu"
        :class="{fold: menu_folded}"
   >
@@ -276,7 +288,8 @@ export default {
       <el-button @click="view_filter = obj => {return obj['Element'] === 'Light'}" size="small"><el-image src="/assets/worldflipper/icon/light.png" style="width: 16px;"/></el-button>
       <el-button @click="view_filter = obj => {return obj['Element'] === 'Dark'}" size="small"><el-image src="/assets/worldflipper/icon/dark.png" style="width: 16px;"/></el-button>
     </div>
-    <el-scrollbar style="
+    <el-scrollbar
+        style="
     display: flex;
     flex-wrap: wrap;
     padding-right: 4px;
@@ -285,7 +298,6 @@ export default {
     "
     always
     >
-
       <div :style="{display: sel_arma_list ? 'none' : 'flex'}" class="wfo-list">
         <div
             class="wfo-obj"

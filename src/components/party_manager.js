@@ -5,6 +5,40 @@ import {ref} from "vue";
 export const unit_data = ref({})
 export const armament_data = ref({})
 
+class Party {
+    constructor(data) {
+        this.union1 = data.union1
+        this.union2 = data.union2
+        this.union3 = data.union3
+    }
+}
+
+export class PartyRelease {
+    constructor(data) {
+        this.party = new Party(data.party)
+        this.replacements = {
+            union1: [],
+            union2: [],
+            union3: [],
+        }
+    }
+    set_party(pos, id) {
+        this.party[pos[0]][pos[1]] = id
+    }
+    dump() {
+        const params = {}
+        if (this.replacements.union1 && this.replacements.union2 && this.replacements.union3) {
+
+        }
+        return JSON.stringify(
+            {
+                party: this.party,
+                params: params
+            }
+        )
+    }
+}
+
 axios.post(
     // 'http://127.0.0.1:8000/unit_data',
     '/api/unit_data/',
