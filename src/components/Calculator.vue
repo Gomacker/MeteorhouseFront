@@ -3,7 +3,6 @@
 //   name: "Calculator"
 // })
 import {ref} from "vue";
-import axios from "axios";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
 import {
@@ -18,16 +17,11 @@ import '@/assets/summary_table.css'
 const view_filter = ref(obj => {return true})
 
 let menu_folded = ref(false)
-// const viewed_unit_list = ref(Object.fromEntries(Object.entries(unit_data.value).filter((v, k) => {
-//   // console.log()
-//   return view_filter.value(v[1])
-// })))
-// function a(r){
-//   console.log(r);
-// }
 </script>
 <script>
 import {ref} from "vue";
+import axios from "axios";
+import {ElMessage} from "element-plus";
 
 const selected = ref(null)
 const sel_arma_list = ref(false)
@@ -140,6 +134,27 @@ export default {
     },
     is_select(i){
       return selected.value === i
+    },
+    noheader_upload() {
+      axios.post(
+          '/api/update_party/',
+          {
+            party: calculate_party.value
+          }
+      ).then(
+          r => {
+            console.log(r.data)
+            if (r.data['result'] === 'success') {
+              ElMessage.success('上传成功')
+            }else {
+              ElMessage.error('保存失败')
+            }
+          }
+      ).catch(
+          () => {
+            ElMessage.error('上传失败(连接失败)')
+          }
+      )
     }
   }
 }
@@ -152,7 +167,7 @@ export default {
     <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
     <span style="color: blue;">Other Info here</span>
     <div style="padding: 4px;">
-      <el-button type="success" disabled plain>[debug](无头)上传队伍</el-button>
+      <el-button type="success" plain @click="noheader_upload">[debug](无头)上传队伍</el-button>
       <el-button type="warning" disabled plain>[debug]检查队伍存在性</el-button>
     </div>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">

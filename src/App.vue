@@ -52,7 +52,7 @@ export default {
                 <el-icon><Menu /></el-icon>
                 Kalculator(Alpha)
               </el-menu-item>
-              <el-menu-item disabled index="menu-party-searcher">
+              <el-menu-item index="menu-party-searcher" @click="$router.push('/party_searcher')">
                 <el-icon><Search /></el-icon>
                 查盘器
               </el-menu-item>

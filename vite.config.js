@@ -16,8 +16,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        // target: 'http://127.0.0.1:10317/api/',
-        target: 'http://alpha.meteorhouse.wiki/api/',
+        target: 'http://127.0.0.1:10317/api/',
+        // target: 'http://alpha.meteorhouse.wiki/api/',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       },
