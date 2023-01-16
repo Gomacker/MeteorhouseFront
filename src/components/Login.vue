@@ -8,7 +8,7 @@
         <el-input type="password" v-model="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">
+        <el-button type="primary" @click="login">
           登录
         </el-button>
       </el-form-item>
@@ -18,6 +18,8 @@
 
 <script>
 import {ref} from "vue";
+import axios from "axios";
+import {ElMessage} from "element-plus";
 
 const username = ref('')
 const password = ref('')
@@ -27,6 +29,32 @@ export default {
     return {
       username: username,
       password: password
+    }
+  },
+  methods: {
+    login() {
+      axios.post(
+          '/api/login/',
+          {
+            username: username.value,
+            password: password.value
+          }
+      ).then(
+          r => {
+            console.log(r.data)
+            if (r.data['result'] === 'success') {
+              ElMessage.success('成功')
+              location.reload()
+              this.$router.go(0)
+            }else {
+              ElMessage.error('失败')
+            }
+          }
+      ).catch(
+          () => {
+            ElMessage.error('失败(失败)')
+          }
+      )
     }
   }
 }

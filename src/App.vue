@@ -3,10 +3,51 @@ import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, U
 
 </script>
 <script>
+
+import {ref} from "vue";
+import axios from "axios";
+import {is_login, user_name, user_avatar} from '@/components/user'
+
 export default {
   data() {
     return {
-      sidebar_hidden: false
+      sidebar_hidden: false,
+      is_login: is_login,
+      user_name: user_name,
+      user_avatar: user_avatar
+    }
+  },
+  mounted() {
+    axios.post(
+        '/api/get_user_profile/'
+    ).then(r => {
+      is_login.value = r.data['is_login']
+      if (is_login.value) {
+        console.log(r.data)
+        user_name.value = r.data['username']
+      }else {
+        console.log('未登录')
+      }
+    }).catch(
+        () => {
+          console.log('获取已登录用户失败')
+        }
+    )
+  },
+  methods: {
+    logout() {
+      axios.post(
+          '/api/logout/'
+      ).then(r => {
+        console.log('已登出')
+        is_login.value = r.data['is_login']
+        user_name.value = ''
+        user_avatar.value = ''
+      }).catch(
+          () => {
+            console.log('连接失败')
+          }
+      )
     }
   }
 }
@@ -24,7 +65,12 @@ export default {
         </el-page-header>
         <div style="flex: 1;"/>
         <div style="display: flex; align-items: center; user-select: none; cursor:pointer;">
-          <el-button v-if="true" text @click="$router.push('/login')">登录</el-button>
+
+<!--          <el-button v-if="true" text @click="get_user_profile">huoqv</el-button>-->
+          <span v-if="is_login">欢迎回来，{{ user_name }}</span>
+          <el-button v-if="!is_login" text @click="$router.push('/login')">登录</el-button>
+          <el-button v-if="is_login" text @click="logout">登出</el-button>
+
 <!--          <el-avatar class="avatar" src="" size="default"/>-->
 <!--          <span style="margin: 0 8px;">Gomacker</span>-->
         </div>

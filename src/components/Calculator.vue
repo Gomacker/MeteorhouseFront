@@ -1,10 +1,8 @@
 <script setup>
-// defineProps({
-//   name: "Calculator"
-// })
 import {ref} from "vue";
 import {Picture, CircleClose} from '@element-plus/icons-vue'
 import UnitCard from "@/components/UnitCard.vue";
+import {is_login} from '@/components/user'
 import {
   getUnitPicUrl,
   unit_data,
@@ -25,6 +23,7 @@ import {ElMessage} from "element-plus";
 
 const selected = ref(null)
 const sel_arma_list = ref(false)
+const party_title = ref('')
 let calculate_party = ref({'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
 let party_replacements = ref({'union1': [[], [], [], []], 'union2': [[], [], [], []], 'union3': [[], [], [], []]})
 let calculate_party_output = ref('')
@@ -45,6 +44,7 @@ export default {
     return {
       sel_arma_list: sel_arma_list,
       calculate_party: calculate_party,
+      party_title: party_title,
       calculate_party_output: calculate_party_output
     }
   },
@@ -147,7 +147,32 @@ export default {
             if (r.data['result'] === 'success') {
               ElMessage.success('上传成功')
             }else {
-              ElMessage.error('保存失败')
+              ElMessage.error('上传失败')
+            }
+          }
+      ).catch(
+          () => {
+            ElMessage.error('上传失败(连接失败)')
+          }
+      )
+    },
+    upload() {
+      axios.post(
+          '/api/update_party/',
+          {
+            title: party_title.value,
+            party: calculate_party.value,
+            params: {
+              replacements: party_replacements.value
+            }
+          }
+      ).then(
+          r => {
+            console.log(r.data)
+            if (r.data['result'] === 'success') {
+              ElMessage.success('上传成功')
+            }else {
+              ElMessage.error('上传失败')
             }
           }
       ).catch(
@@ -165,10 +190,20 @@ export default {
   <div style="display: flex; flex-direction: column; align-items: center;">
     <span style="color: blue;">{{ Object.keys(unit_data).length }} units loaded</span>
     <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
-    <span style="color: blue;">Other Info here</span>
     <div style="padding: 4px;">
       <el-button type="success" plain @click="noheader_upload">[debug](无头)上传队伍</el-button>
       <el-button type="warning" disabled plain>[debug]检查队伍存在性</el-button>
+    </div>
+    <div id="calculator-updater" style="display: flex; flex-direction: column; margin: 16px;">
+      <div style="width: 480px;">
+        <span style="margin: 0 8px;">标题</span>
+        <el-input v-model="party_title" :style="{width: is_login ? '300px' : '200px'}" style="margin: 0 8px;" :maxlength="20" show-word-limit placeholder="title"/>
+        <el-button style="margin: 0 8px;" :disabled="!is_login" @click="upload">
+          上传队伍
+          <p v-if="!is_login" style="color: red;">&lt;需要登录&gt;</p>
+        </el-button>
+
+      </div>
     </div>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center;">
 <!--      <div class="party-editor">-->

@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
+import VueCookies from 'vue-cookies'
 import 'element-plus/dist/index.css'
 import App from './App.vue'
 
@@ -59,5 +60,6 @@ Array.prototype.remove=function(dx)
 }
 const app = createApp(App)
 app.use(router)
+app.use(VueCookies)
 app.use(ElementPlus, {locale: zhCn})
 app.mount('#app')
