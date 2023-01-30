@@ -26,14 +26,11 @@ const get_calendar = function () {
 <template>
   <el-button @click="get_calendar">get日历</el-button>
   <div>
-    <p># 千里眼(事件表)会往后放一放（前端与数据困难） #</p>
+    <p style="color: orangered; font-weight: bold; font-size: 16px;"># 千里眼(事件表)数据制作中！ #</p>
     <p># 编队计算模块会在能力数据解析完毕后放出 #</p>
-    <p># 茶盘气数据格式接近完善，但仍需优化搜索和api整理 #</p>
+    <p># 茶盘气正在适配数据格式 #</p>
     <p># 一图预览页正在前后端相互搬东西（旧版暂时预览用: 域名:端口/api/summary_table/一图流ID/，比如:<a href="/api/summary_table/default/" target="_blank">/api/summary_table/default/</a>） #</p>
-    <p style="color: green;"># TODO 正在优先完善一图流编辑器（先用表内的new来编辑，不新建） #</p>
-    <p># 素材包能放嘛（指接近到干炸里脊的程度（ #</p>
-    <p># 账号还没开始写😫 #</p>
-    <p># 资源管理先不开，怕这个ip泄露出去被乱改寄了 #</p>
+    <p># 一图流编辑器（先用表内的new来编辑，新建更名@我） #</p>
     <p># 关于里的相关站有其他的可以说一下（话说NGA的域名之后会主要留哪个） #</p>
     <p># 8说了，写完去给苏打饼干打孔 #</p>
   </div>

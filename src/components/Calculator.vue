@@ -8,7 +8,8 @@ import {
   unit_data,
   armament_data,
   getArmamentPicUrl,
-  getArmamentCorePicUrl
+  getArmamentCorePicUrl,
+  getElementCss
 } from "@/components/party_manager";
 import PartyCard from "@/components/party/PartyCardAnise.vue";
 import '@/assets/summary_table.css'
@@ -44,6 +45,7 @@ export default {
     return {
       sel_arma_list: sel_arma_list,
       calculate_party: calculate_party,
+      party_replacements: party_replacements,
       party_title: party_title,
       calculate_party_output: calculate_party_output
     }
@@ -188,9 +190,7 @@ export default {
 
 <template>
   <div style="display: flex; flex-direction: column; align-items: center;">
-    <span style="color: blue;">{{ Object.keys(unit_data).length }} units loaded</span>
-    <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
-    <div style="padding: 4px;">
+    <div v-if="is_login" style="padding: 4px;">
       <el-button type="success" plain @click="noheader_upload">[debug](无头)上传队伍</el-button>
       <el-button type="warning" disabled plain>[debug]检查队伍存在性</el-button>
     </div>
@@ -219,7 +219,7 @@ export default {
         <div class="union">
           <div class="wfo-slot main"
                :class="[is_select('party-union1-main') ? 'selected' : '',
-               unit_data.hasOwnProperty(calculate_party['union1'][0]) ? 'ele-' + unit_data[calculate_party['union1'][0]]['Element'].toLowerCase() : '']"
+               unit_data.hasOwnProperty(calculate_party['union1'][0]) ? 'ele-' + getElementCss(unit_data[calculate_party['union1'][0]]['element']) : '']"
                @click="select('party-union1-main')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union1'][0]])" alt=""/>
             <div style="text-align: center;">队长</div>
@@ -232,7 +232,7 @@ export default {
           </div>
           <div class="wfo-slot unison"
                :class="[is_select('party-union1-unison') ? 'selected' : '',
-               unit_data.hasOwnProperty(calculate_party['union1'][1]) ? 'ele-' + unit_data[calculate_party['union1'][1]]['Element'].toLowerCase() : '']"
+               unit_data.hasOwnProperty(calculate_party['union1'][1]) ? 'ele-' + getElementCss(unit_data[calculate_party['union1'][1]]['element']) : '']"
                @click="select('party-union1-unison')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union1'][1]])" alt=""/>
             <div style="text-align: center;">辅助角色</div>
@@ -247,7 +247,7 @@ export default {
         <div class="union">
           <div class="wfo-slot main"
                :class="[is_select('party-union2-main') ? 'selected' : '',
-               unit_data.hasOwnProperty(calculate_party['union2'][0]) ? 'ele-' + unit_data[calculate_party['union2'][0]]['Element'].toLowerCase() : '']"
+               unit_data.hasOwnProperty(calculate_party['union2'][0]) ? 'ele-' + getElementCss(unit_data[calculate_party['union2'][0]]['element']) : '']"
                @click="select('party-union2-main')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union2'][0]])" alt=""/>
             <div style="text-align: center;">主要角色</div>
@@ -260,7 +260,7 @@ export default {
           </div>
           <div class="wfo-slot unison"
                :class="[is_select('party-union2-unison') ? 'selected' : '',
-               unit_data.hasOwnProperty(calculate_party['union2'][1]) ? 'ele-' + unit_data[calculate_party['union2'][1]]['Element'].toLowerCase() : '']"
+               unit_data.hasOwnProperty(calculate_party['union2'][1]) ? 'ele-' + getElementCss(unit_data[calculate_party['union2'][1]]['element']) : '']"
                @click="select('party-union2-unison')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union2'][1]])" alt=""/>
             <div style="text-align: center;">辅助角色</div>
@@ -275,7 +275,7 @@ export default {
         <div class="union">
           <div class="wfo-slot main"
                :class="[is_select('party-union3-main') ? 'selected' : '',
-               unit_data.hasOwnProperty(calculate_party['union3'][0]) ? 'ele-' + unit_data[calculate_party['union3'][0]]['Element'].toLowerCase() : '']"
+               unit_data.hasOwnProperty(calculate_party['union3'][0]) ? 'ele-' + getElementCss(unit_data[calculate_party['union3'][0]]['element']) : '']"
                @click="select('party-union3-main')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union3'][0]])" alt=""/>
             <div style="text-align: center;">主要角色</div>
@@ -288,7 +288,7 @@ export default {
           </div>
           <div class="wfo-slot unison"
                :class="[is_select('party-union3-unison') ? 'selected' : '',
-               unit_data.hasOwnProperty(calculate_party['union3'][1]) ? 'ele-' + unit_data[calculate_party['union3'][1]]['Element'].toLowerCase() : '']"
+               unit_data.hasOwnProperty(calculate_party['union3'][1]) ? 'ele-' + getElementCss(unit_data[calculate_party['union3'][1]]['element']) : '']"
                @click="select('party-union3-unison')">
             <img :src="getUnitPicUrl(unit_data[calculate_party['union3'][1]])" alt=""/>
             <div style="text-align: center;">辅助角色</div>
@@ -303,7 +303,15 @@ export default {
       </div>
       <div id="calculator-output" style="display: flex; flex-direction: column; margin: 16px;">
         <div>
-          <el-button @click="calculate_party_output = JSON.stringify({party:calculate_party})">输出</el-button>
+          <el-button @click="calculate_party_output =
+          JSON.stringify(
+            {
+              party:calculate_party,
+              params:{
+                replacements: party_replacements
+              }
+            }
+          )">输出</el-button>
           <el-button @click="calculate_party = JSON.parse(calculate_party_output).party">读取</el-button>
           <el-button type="danger" @click="calculate_party = {'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]}">重置</el-button>
         </div>
@@ -331,12 +339,12 @@ export default {
       <el-button @click="sel_arma_list = !sel_arma_list">{{ sel_arma_list ? '角色' : '装备'}}</el-button>
       <el-button @click="view_filter = obj => {return true}">All</el-button>
       <el-button @click="view_filter = obj => {return obj['Element'] === 'None'}" size="small"><el-image src="/assets/worldflipper/icon/none.png" style="width: 16px;"/></el-button>
-      <el-button @click="view_filter = obj => {return obj['Element'] === 'Fire'}" size="small"><el-image src="/assets/worldflipper/icon/fire.png" style="width: 16px;"/></el-button>
-      <el-button @click="view_filter = obj => {return obj['Element'] === 'Water'}" size="small"><el-image src="/assets/worldflipper/icon/water.png" style="width: 16px;"/></el-button>
-      <el-button @click="view_filter = obj => {return obj['Element'] === 'Thunder'}" size="small"><el-image src="/assets/worldflipper/icon/thunder.png" style="width: 16px;"/></el-button>
-      <el-button @click="view_filter = obj => {return obj['Element'] === 'Wind'}" size="small"><el-image src="/assets/worldflipper/icon/wind.png" style="width: 16px;"/></el-button>
-      <el-button @click="view_filter = obj => {return obj['Element'] === 'Light'}" size="small"><el-image src="/assets/worldflipper/icon/light.png" style="width: 16px;"/></el-button>
-      <el-button @click="view_filter = obj => {return obj['Element'] === 'Dark'}" size="small"><el-image src="/assets/worldflipper/icon/dark.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Fire' || obj['element'] === 0}" size="small"><el-image src="/assets/worldflipper/icon/fire.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Water' || obj['element'] === 1}" size="small"><el-image src="/assets/worldflipper/icon/water.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Thunder' || obj['element'] === 2}" size="small"><el-image src="/assets/worldflipper/icon/thunder.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Wind' || obj['element'] === 3}" size="small"><el-image src="/assets/worldflipper/icon/wind.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Light' || obj['element'] === 4}" size="small"><el-image src="/assets/worldflipper/icon/light.png" style="width: 16px;"/></el-button>
+      <el-button @click="view_filter = obj => {return obj['Element'] === 'Dark' || obj['element'] === 5}" size="small"><el-image src="/assets/worldflipper/icon/dark.png" style="width: 16px;"/></el-button>
     </div>
     <el-scrollbar
         style="
@@ -373,7 +381,7 @@ export default {
         <div
             v-for="(unit, i) in Object.fromEntries(Object.entries(unit_data).filter((v, k) => {return view_filter(v[1])}))"
             class="wfo-obj"
-            :class="[is_select('object-unit-' + i) ? 'selected' : '', 'ele-' + unit['Element'].toLowerCase()]"
+            :class="[is_select('object-unit-' + i) ? 'selected' : '', 'ele-' + getElementCss(unit['element'])]"
             :id="'wfo-u' + i"
             @click="select('object-unit-' + i)"
         >
@@ -445,7 +453,9 @@ export default {
 
 
 <style scoped>
-
+.party:deep(img) {
+  display: block;
+}
 .wfo-list{
   display: flex;
   flex-wrap: wrap;

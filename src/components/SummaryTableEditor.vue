@@ -3,6 +3,7 @@
   <div style="box-shadow: black 0 0 4px; position: fixed; top: 80px; width: 70%; padding: 16px; z-index: 20; background: white;">
     <el-form>
       <span><el-button @click="open_alert">注意事项</el-button></span>
+      {{ table_data.hasOwnProperty('aa') }}
       <span v-if="loaded_table_id"> 预览页：<a :href="'/api/summary_table/' + loaded_table_id" target="_blank">/api/summary_table/{{ loaded_table_id }}</a></span>
 
       <el-form-item label="一图ID">
@@ -20,10 +21,13 @@
     </el-form>
     <div>
 <!--      <el-button type="primary" @click="">新建</el-button>-->
-      <el-button type="primary" @click="save_table" :disabled="Boolean(loaded_table_id && table_data.length)">保存</el-button>
+      <el-button type="primary" @click="save_table" :disabled="!Boolean(loaded_table_id && table_data.hasOwnProperty('property'))">保存</el-button>
+<!--      {{ loaded_table_id }}-->
+<!--      {{ table_data.hasOwnProperty('property') }}-->
     </div>
   </div>
   <div style="margin-top: 180px;">
+<!--    <SummaryTableEditorBodyTemp/>-->
     <SummaryTableEditorBody/>
   </div>
 </template>
@@ -37,23 +41,7 @@ import axios from "axios";
 import {save_table, loaded_table_id, table_data, table_change, type_change} from "@/components/summary_table_editor";
 import SummaryTableEditorBody from "@/components/SummaryTableEditorBody.vue";
 import {ElMessageBox} from "element-plus";
-// const table_data = ref({})
-// const main_color = ref('#ffffff')
-// const sub_color = ref('#000000')
-// const table_data = ref({})
-// let table_data_ = ref({})
-
-// function table_change(st_id){
-//   axios.get('api/summary_table/' + st_id + '/data').then(r => {
-//     this.table_data = r.data
-//   })
-//   console.log(st_id)
-// }
-//
-// function type_change(e, e1){
-//   console.log(this.table_data.content[e[0]]["data"]["elements"][e[1]])
-//   console.log(e1)
-// }
+import SummaryTableEditorBodyTemp from "@/components/SummaryTableEditorBodyTemp.vue";
 const table_id = ref('')
 if (loaded_table_id && !table_id) {
   table_id.value = loaded_table_id.value
@@ -106,7 +94,7 @@ export default {
       )
     }
   },
-  components: {SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
+  components: {SummaryTableEditorBodyTemp, SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
   beforeRouteLeave() {
     // console.log('seuhioghouie')
   },
@@ -115,17 +103,7 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('keydown', save_quick)
-  },
-  // handleEvent(event) {
-  //   console.log(event)
-  //   if (event.keyCode === 83 && event.ctrlKey) {
-  //       console.log('ctrl + s')
-  //       event.preventDefault()
-  //       event.returnValue = false
-  //       save_table()
-  //       if (event.ctrlKey && event.code === 'KeyS') return false
-  //   }
-  // }
+  }
 }
 </script>
 

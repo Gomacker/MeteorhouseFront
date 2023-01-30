@@ -1,3 +1,11 @@
+<script setup>
+// import {table_data} from "@/components/summary_table_editor";
+
+// defineProps({
+//   table_data: Object
+// })
+// console.log(table_data)
+</script>
 <template>
   <div class="editor-body" v-if="table_data.hasOwnProperty('property')">
     <el-row :gutter="20" style="justify-content: center;">

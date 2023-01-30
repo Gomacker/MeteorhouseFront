@@ -13,6 +13,13 @@ class Party {
     }
 }
 
+export class Unit {
+    constructor(props) {
+    }
+
+}
+
+
 export class PartyRelease {
     constructor(data) {
         this.party = new Party(data.party)
@@ -59,8 +66,8 @@ axios.post(
 
 export function getUnitPicUrl(unit) {
     if (unit &&
-        Object.hasOwn(unit, 'WfExId')) {
-        return '/assets/worldflipper/unit/square212x/base/' + unit['WfExId'] + '.png'
+        Object.hasOwn(unit, 'extraction_id')) {
+        return '/assets/worldflipper/unit/square212x/base/' + unit['extraction_id'] + '.png'
     }else {
         return '/assets/worldflipper/unit/blank.png'
     }
@@ -84,4 +91,14 @@ export function getArmamentCorePicUrl(armament) {
     }else {
         return '/assets/worldflipper/unit/blank.png'
     }
+}
+
+export function getElementCss(id_) {
+    if(id_ === 0) return 'fire'
+    else if(id_ === 1) return 'water'
+    else if(id_ === 2) return 'thunder'
+    else if(id_ === 3) return 'wind'
+    else if(id_ === 4) return 'light'
+    else if(id_ === 5) return 'dark'
+    else return 'none'
 }

@@ -6,7 +6,7 @@ import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, U
 
 import {ref} from "vue";
 import axios from "axios";
-import {is_login, user_name, user_avatar} from '@/components/user'
+import {is_login, user_name, user_avatar, permissions} from '@/components/user'
 
 export default {
   data() {
@@ -14,7 +14,8 @@ export default {
       sidebar_hidden: false,
       is_login: is_login,
       user_name: user_name,
-      user_avatar: user_avatar
+      user_avatar: user_avatar,
+      permissions: permissions
     }
   },
   mounted() {
@@ -25,8 +26,12 @@ export default {
       if (is_login.value) {
         console.log(r.data)
         user_name.value = r.data['username']
+        permissions.value.summary_table_editor = true
+        permissions.value.resource_manager = true
       }else {
         console.log('未登录')
+        permissions.value.summary_table_editor = false
+        permissions.value.resource_manager = false
       }
     }).catch(
         () => {
@@ -43,6 +48,7 @@ export default {
         is_login.value = r.data['is_login']
         user_name.value = ''
         user_avatar.value = ''
+        this.$router.go(0)
       }).catch(
           () => {
             console.log('连接失败')
@@ -106,19 +112,23 @@ export default {
                 <el-icon><Management /></el-icon>
                 一图流
               </el-menu-item>
-              <el-menu-item index="menu-summary-editor" @click="$router.push('/summary_table_editor')">
+              <el-menu-item v-if="permissions.summary_table_editor" index="menu-summary-editor" @click="$router.push('/summary_table_editor')">
                 <el-icon><Management /></el-icon>
                 一图流编辑器(Alpha)
               </el-menu-item>
-              <el-menu-item disabled index="">
-                <el-icon><PictureFilled /></el-icon>
-                素材包
-              </el-menu-item>
-              <el-menu-item disabled index="">
-                <el-icon><UserFilled /></el-icon>
-                我的
-              </el-menu-item>
-              <el-menu-item index="menu-resource-manager" @click="$router.push('/resource_manager')">
+<!--              <el-menu-item disabled index="">-->
+<!--                <el-icon><PictureFilled /></el-icon>-->
+<!--                素材包-->
+<!--              </el-menu-item>-->
+<!--              <el-menu-item disabled index="">-->
+<!--                <el-icon><UserFilled /></el-icon>-->
+<!--                我的-->
+<!--              </el-menu-item>-->
+<!--              <el-menu-item disabled index="">-->
+<!--                <el-icon><UserFilled /></el-icon>-->
+<!--                Bot管理-->
+<!--              </el-menu-item>-->
+              <el-menu-item v-if="permissions.resource_manager" index="menu-resource-manager" @click="$router.push('/resource_manager')">
                 <el-icon><List /></el-icon>
                 资源管理
               </el-menu-item>
@@ -131,6 +141,10 @@ export default {
         </el-aside>
         <el-scrollbar style="position: absolute; width: 100%;" view-style="width: 100%; height: 100%;">
           <el-main :style="{'margin-left': (sidebar_hidden ? 0 : 200 + 'px')}" style="transition: margin-left 0.4s ease;">
+
+<!--            <div style="position: fixed; display: flex; bottom: -500px; justify-content: center;">-->
+            <img class="bg-magic-circle" src="@/assets/bg_magic_circle.png" alt="" @dragstart.prevent/>
+<!--            </div>-->
 
 <!--          <el-scrollbar>-->
             <router-view></router-view>
@@ -148,11 +162,13 @@ export default {
           bottom: 0;
           width: 100%;
           z-index: 10;
+          /*color: white;*/
+          padding: 2px;
         "
       >
         Author: @Kranca / Gomacker
         <a href="https://space.bilibili.com/11466987" target="_blank">
-          <img style="display: inline-block; width: 16px; vertical-align: middle;" src="https://www.bilibili.com/favicon.ico" alt="">
+          <img style="display: inline-block; width: 16px; vertical-align: bottom;" src="https://www.bilibili.com/favicon.ico" alt="">
         </a>
       </el-footer>
     </el-container>
@@ -172,6 +188,31 @@ export default {
 
 <style scoped>
 
+.bg-magic-circle {
+  /*position: absolute;*/
+  position: fixed;
+  /*display: flex;*/
+  /*bottom: -35%;*/
+  /*justify-content: center;*/
+  z-index: 0;
+  animation: rotation 16s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 6%));
+  /*width: 100%;*/
+  /*height: 100%;*/
+  user-select: none;
+  left: -375px;
+  /*left: -200px;*/
+  /*right: 30vw;*/
+  bottom: -375px;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 main {
   height: 100%;
   background: #f8f8f8;

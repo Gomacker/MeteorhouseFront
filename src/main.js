@@ -22,6 +22,8 @@ const FutureVision = () => import("@/components/FutureVision.vue")
 const About = () => import("@/components/About.vue")
 const Login = () => import("@/components/Login.vue")
 const ResourceManager = () => import("@/components/ResourceManager.vue")
+const ResourceManagerUnit = () => import("@/components/resource_manager/ResourceManagerUnit.vue")
+const ResourceManagerEvent = () => import("@/components/resource_manager/ResourceManagerEvent.vue")
 import {createRouter, createWebHistory} from "vue-router";
 // import VueRouter from "vue-router";
 
@@ -36,6 +38,8 @@ const routes = [
     {path: '/about', component: About},
     {path: '/login', component: Login},
     {path: '/resource_manager', component: ResourceManager},
+    {path: '/resource_manager/unit', component: ResourceManagerUnit},
+    {path: '/resource_manager/event', component: ResourceManagerEvent},
 ]
 
 const router = createRouter({
