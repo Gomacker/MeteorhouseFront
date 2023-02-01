@@ -6,8 +6,6 @@ defineProps({
 </script>
 <template>
   <div style="display: flex; flex-direction: column; align-items: center;">
-    <span style="color: blue;">{{ Object.keys(unit_data).length }} units loaded</span>
-    <span style="color: blue;">{{ Object.keys(armament_data).length }} armaments loaded</span>
     <el-card class="party-card-anise" style="width: fit-content; background: rgb(0, 255, 0);" body-style="display: flex; padding: 0;">
   <!--    <div style="flex: 1;">-->
   <!--      <el-image style="width: 82px;" :src="getUnitPicUrl(unit_data[party['union1'][0]])"></el-image>-->

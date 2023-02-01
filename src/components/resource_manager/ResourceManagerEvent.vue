@@ -1,9 +1,9 @@
 <script setup>
 // import {getUnitPicUrl, unit_data} from '@/components/party_manager'
-import {add_event, event_data, get_event_data} from '@/components/resource_manager'
+import {add_event, change_event, del_event, event_data, get_event_data} from '@/components/resource_manager'
 import moment from 'moment/moment'
 import EventCard from "@/components/event/EventCard.vue";
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 
 const form = reactive({
   title: '',
@@ -15,6 +15,21 @@ const form = reactive({
   origin_url: '',
   notes: '',
 })
+
+function clear_form() {
+  Object.assign(form, {
+    title: '',
+    description: '',
+    type: '',
+    time_start: 0,
+    time_end: 0,
+    image_url: '',
+    origin_url: '',
+    notes: '',
+  })
+}
+
+const on_edit = ref('')
 
 const event_type = new Map([
     ['活动 (无限池)', 'event_box_gacha'],
@@ -38,7 +53,10 @@ onMounted(() => {
 <template>
   <div style="display: flex; flex-direction: column; height: 100%;">
     <div style="position: absolute; height: 0; top: 0; right: 0; z-index: 10;">
-      <div style="background-color: lightgrey; padding: 16px 16px 1px; border-radius: 8px; box-shadow: var(--el-box-shadow);">
+      <div
+          style="background-color: lightgrey; padding: 16px 16px 1px; border-radius: 8px; box-shadow: var(--el-box-shadow);"
+          :style="{'border': on_edit ? '#00bd7e 2px solid' : 'transparent 2px solid'}"
+      >
       <el-form :model="form" style="max-width: 480px;" label-width="80px">
         <el-form-item label="标题">
           <el-input v-model="form.title"/>
@@ -97,14 +115,28 @@ onMounted(() => {
           <el-input v-model="form.notes"/>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="add_event(form)">添加</el-button>
+          <el-button type="primary" @click="() => {
+            if (!on_edit) {
+              add_event(form);
+              clear_form();
+            }else {
+              change_event(on_edit, form);
+              on_edit = '';
+              clear_form();
+            }
+          }">{{ on_edit ? '修改' : '添加' }}</el-button>
         </el-form-item>
       </el-form>
       </div>
     </div>
 <!--    {{ form }}-->
     <div style="height: 100%; padding-top: 430px; /* background-color: red; */">
-      <el-table :data="event_data.events" height="100%" style="background-color: rgba(255, 255, 255, 0.55);">
+<!--      <div v-for="v in event_data.hasOwnProperty('events') ? Object.entries(event_data.events) : []">-->
+<!--      <div v-for="v in event_data.hasOwnProperty('events') ? Object.entries(event_data.events).map(value => Object.assign({id: value[0]}, value[1])) : []">-->
+<!--        {{ v }}-->
+<!--      </div>-->
+      <el-table :data="event_data.hasOwnProperty('events') ? Object.entries(event_data.events).map(value => Object.assign({id: value[0]}, value[1])) : []" height="100%" style="background-color: rgba(255, 255, 255, 0.55);">
+<!--      <el-table :data="[]" height="100%" style="background-color: rgba(255, 255, 255, 0.55);">-->
         <el-table-column type="expand">
           <template #default="props">
             <div style="padding: 16px;">
@@ -114,6 +146,7 @@ onMounted(() => {
             </div>
           </template>
         </el-table-column>
+        <el-table-column prop="id" label="ID"/>
         <el-table-column prop="title" label="标题"/>
         <el-table-column prop="description" label="描述"/>
         <el-table-column prop="type" label="类型"/>
@@ -136,6 +169,28 @@ onMounted(() => {
 <!--        <el-table-column prop="image_url" label="图片地址"/>-->
 <!--        <el-table-column prop="origin_url" label="源地址"/>-->
         <el-table-column prop="notes" label="备注"/>
+        <el-table-column fixed="right" label="Operations" width="140">
+          <template #default="scope">
+            <el-button type="primary" size="small" @click="() => {
+              if (on_edit === scope.row.id) {
+                clear_form();
+                on_edit = '';
+              } else {
+                Object.assign(form, {
+                  ...event_data.events[scope.row.id],
+                  time_start: event_data.events[scope.row.id].time_start * 1000,
+                  time_end: event_data.events[scope.row.id].time_end * 1000,
+                });
+                on_edit = scope.row.id;
+              }
+            }">编辑</el-button>
+            <el-popconfirm title="确认删除?" @confirm="del_event(scope.row.id)">
+              <template #reference>
+                <el-button type="danger" size="small">删除</el-button>
+              </template>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
