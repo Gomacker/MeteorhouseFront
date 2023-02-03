@@ -456,6 +456,9 @@ export default {
 .party:deep(img) {
   display: block;
 }
+.party:hover{
+  box-shadow: 0 0 8px 0 black;
+}
 .wfo-list{
   display: flex;
   flex-wrap: wrap;

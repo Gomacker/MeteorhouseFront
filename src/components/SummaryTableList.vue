@@ -14,14 +14,15 @@ export default {
 
 <template>
   <div>
-
+    <router-link to="/summary_table/default">
+      Default
+    </router-link>
     <el-card></el-card>
     <el-card></el-card>
     <el-card></el-card>
     <el-card></el-card>
     <el-card></el-card>
     <el-card></el-card>
-    <HelloWorld :msg="name"></HelloWorld>
   </div>
 <!--  <SummaryTable></SummaryTable>-->
 </template>

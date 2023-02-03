@@ -94,15 +94,15 @@
     font-size: 13px;
     color: black;
 }
-.party:hover{
-    box-shadow: 0 0 8px 0 black;
-}
 .union {
     width: 150px;
     height: 195px;
     margin: 5px;
     position: relative;
     /* background-color: crimson; */
+}
+.union img {
+    display: block;
 }
 .wfo{
     border: 2px solid white;
