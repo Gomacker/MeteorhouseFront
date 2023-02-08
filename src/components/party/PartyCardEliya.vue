@@ -9,12 +9,17 @@ import {
 } from "@/components/party_manager";
 import '@/assets/summary_table.css'
 
-defineProps({
+const props = defineProps({
   party: Object
 })
 
+if (props.party.hasOwnProperty('replacements')) {
+
+}
+
 </script>
 <template>
+<!--{{ party['params'] }}-->
 <div class="party" style="display: flex;">
   <div class="union">
     <div class="wfo-slot main"

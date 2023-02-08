@@ -3,6 +3,7 @@ import {onMounted, onUnmounted, ref} from "vue";
 import axios from "axios";
 import moment from 'moment';
 import {getUnitPicUrl, unit_data} from "@/components/party_manager";
+import UnitPic from "@/components/party/components/UnitPic.vue";
 
 
 const cal_data = ref([])
@@ -19,26 +20,26 @@ const get_calendar = function () {
     })
   })
 }
-let count = 3
-let times = null
-const unit_id = ref(1)
-onMounted(() => {
-  times = setInterval(() => {
-    count--; //递减
-    console.log(count)
-    if (count <= 0) {
-      // <=0 变成获取按钮
-      console.log(unit_data.value[unit_id.value].name[0])
-      unit_id.value++
-      count = 3
-    }
-  }, 1000); //1000毫秒后执行
-})
-
-onUnmounted(() => {
-
-  clearInterval(times);
-})
+// let count = 3
+// let times = null
+// const unit_index = ref(1)
+// onMounted(() => {
+//   times = setInterval(() => {
+//     count--; //递减
+//     console.log(count)
+//     if (count <= 0) {
+//       // <=0 变成获取按钮
+//       console.log(unit_data.value[unit_index.value].name[0])
+//       unit_index.value++
+//       count = 3
+//     }
+//   }, 1000); //1000毫秒后执行
+// })
+//
+// onUnmounted(() => {
+//
+//   clearInterval(times);
+// })
 </script>
 
 <script>
@@ -54,10 +55,11 @@ onUnmounted(() => {
     <p># 一图流编辑器（先用表内的new来编辑，新建更名@我） #</p>
     <p># 关于里的相关站有其他的可以说一下（话说NGA的域名之后会主要留哪个） #</p>
     <p># 8说了，写完去给苏打饼干打孔 #</p>
-    <div>
-      <img class="test-img" :src="getUnitPicUrl(unit_data[unit_id])" alt=""/>
-      {{ getUnitPicUrl(unit_data[unit_id]) }}
-    </div>
+<!--    <div>-->
+<!--      <img class="test-img" :src="getUnitPicUrl(unit_data[unit_index])" alt=""/>-->
+<!--      {{ getUnitPicUrl(unit_data[unit_index]) }}-->
+<!--    </div>-->
+<!--    <UnitPic :units="[1,14,55]"/>-->
   </div>
   <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
     <el-card v-for="cal in cal_data" body-style="padding: 0" style="width: 200px; margin: 8px;">

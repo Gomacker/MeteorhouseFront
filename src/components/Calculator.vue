@@ -137,27 +137,6 @@ export default {
     is_select(i){
       return selected.value === i
     },
-    noheader_upload() {
-      axios.post(
-          '/api/update_party/',
-          {
-            party: calculate_party.value
-          }
-      ).then(
-          r => {
-            console.log(r.data)
-            if (r.data['result'] === 'success') {
-              ElMessage.success('上传成功')
-            }else {
-              ElMessage.error('上传失败')
-            }
-          }
-      ).catch(
-          () => {
-            ElMessage.error('上传失败(连接失败)')
-          }
-      )
-    },
     upload() {
       axios.post(
           '/api/update_party/',
@@ -191,11 +170,11 @@ export default {
 <template>
   <div style="display: flex; flex-direction: column; align-items: center;">
     <div v-if="is_login" style="padding: 4px;">
-      <el-button type="success" plain @click="noheader_upload">[debug](无头)上传队伍</el-button>
-      <el-button type="warning" disabled plain>[debug]检查队伍存在性</el-button>
+<!--      <el-button type="success" plain @click="noheader_upload">[debug](无头)上传队伍</el-button>-->
+<!--      <el-button type="warning" disabled plain>[debug]检查队伍存在性</el-button>-->
     </div>
     <div id="calculator-updater" style="display: flex; flex-direction: column; margin: 16px;">
-      <div style="width: 480px;">
+      <div v-if="is_login" style="width: 480px;">
         <span style="margin: 0 8px;">标题</span>
         <el-input v-model="party_title" :style="{width: is_login ? '300px' : '200px'}" style="margin: 0 8px;" :maxlength="20" show-word-limit placeholder="title"/>
         <el-button style="margin: 0 8px;" :disabled="!is_login" @click="upload">
@@ -307,9 +286,9 @@ export default {
           JSON.stringify(
             {
               party:calculate_party,
-              params:{
-                replacements: party_replacements
-              }
+              // params:{
+              //   replacements: party_replacements
+              // }
             }
           )">输出</el-button>
           <el-button @click="calculate_party = JSON.parse(calculate_party_output).party">读取</el-button>

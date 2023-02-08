@@ -14,9 +14,13 @@ class Party {
 }
 
 export class Unit {
-    constructor(props) {
+    constructor(id_) {
+        this.ud = unit_data[id_]
     }
+    res_path(res_group='square212x/base/', awaken=false) {
 
+        return '/assets/worldflipper/unit/' + res_group + '.png'
+    }
 }
 
 

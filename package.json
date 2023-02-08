@@ -12,6 +12,7 @@
     "@popperjs/core": "^2.11.6",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
+    "clipboard": "^2.0.11",
     "element-plus": "^2.2.27",
     "moment": "^2.29.4",
     "vue": "^3.2.45",
