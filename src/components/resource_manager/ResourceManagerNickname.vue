@@ -1,22 +1,80 @@
 <script setup>
 // import {getArmamentPicUrl, armament_data} from '@/components/party_manager'
 
+import UnitPicInfo from "@/components/party/components/UnitPicInfo.vue";
+import {unit_data} from "@/components/party_manager";
 </script>
 <template>
   <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
 <!--    {{ JSON.stringify(nickname_data, null, 2).replaceAll('\n', '<\p><\/p>').replaceAll(' ', '&nbsp;') }}-->
-    <div style="display: flex; flex-direction: column;">
-      <div v-for="(u, id_) in nickname_data">
-        {{ id_ }}: {{ u }}
+    <div
+        style="
+          position: sticky;
+          top: 0;
+          z-index: 20;
+          background-color: #fff;
+          width: 100%;
+          padding: 8px;
+          box-shadow: 0 0 4px black;
+        "
+    >
+      <el-button type="primary">保存</el-button>
+    </div>
+    <div
+        style="
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: flex-start;
+          justify-content: center;
+          padding: 8px;
+        "
+    >
+      <div
+          v-for="(nicknames, id_) in nickname_data"
+          style="
+            background-color: pink;
+            box-shadow: 0 0 8px pink;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 4px;
+            padding: 8px;
+            border-radius: 8px;
+          "
+      >
+        <UnitPicInfo :unit_data="unit_data[id_]"/>
+        <div style="padding: 4px; width: 160px; display: flex; flex-direction: column;">
+<!--          {{nicknames.length - 1}}-->
+          <div
+              v-for="index in Object.keys(nicknames)"
+              style="margin: 2px; display: flex; align-items: center;"
+          >
+            <el-input
+                v-model="nicknames[index]"
+            />
+            <el-button
+                type="danger"
+                size="small"
+                style="margin: 2px;"
+                @click="nicknames.splice(index, 1)"
+            >x</el-button>
+          </div>
+          <div>
+            <el-button
+                size="small"
+                type="primary"
+                plain
+                round
+                style="width: 100%; font-weight: bold; font-size: 18px;"
+                @click="nicknames.push('')"
+            >
+              +
+            </el-button>
+          </div>
+        </div>
       </div>
     </div>
-<!--    <el-row v-for="unit in unit_data" style="border: red solid 1px; width: 360px;">-->
-<!--    <el-card v-for="armament in armament_data" style="border: red solid 1px; margin: 6px; width: 360px;">-->
-<!--        <img :src="getArmamentPicUrl(armament)" style="width: 82px; height: 82px;" loading="lazy" alt=""/>-->
-<!--        {{ armament }}-->
-<!--    </el-card>-->
-<!--      </el-col>-->
-<!--    </el-row>-->
   </div>
 </template>
 

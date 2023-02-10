@@ -134,6 +134,10 @@ export default {
                 <el-icon><List /></el-icon>
                 资源管理
               </el-menu-item>
+              <el-menu-item v-if="permissions.resource_manager && user_name === 'kranca'" index="test-place" @click="$router.push('/test_place')">
+                <el-icon><List /></el-icon>
+                <span style="color: lightseagreen;">（测试用）</span>
+              </el-menu-item>
               <el-menu-item index="about" @click="$router.push('/about')">
                 <el-icon><InfoFilled /></el-icon>
                 关于

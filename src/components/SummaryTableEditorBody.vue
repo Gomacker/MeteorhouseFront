@@ -83,9 +83,13 @@
                     <el-select v-model="col.type" filterable @change="type_change([index, j], this)">
                       <el-option value="TextRegion"/>
                       <el-option value="Party"/>
+                      <el-option value="Origin"/>
                     </el-select>
                   </el-form-item>
                   <el-form-item v-if="col.type === 'TextRegion'" label="内容">
+                    <el-input type="textarea" :rows="4" v-model="col.data.content"/>
+                  </el-form-item>
+                  <el-form-item v-if="col.type === 'Origin'" label="内容(源)">
                     <el-input type="textarea" :rows="4" v-model="col.data.content"/>
                   </el-form-item>
                   <span v-if="col.type === 'TextRegion'">
@@ -162,7 +166,8 @@ export default {
 <style scoped>
 .editor-body {
   max-width: 1036px;
-  margin: auto;
+
+  /*margin: auto;*/
 }
 .editor-body:deep(div){
   margin: 2px 0;

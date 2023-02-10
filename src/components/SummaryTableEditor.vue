@@ -1,9 +1,9 @@
 
 <template>
-  <div style="box-shadow: black 0 0 4px; position: fixed; top: 80px; width: 70%; padding: 16px; z-index: 20; background: white;">
+<!--  <div style="box-shadow: black 0 0 4px; position: fixed; top: 80px; width: 70%; padding: 16px; z-index: 20; background: white;">-->
+  <div style="box-shadow: black 0 0 4px; position: sticky; width: 100%; top: 0; padding: 16px; z-index: 20; background: white;">
     <el-form>
       <span><el-button @click="open_alert">注意事项</el-button></span>
-      {{ table_data.hasOwnProperty('aa') }}
       <span v-if="loaded_table_id"> 预览页：<a :href="'/api/summary_table/' + loaded_table_id" target="_blank">/api/summary_table/{{ loaded_table_id }}</a></span>
 
       <el-form-item label="一图ID">
@@ -26,9 +26,13 @@
 <!--      {{ table_data.hasOwnProperty('property') }}-->
     </div>
   </div>
-  <div style="margin-top: 180px;">
+  <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; margin-top: 16px;">
 <!--    <SummaryTableEditorBodyTemp/>-->
+<!--    {{table_data}}-->
     <SummaryTableEditorBody/>
+    <div style="transform: scale(1)">
+      <SummaryTable v-if="table_data" :table_data="table_data"/>
+    </div>
   </div>
 </template>
 
@@ -42,6 +46,7 @@ import {save_table, loaded_table_id, table_data, table_change, type_change} from
 import SummaryTableEditorBody from "@/components/SummaryTableEditorBody.vue";
 import {ElMessageBox} from "element-plus";
 import SummaryTableEditorBodyTemp from "@/components/SummaryTableEditorBodyTemp.vue";
+import SummaryTable from "@/components/SummaryTable.vue";
 const table_id = ref('')
 if (loaded_table_id && !table_id) {
   table_id.value = loaded_table_id.value
@@ -68,7 +73,7 @@ const save_quick = (event) => {
   }
 }
 export default {
-  name: "SummaryTable",
+  name: "SummaryTableEditor",
   data() {
     return{
       table_list: table_list,
@@ -94,7 +99,9 @@ export default {
       )
     }
   },
-  components: {SummaryTableEditorBodyTemp, SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
+  components: {
+    SummaryTable,
+    SummaryTableEditorBodyTemp, SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
   beforeRouteLeave() {
     // console.log('seuhioghouie')
   },

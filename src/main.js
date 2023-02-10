@@ -14,7 +14,7 @@ const MainPage = () => import("@/components/MainPage.vue")
 // import MainPage from "@/components/MainPage.vue";
 const PartySearcher = () => import("@/components/PartySearcher.vue")
 const PartySearcherPure = () => import("@/components/PartySearcherPure.vue")
-const SummaryTable = () => import("@/components/SummaryTable.vue")
+const SummaryTablePage = () => import("@/components/SummaryTablePage.vue")
 const SummaryTableList = () => import("@/components/SummaryTableList.vue")
 const SummaryTableEditor = () => import("@/components/SummaryTableEditor.vue")
 const FutureVision = () => import("@/components/FutureVision.vue")
@@ -25,6 +25,7 @@ const ResourceManagerUnit = () => import("@/components/resource_manager/Resource
 const ResourceManagerArmament = () => import("@/components/resource_manager/ResourceManagerArmament.vue")
 const ResourceManagerEvent = () => import("@/components/resource_manager/ResourceManagerEvent.vue")
 const ResourceManagerNickname = () => import("@/components/resource_manager/ResourceManagerNickname.vue")
+const TestPlace = () => import("@/components/TestPlace.vue")
 // import VueRouter from "vue-router";
 
 const routes = [
@@ -33,7 +34,7 @@ const routes = [
     {path: '/calculator', component: Calculator},
     {path: '/party_searcher', component: PartySearcher},
     {path: '/party_searcher_pure', component: PartySearcherPure},
-    {path: '/summary_table/:st_id', component: SummaryTable},
+    {path: '/summary_table/:st_id', component: SummaryTablePage},
     {path: '/summary_table_list', component: SummaryTableList},
     {path: '/summary_table_editor', component: SummaryTableEditor},
     {path: '/about', component: About},
@@ -43,9 +44,13 @@ const routes = [
     {path: '/resource_manager/armament', component: ResourceManagerArmament},
     {path: '/resource_manager/event', component: ResourceManagerEvent},
     {path: '/resource_manager/nickname', component: ResourceManagerNickname},
+    {path: '/test_place', component: TestPlace},
+    {path: '/test_place_pure', component: TestPlace},
 ]
 const routes_pure = [
     {path: '/party_searcher_pure', component: PartySearcherPure},
+    {path: '/test_place_pure', component: TestPlace},
+    // {path: '/test_place', component: TestPlace},
 ]
 
 const router = createRouter({

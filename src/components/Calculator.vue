@@ -366,7 +366,7 @@ export default {
         >
           <el-image
               :src="getUnitPicUrl(unit)"
-              :title="i + ': ' + unit['WfExId']"
+              :title="i + ': ' + unit['extraction_id']"
               loading="lazy"
               @dragstart.prevent
           >

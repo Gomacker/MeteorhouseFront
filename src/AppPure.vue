@@ -64,7 +64,7 @@ export default {
   <div style="width: 100%; height: 100%">
 <!--    <button @click="count++">Count is: {{ count }}</button>-->
     <el-container style="height: 100%">
-      <el-header style="background: linear-gradient(to right, #fa8afa, yellow); display: flex; z-index: 10;">
+      <el-header style="background: linear-gradient(to right, #8afae0, yellow); display: flex; z-index: 10;">
 <!--        <div style="display: flex; justify-content: space-between;">-->
         <el-page-header title=" " :icon="Expand" @back="sidebar_hidden = !sidebar_hidden">
           <template #content>
@@ -85,74 +85,10 @@ export default {
 <!--        </div>-->
       </el-header>
       <el-container>
-<!--        <el-aside class="sidebar" v-bind:class="{hidden: sidebar_hidden}" width="200px" style="user-select: none;">-->
-<!--          <el-scrollbar-->
-<!--              style="height: 100%"-->
-<!--              view-style="height: 100%; display: flex; flex-direction: column;"-->
-<!--          >-->
-<!--&lt;!&ndash;            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <h1>aa</h1>&ndash;&gt;-->
-<!--&lt;!&ndash;              <span style="font-size: 64px;">qsqa</span>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            <el-menu default-active="1">-->
-<!--              <el-menu-item index="menu-main-page" @click="$router.push('/')">-->
-<!--                主页-->
-<!--              </el-menu-item>-->
-<!--              <el-menu-item index="menu-future-vision" @click="$router.push('/future_vision')">-->
-<!--                <el-icon><Calendar /></el-icon>-->
-<!--                千里眼-->
-<!--              </el-menu-item>-->
-<!--              <el-menu-item index="menu-calculator" @click="$router.push('/calculator')">-->
-<!--                <el-icon><Menu /></el-icon>-->
-<!--                Kalculator(Alpha)-->
-<!--              </el-menu-item>-->
-<!--              <el-menu-item index="menu-party-searcher" @click="$router.push('/party_searcher')">-->
-<!--                <el-icon><Search /></el-icon>-->
-<!--                查盘器-->
-<!--              </el-menu-item>-->
-<!--              <el-menu-item index="menu-summary-table" @click="$router.push('/summary_table_list')">-->
-<!--                <el-icon><Management /></el-icon>-->
-<!--                一图流-->
-<!--              </el-menu-item>-->
-<!--              <el-menu-item v-if="permissions.summary_table_editor" index="menu-summary-editor" @click="$router.push('/summary_table_editor')">-->
-<!--                <el-icon><Management /></el-icon>-->
-<!--                一图流编辑器(Alpha)-->
-<!--              </el-menu-item>-->
-<!--&lt;!&ndash;              <el-menu-item disabled index="">&ndash;&gt;-->
-<!--&lt;!&ndash;                <el-icon><PictureFilled /></el-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                素材包&ndash;&gt;-->
-<!--&lt;!&ndash;              </el-menu-item>&ndash;&gt;-->
-<!--&lt;!&ndash;              <el-menu-item disabled index="">&ndash;&gt;-->
-<!--&lt;!&ndash;                <el-icon><UserFilled /></el-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                我的&ndash;&gt;-->
-<!--&lt;!&ndash;              </el-menu-item>&ndash;&gt;-->
-<!--&lt;!&ndash;              <el-menu-item disabled index="">&ndash;&gt;-->
-<!--&lt;!&ndash;                <el-icon><UserFilled /></el-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                Bot管理&ndash;&gt;-->
-<!--&lt;!&ndash;              </el-menu-item>&ndash;&gt;-->
-<!--              <el-menu-item v-if="permissions.resource_manager" index="menu-resource-manager" @click="$router.push('/resource_manager')">-->
-<!--                <el-icon><List /></el-icon>-->
-<!--                资源管理-->
-<!--              </el-menu-item>-->
-<!--              <el-menu-item index="about" @click="$router.push('/about')">-->
-<!--                <el-icon><InfoFilled /></el-icon>-->
-<!--                关于-->
-<!--              </el-menu-item>-->
-<!--            </el-menu>-->
-<!--          </el-scrollbar>-->
-<!--        </el-aside>-->
-        <el-scrollbar style="position: absolute; width: 100%;" view-style="width: 100%; height: 100%;">
-          <el-main :style="{'margin-left': 0}" style="transition: margin-left 0.4s ease;">
-
-<!--            <div style="position: fixed; display: flex; bottom: -500px; justify-content: center;">-->
-            <img class="bg-magic-circle" src="@/assets/bg_magic_circle.png" alt="" @dragstart.prevent/>
-<!--            </div>-->
-
-<!--          <el-scrollbar>-->
-            <router-view></router-view>
-<!--          </el-scrollbar>-->
-          </el-main>
-        </el-scrollbar>
+        <el-main :style="{'margin-left': 0}" style="transition: margin-left 0.4s ease;">
+          <img class="bg-magic-circle" src="@/assets/bg_magic_circle.png" alt="" @dragstart.prevent/>
+          <router-view></router-view>
+        </el-main>
       </el-container>
 <!--      <el-footer-->
 <!--        height="24px"-->

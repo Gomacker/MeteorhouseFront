@@ -5,7 +5,7 @@ import {ElMessage} from "element-plus";
 
 export const loaded_table_id = ref('')
 
-export const table_data = ref({value: {}})
+export const table_data = ref({})
 
 // console.log('table_data')
 // console.log(table_data)
