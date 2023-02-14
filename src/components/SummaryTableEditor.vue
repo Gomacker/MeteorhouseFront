@@ -45,7 +45,6 @@ import axios from "axios";
 import {save_table, loaded_table_id, table_data, table_change, type_change} from "@/components/summary_table_editor";
 import SummaryTableEditorBody from "@/components/SummaryTableEditorBody.vue";
 import {ElMessageBox} from "element-plus";
-import SummaryTableEditorBodyTemp from "@/components/SummaryTableEditorBodyTemp.vue";
 import SummaryTable from "@/components/SummaryTable.vue";
 const table_id = ref('')
 if (loaded_table_id && !table_id) {
@@ -101,7 +100,7 @@ export default {
   },
   components: {
     SummaryTable,
-    SummaryTableEditorBodyTemp, SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
+    SummaryTableEditorBody, PartyCard, Plus, ArrowLeft, ArrowRight, DeleteFilled},
   beforeRouteLeave() {
     // console.log('seuhioghouie')
   },

@@ -134,7 +134,7 @@ export default {
                 <el-icon><List /></el-icon>
                 资源管理
               </el-menu-item>
-              <el-menu-item v-if="permissions.resource_manager && user_name === 'kranca'" index="test-place" @click="$router.push('/test_place')">
+              <el-menu-item v-if="permissions.resource_manager" index="test-place" @click="$router.push('/test_place')">
                 <el-icon><List /></el-icon>
                 <span style="color: lightseagreen;">（测试用）</span>
               </el-menu-item>
@@ -146,7 +146,14 @@ export default {
           </el-scrollbar>
         </el-aside>
         <el-scrollbar style="position: absolute; width: 100%;" view-style="width: 100%; height: 100%;">
-          <el-main :style="{'margin-left': (sidebar_hidden ? 0 : 200 + 'px')}" style="transition: margin-left 0.4s ease;">
+<!--          <el-main :style="{'margin-left': (sidebar_hidden ? 0 : 200 + 'px')}" style="transition: margin-left 0.4s ease;">-->
+          <el-main
+              :style="{'margin-left': (sidebar_hidden ? 0 : 200 + 'px')}"
+              style="
+                /*padding: 0 0 20px 0;*/
+                transition: margin-left 0.4s ease;
+              "
+          >
 
 <!--            <div style="position: fixed; display: flex; bottom: -500px; justify-content: center;">-->
             <img class="bg-magic-circle" src="@/assets/bg_magic_circle.png" alt="" @dragstart.prevent/>
@@ -156,6 +163,7 @@ export default {
             <router-view></router-view>
 <!--          </el-scrollbar>-->
           </el-main>
+<!--          </el-main>-->
         </el-scrollbar>
       </el-container>
       <el-footer
@@ -163,7 +171,7 @@ export default {
         style="
           background: darkgray;
           text-align: center;
-          position: relative;
+          /*position: absolute;*/
           /*position: fixed;*/
           bottom: 0;
           width: 100%;

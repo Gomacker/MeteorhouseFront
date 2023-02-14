@@ -13,6 +13,7 @@ import {
 } from "@/components/party_manager";
 import PartyCard from "@/components/party/PartyCardAnise.vue";
 import '@/assets/summary_table.css'
+import UnitPicOrigin from "@/components/party/components/UnitPicOrigin.vue";
 const view_filter = ref(obj => {return true})
 
 let menu_folded = ref(false)
@@ -338,6 +339,7 @@ export default {
       <div :style="{display: sel_arma_list ? 'none' : 'flex'}" class="wfo-list">
         <div
             class="wfo-obj"
+            style="background-color:#fff;"
             :class="[is_select('object-empty') ? 'selected' : '']"
             id="wfo-empty"
             @click="select('object-empty')"
@@ -364,6 +366,7 @@ export default {
             :id="'wfo-u' + i"
             @click="select('object-unit-' + i)"
         >
+<!--          <UnitPicOrigin :unit="unit" :size="82"/>-->
           <el-image
               :src="getUnitPicUrl(unit)"
               :title="i + ': ' + unit['extraction_id']"
@@ -452,11 +455,13 @@ export default {
   background-size: 62px;
   background-repeat: no-repeat;
   box-sizing: content-box;
-  border: solid white 2px;
+  border: solid transparent 2px;
   border-radius: 4px;
   /*box-shadow: var(--el-box-shadow);*/
-  width: 62px;
-  height: 62px;
+  width: 72px;
+  height: 72px;
+  /*width: 82px;*/
+  /*height: 82px;*/
   user-select: none;
   cursor: pointer;
 

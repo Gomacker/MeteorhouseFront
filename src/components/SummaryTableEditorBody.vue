@@ -148,7 +148,8 @@
 
 <script>
 import {Plus, ArrowLeft, ArrowRight, DeleteFilled} from '@element-plus/icons-vue';
-import PartyCard from "@/components/party/PartyCardAnise.vue";
+// import PartyCard from "@/components/party/PartyCardAnise.vue";
+import PartyCard from "@/components/party/PartyCardEliya.vue";
 import {move_to_next, move_to_previous, table_data, type_change} from "./summary_table_editor";
 
 export default {
