@@ -76,7 +76,6 @@ export default {
 
 <!--          <el-button v-if="true" text @click="get_user_profile">huoqv</el-button>-->
           <span v-if="is_login">欢迎回来，{{ user_name }}</span>
-          <el-button v-if="!is_login" text @click="$router.push('/login')">登录</el-button>
           <el-button v-if="is_login" text @click="logout">登出</el-button>
 
 <!--          <el-avatar class="avatar" src="" size="default"/>-->
@@ -104,15 +103,15 @@ export default {
               </el-menu-item>
               <el-menu-item index="menu-calculator" @click="$router.push('/calculator')">
                 <el-icon><Menu /></el-icon>
-                Kalculator(Alpha)
+                编队器(Alpha)
               </el-menu-item>
               <el-menu-item index="menu-party-searcher" @click="$router.push('/party_searcher')">
                 <el-icon><Search /></el-icon>
                 查盘器
               </el-menu-item>
-              <el-menu-item index="menu-summary-table" @click="$router.push('/summary_table_list')">
+              <el-menu-item disabled index="menu-summary-table" @click="$router.push('/summary_table_list')">
                 <el-icon><Management /></el-icon>
-                一图流
+                一图流(维护中)
               </el-menu-item>
               <el-menu-item v-if="permissions.summary_table_editor" index="menu-summary-editor" @click="$router.push('/summary_table_editor')">
                 <el-icon><Management /></el-icon>
@@ -180,10 +179,11 @@ export default {
           padding: 2px;
         "
       >
-        Author: @Kranca / Gomacker
-        <a href="https://space.bilibili.com/11466987" target="_blank">
-          <img style="display: inline-block; width: 16px; vertical-align: bottom;" src="https://www.bilibili.com/favicon.ico" alt="">
-        </a>
+        <a style="color:#222" target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">津ICP备2022008496号-1</a>
+<!--        Author: @Kranca / Gomacker-->
+<!--        <a href="https://space.bilibili.com/11466987" target="_blank">-->
+<!--          <img style="display: inline-block; width: 16px; vertical-align: bottom;" src="https://www.bilibili.com/favicon.ico" alt="">-->
+<!--        </a>-->
       </el-footer>
     </el-container>
   </div>
@@ -203,20 +203,12 @@ export default {
 <style scoped>
 
 .bg-magic-circle {
-  /*position: absolute;*/
   position: fixed;
-  /*display: flex;*/
-  /*bottom: -35%;*/
-  /*justify-content: center;*/
   z-index: 0;
   animation: rotation 16s linear infinite;
   filter: drop-shadow(0 0 8px rgba(0, 0, 0, 6%));
-  /*width: 100%;*/
-  /*height: 100%;*/
   user-select: none;
   left: -375px;
-  /*left: -200px;*/
-  /*right: 30vw;*/
   bottom: -375px;
 }
 @keyframes rotation {

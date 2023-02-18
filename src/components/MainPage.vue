@@ -4,6 +4,11 @@ import axios from "axios";
 import moment from 'moment';
 import {getUnitPicUrl, unit_data} from "@/components/party_manager";
 import UnitPic from "@/components/party/components/UnitPic.vue";
+import UnitWikiCardBody from "@/components/party/components/UnitWikiCardBody.vue";
+import EventCard from "@/components/event/EventCard.vue";
+import {show_awakened} from "@/components/party/components/settings";
+import {ElMessage} from "element-plus";
+import {is_login} from "@/components/user";
 
 
 const cal_data = ref([])
@@ -18,6 +23,23 @@ const get_calendar = function () {
     cal_data.value.sort((a, b) => {
       return a['timeEnd'] < b['timeEnd'] ? -1 : a['timeEnd'] > b['timeEnd'] ? 1 : 0
     })
+  })
+}
+const on_reload = ref(false)
+
+function reload_data() {
+  axios.post(
+      '/api/reload_data/'
+  ).then(
+      () => {
+        ElMessage.success({
+          showClose: true,
+          message: '重载数据完毕，请刷新页面',
+          duration: 0
+        })
+      }
+  ).catch(() => {
+    ElMessage.error('重载数据失败')
   })
 }
 // let count = 3
@@ -40,6 +62,7 @@ const get_calendar = function () {
 //
 //   clearInterval(times);
 // })
+const test_uid = ref(1)
 </script>
 
 <script>
@@ -47,7 +70,8 @@ const get_calendar = function () {
 
 <template>
   <el-button @click="get_calendar">get日历</el-button>
-  <div>
+  <el-button type="danger" v-if="is_login" :disabled="on_reload" @click="reload_data">reload data</el-button>
+  <div v-if="is_login" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
     <p style="color: orangered; font-weight: bold; font-size: 16px;"># 千里眼(事件表)数据制作中！ #</p>
     <p># 编队计算模块会在能力数据解析完毕后放出 #</p>
     <p># 茶盘气正在适配数据格式 #</p>
@@ -55,24 +79,46 @@ const get_calendar = function () {
     <p># 一图流编辑器（先用表内的new来编辑，新建更名@我） #</p>
     <p># 关于里的相关站有其他的可以说一下（话说NGA的域名之后会主要留哪个） #</p>
     <p># 8说了，写完去给苏打饼干打孔 #</p>
-<!--    <div>-->
-<!--      <img class="test-img" :src="getUnitPicUrl(unit_data[unit_index])" alt=""/>-->
-<!--      {{ getUnitPicUrl(unit_data[unit_index]) }}-->
-<!--    </div>-->
-<!--    <UnitPic :units="[1,14,55]"/>-->
   </div>
-  <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
-    <el-card v-for="cal in cal_data" body-style="padding: 0" style="width: 200px; margin: 8px;">
-      <el-image :src="'https://wf-calendar.miaowm5.com/banner/ch/' + cal.id + '.' + cal.image"
-                style="width: 200px; height: 105px; /* box-shadow: var(--el-box-shadow); */" fit="cover"
-                loading="lazy"
+  <div v-if="!is_login" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+    <p style="color: orangered; font-weight: bold; font-size: 24px;"># Meteorhouse Library (Alpha) #</p>
+<!--    <p># 茶盘气正在适配数据格式 #</p>-->
+    <p style="margin: 16px;">
+      <el-button
+          size="large"
+          style="
+            color: white;
+            background: linear-gradient(45deg, rgba(255,0,0,0.64), rgba(0,0,255,0.59));
+          "
+          @click="$router.push('/party_searcher')"
       >
-      </el-image>
-      <div style="padding: 8px; font-size: 8px;">
-        <p>{{ cal["title"] }}</p>
-        <p>结束时间: {{ moment(new Date(cal['timeEnd'])).format('YYYY-MM-DD hh:mm:ss') }}</p>
-      </div>
-    </el-card>
+        查盘器
+      </el-button>
+    </p>
+    <p># 一图预览页正在前后端相互搬东西 #</p>
+  </div>
+<!--  <div style="position: sticky; top: 0; z-index: 10; background-color: white; box-shadow: 0 0 4px black; padding: 8px 16px; border-radius: 8px;">-->
+<!--    <p>Show Awakened <el-switch v-model="show_awakened"/></p>-->
+<!--    <p>-->
+<!--      Anise ID-->
+<!--      <el-input-number-->
+<!--          v-model="test_uid"-->
+<!--          :min="1"-->
+<!--      />-->
+<!--    </p>-->
+<!--  </div>-->
+<!--&lt;!&ndash;  <UnitWikiCardBody v-for="unit in unit_data" :unit="unit"/>&ndash;&gt;-->
+<!--  <UnitWikiCardBody style="margin: 16px;" :unit="unit_data[test_uid]"/>-->
+
+  <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+    <div style="display: flex; align-items: flex-start; flex-wrap: wrap;">
+      <EventCard v-for="cal in cal_data" :event="{
+      title: cal.title,
+      description: '开始时间：' + moment(new Date(cal['timeStart'])).format('YYYY-MM-DD hh:mm:ss') + '\n结束时间：' + moment(new Date(cal['timeEnd'])).format('YYYY-MM-DD hh:mm:ss'),
+      image_url: 'https://wf-calendar.miaowm5.com/banner/ch/' + cal.id + '.' + cal.image,
+      background_color: '#ffffff'
+    }"/>
+    </div>
   </div>
 </template>
 

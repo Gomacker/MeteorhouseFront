@@ -25,6 +25,9 @@
           <img style="width: 16px; vertical-align: middle;" src="https://im.qq.com/favicon.ico" alt="">
         </a>
       </p>
+      <p>
+        <el-button type="warning" @click="$router.push('/login')">后台登录</el-button>
+      </p>
       <div style="display:none;">
         攻略/内容协力感谢：
         <div class="thanks-list">

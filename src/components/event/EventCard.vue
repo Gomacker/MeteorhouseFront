@@ -4,6 +4,7 @@ defineProps({
 })
 </script>
 <template>
+<!--  {{ event }}-->
 <el-card body-style="padding: 0"
          style="min-width: fit-content; margin: 4px;"
          :style="{'background-color': event.background_color}"

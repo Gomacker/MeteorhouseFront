@@ -1,6 +1,7 @@
 <script setup>
 import UnitPicInfo from "@/components/party/components/UnitPicInfo.vue";
 import {unit_data} from "@/components/party_manager";
+import PartyCardEliya from "@/components/party/PartyCardEliya.vue";
 
 const up_data_fire = [
   {
@@ -2393,6 +2394,9 @@ function format_content(content) {
 <!--  light: up_data_light,-->
 <!--  dark: up_data_dark,-->
 <!--  }) }}</div>-->
+<!--  <PartyCardEliya :party="-->
+<!--  {'id':'tvB3jZ9W','title':'火技伤/泽塔佐仓/地狱风/除泽塔 6板满','updater_id':'astaroth','party':{'union1':[281,5,195,99],'union2':[208,238,186,235],'union3':[219,20,235,161]},'params':{'replacements':{},'manaboard1':{},'manaboard2':{},'extension':{}}}-->
+<!--"/>-->
   <div style="
       background: url(/assets/worldflipper/ui/background_cut_official.png);
       background-size: 136px;

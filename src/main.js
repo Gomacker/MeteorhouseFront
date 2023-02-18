@@ -7,6 +7,8 @@ import './assets/main.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import {createRouter, createWebHistory} from "vue-router";
 import AppPure from "@/AppPure.vue";
+import AppCard from "@/AppCard.vue";
+const UnitWikiCard = () => import("@/components/party/UnitWikiCard.vue")
 
 const Calculator = () => import("@/components/Calculator.vue")
 // import Calculator from "@/components/Calculator.vue";
@@ -26,6 +28,7 @@ const ResourceManagerArmament = () => import("@/components/resource_manager/Reso
 const ResourceManagerEvent = () => import("@/components/resource_manager/ResourceManagerEvent.vue")
 const ResourceManagerNickname = () => import("@/components/resource_manager/ResourceManagerNickname.vue")
 const TestPlace = () => import("@/components/TestPlace.vue")
+const ObjFilter = () => import("@/components/ObjFilter.vue")
 // import VueRouter from "vue-router";
 
 const routes = [
@@ -33,7 +36,7 @@ const routes = [
     {path: '/future_vision', component: FutureVision},
     {path: '/calculator', component: Calculator},
     {path: '/party_searcher', component: PartySearcher},
-    {path: '/party_searcher_pure', component: PartySearcherPure},
+    // {path: '/party_searcher_pure', component: PartySearcherPure},
     {path: '/summary_table/:st_id', component: SummaryTablePage},
     {path: '/summary_table_list', component: SummaryTableList},
     {path: '/summary_table_editor', component: SummaryTableEditor},
@@ -45,17 +48,24 @@ const routes = [
     {path: '/resource_manager/event', component: ResourceManagerEvent},
     {path: '/resource_manager/nickname', component: ResourceManagerNickname},
     {path: '/test_place', component: TestPlace},
-    {path: '/test_place_pure', component: TestPlace},
+    // {path: '/test_place_pure', component: TestPlace},
 ]
 const routes_pure = [
-    {path: '/party_searcher_pure', component: PartySearcherPure},
-    {path: '/test_place_pure', component: TestPlace},
+    {path: '/pure/party_searcher', component: PartySearcherPure},
+    {path: '/pure/test_place', component: TestPlace},
+    {path: '/pure/filter', component: ObjFilter},
+    // {path: '/test_place', component: TestPlace},
+]
+const routes_card = [
+    {path: '/card/unit', component: UnitWikiCard},
+    {path: '/card/party_searcher', component: PartySearcherPure},
+    {path: '/card/test_place', component: TestPlace},
     // {path: '/test_place', component: TestPlace},
 ]
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes: routes.concat(routes_pure).concat(routes_card)
 })
 Array.prototype.insert = function(index, value){
     this.splice(index,0, value);
@@ -86,8 +96,14 @@ if (location.search) {
 console.log(location)
 console.log(routes_pure.map((v, i) => v.path))
 const pure_paths = routes_pure.map((v, i) => v.path)
+const card_paths = routes_card.map((v, i) => v.path)
 if (pure_paths.includes(location.pathname) || pure_paths.includes(location.pathname.substring(0, location.pathname.length - 1))) {
     const app = createApp(AppPure)
+    app.use(router)
+    app.use(ElementPlus, {locale: zhCn})
+    app.mount('#app')
+} else if (card_paths.includes(location.pathname) || card_paths.includes(location.pathname.substring(0, location.pathname.length - 1))) {
+    const app = createApp(AppCard)
     app.use(router)
     app.use(ElementPlus, {locale: zhCn})
     app.mount('#app')

@@ -1,7 +1,7 @@
 <script setup>
 import {getElementCss, getUnitPicUrl, unit_data} from '@/components/party_manager'
 import UnitPicOrigin from "@/components/party/components/UnitPicOrigin.vue";
-import {reactive, ref} from "vue";
+import {onBeforeUnmount, onMounted, reactive, ref} from "vue";
 import axios from "axios";
 import {ElMessage} from "element-plus";
 
@@ -64,6 +64,7 @@ function save_unit() {
       // loaded_source.value = selected_source.value
       // loaded_unit_data.value = r.data['data']
       // form.data = JSON.parse(JSON.stringify(default_from))
+      loaded_unit_data.value[selected_obj_id.value] = JSON.parse(JSON.stringify(form.data))
       ElMessage.success('保存成功')
     }else {
       ElMessage.error('保存失败')
@@ -83,6 +84,23 @@ axios.post(
 )
 const fold_units = ref(false)
 // const icon_size = ref(240);
+const save_quick = (event) => {
+  if (event.keyCode === 83 && event.ctrlKey) {
+    console.log('ctrl + s')
+    event.preventDefault()
+    event.returnValue = false
+    if (Boolean(selected_obj_id)) {
+      save_unit()
+    }
+    if (event.ctrlKey && event.code === 'KeyS') return false
+  }
+}
+onMounted(() => {
+  window.addEventListener('keydown', save_quick)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', save_quick)
+})
 </script>
 <template>
   <div
@@ -289,6 +307,9 @@ const fold_units = ref(false)
             "
         >
           * 以下数据在能力描述生成器后会做二次校对整理
+          <el-form-item label="队长能力名">
+            <el-input v-model="form.data.leader_ability_name"/>
+          </el-form-item>
           <el-form-item label="队长能力">
             <el-input type="textarea" rows="2" v-model="form.data.leader_ability"/>
           </el-form-item>

@@ -68,10 +68,10 @@ axios.post(
     armament_data.value = res.data
 })
 
-export function getUnitPicUrl(unit) {
+export function getUnitPicUrl(unit, awakened=false) {
     if (unit &&
         Object.hasOwn(unit, 'extraction_id')) {
-        return '/assets/worldflipper/unit/square212x/base/' + unit['extraction_id'] + '.png'
+        return '/assets/worldflipper/unit/square212x/' + (awakened ? 'awakened' : 'base') + '/' + unit['extraction_id'] + '.png'
     }else {
         return '/assets/worldflipper/unit/blank.png'
     }
@@ -105,4 +105,31 @@ export function getElementCss(id_) {
     else if(id_ === 4) return 'light'
     else if(id_ === 5) return 'dark'
     else return 'none'
+}
+
+export function format_content(content, icon_size=24) {
+    let s = '<p>'
+    s += content.replaceAll('\n', '</p><p>')
+    s += '</p>'
+    s = s.replaceAll('火属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_fire.png" alt=""/>')
+    s = s.replaceAll('水属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_water.png" alt=""/>')
+    s = s.replaceAll('雷属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_thunder.png" alt=""/>')
+    s = s.replaceAll('风属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_wind.png" alt=""/>')
+    s = s.replaceAll('風属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_wind.png" alt=""/>')
+    s = s.replaceAll('光属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_light.png" alt=""/>')
+    s = s.replaceAll('暗属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_dark.png" alt=""/>')
+    s = s.replaceAll('闇属性', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_dark.png" alt=""/>')
+    s = s.replaceAll('作为主要角色编成：', '<img style="width: ' + icon_size + 'px; vertical-align: bottom; margin: 0 2px;" src="/assets/worldflipper/icon/desc_main.png" alt=""/>')
+
+    s = s.replaceAll('攻击力 +', '<span style="color: rgb(255, 128, 0)">攻击力</span> +')
+    s = s.replaceAll('攻击力提升(', '<span style="color: rgb(255, 128, 0)">攻击力提升</span>(')
+    s = s.replaceAll('技能伤害 +', '<span style="color: rgb(0, 128, 255)">技能伤害</span> +')
+    s = s.replaceAll('技能伤害提升(', '<span style="color: rgb(0, 128, 255)">技能伤害提升</span>(')
+    s = s.replaceAll('强化弹射伤害 +', '<span style="color: rgb(0,159,79)">强化弹射伤害</span> +')
+    s = s.replaceAll('强化弹射伤害提升(', '<span style="color: rgb(0,159,79)">强化弹射伤害提升</span>(')
+    s = s.replaceAll('直接攻击伤害 +', '<span style="color: rgb(169,45,255)">直接攻击伤害</span> +')
+    s = s.replaceAll('直接攻击伤害提升(', '<span style="color: rgb(169,45,255)">直接攻击伤害提升</span>(')
+    s = s.replaceAll('能力伤害 +', '<span style="color: rgb(255, 0, 128)">能力伤害</span> +')
+    s = s.replaceAll('能力伤害提升(', '<span style="color: rgb(255, 0, 128)">能力伤害提升</span>(')
+    return s
 }

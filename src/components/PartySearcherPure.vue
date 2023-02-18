@@ -49,11 +49,11 @@ import {Search} from '@element-plus/icons-vue'
           v-model:current-page="current_page"
           background
           layout="prev, pager, next"
-          :page-size="10"
+          :page-size="party_pre_page"
           :total="party_count"
           @currentChange="() => {
             get_data(current_page, search_content_applied);
-            scrollbar_ref.setScrollTop(0)
+            // scrollbar_ref.setScrollTop(0)
           }"
       />
     </div>
@@ -69,6 +69,7 @@ import PartyCard from "@/components/party/PartyCardEliya.vue";
 const party_releases = ref({})
 
 const party_count = ref(0)
+const party_pre_page = ref(10)
 const current_page = ref(1)
 
 const search_content = ref('')
@@ -118,6 +119,7 @@ function get_data(page_index, search_content='') {
         console.log(r.data)
         party_releases.value = r.data['parties']
         party_count.value = r.data['party_count']
+        party_pre_page.value = r.data['party_pre_page']
         loading.value = false
       }
   )
@@ -151,6 +153,9 @@ export default {
     if (query.hasOwnProperty('q')) {
       search_content.value = query.q
       search_content_applied.value = search_content.value
+    }
+    if (query.hasOwnProperty('page') && parseInt(query.page) > 0) {
+      current_page.value = parseInt(query.page)
     }
     get_data(current_page.value, search_content_applied.value)
   }

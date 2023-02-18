@@ -36,7 +36,10 @@ import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
       <div class="search-body" style="display: flex; flex-wrap: wrap; justify-content: center;">
         <el-card class="party-card" v-for="(p, id) in party_releases" body-style="padding: 12px 8px 8px;" style="margin: 8px; /* width: fit-content */ width: 498px;">
           <div style="display: flex; justify-content: space-between;">
-            <div><span style="font-weight: bold; font-size: 18px;">{{ p.title }}</span><span style="color: darkgray;">({{ id }})</span></div>
+            <div>
+              <span style="font-weight: bold; font-size: 18px;">{{ p.title }}</span>
+              <span style="color: darkgray;">({{ id }})</span>
+            </div>
             <div><span style="color: gray;">{{ p.updater_id }}</span></div>
           </div>
           <!--      <PartyCard :party="{party: p}"></PartyCard>-->
@@ -44,16 +47,16 @@ import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
           <div style="display: flex; justify-content: space-between;">
             <div/>
             <div>
-<!--              <el-button-group style="margin: 0 2px;">-->
-<!--                &lt;!&ndash;            <el-button size="default" style="color: deeppink; padding-right: 64px;">&ndash;&gt;-->
-<!--                <el-button disabled size="small" style="color: deeppink;">-->
-<!--                  <div style="width: 100%; height: 100%; position: absolute;"></div>-->
-<!--                  <div>❤ 0</div>-->
-<!--                </el-button>-->
-<!--                <el-button disabled size="small">-->
-<!--                  <el-icon><ArrowDownBold /></el-icon>-->
-<!--                </el-button>-->
-<!--              </el-button-group>-->
+              <el-button-group style="margin: 0 2px;">
+                <!--            <el-button size="default" style="color: deeppink; padding-right: 64px;">-->
+                <el-button disabled size="small" style="color: deeppink;">
+                  <div style="width: 100%; height: 100%; position: absolute;"></div>
+                  <div>❤ 0</div>
+                </el-button>
+                <el-button disabled size="small">
+                  <el-icon><ArrowDownBold /></el-icon>
+                </el-button>
+              </el-button-group>
               <el-button size="small" type="warning" :data-clipboard-text="JSON.stringify({party: p.party})" :id="'copy-' + p.id" @click="copy_party(p.id)" style="margin: 0 2px;">
                 <el-icon><DocumentCopy /></el-icon>
               </el-button>
