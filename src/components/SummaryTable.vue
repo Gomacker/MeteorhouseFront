@@ -1,15 +1,22 @@
 <script setup>
 
-import {onBeforeUpdate, onMounted, ref} from "vue";
+import {h, onBeforeUpdate, ref, render} from "vue";
 import PartyCardEliya from "@/components/party/PartyCardEliya.vue";
+import UnitPicOrigin from "@/components/party/components/UnitPicOrigin.vue";
+import {unit_data} from "@/components/party_manager";
+import SummaryTableTextContent from "@/components/summary_table/SummaryTableTextContent.vue";
 
-function hexToRgb(hex) {
-  let r = parseInt(hex.substring(0, 2), 16);
-  let g = parseInt(hex.substring(2, 4), 16);
-  let b = parseInt(hex.substring(4, 6), 16);
-
-  return `rgb(${r}, ${g}, ${b})`;
+function splitByBrackets(str) {
+  let result = [];
+  let bracketed = str.match(/\[.*?]/g) || [];
+  let unbracketed = str.split(/\[.*?]/g);
+  for (let i = 0; i < unbracketed.length; i++) {
+    if (unbracketed[i]) result.push(unbracketed[i]);
+    if (i < bracketed.length) result.push(bracketed[i]);
+  }
+  return result;
 }
+
 
 function transColor(color, s) {
   const rgbRegex = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
@@ -20,10 +27,15 @@ function transColor(color, s) {
 }
 
 function formatText(t) {
+  console.log(t)
   t = t.replaceAll('', '')
+  // t = '<p>' + t + '</p>'
+  t = t.replaceAll('\n', '</p><p>')
   t = t.replaceAll('[novice]', '<span class="novice">')
   t = t.replaceAll('[highlight]', '<span class="highlight">')
   t = t.replaceAll('[end]', '</span>')
+  t = t.replaceAll('[biliicon]', '<img style="width: 24px; vertical-align: text-bottom; margin: 0 4px;" src="https://www.bilibili.com/favicon.ico" alt=""/>')
+
   return t
 }
 
@@ -80,53 +92,55 @@ onBeforeUpdate(() => {
       <div id="banner-title">
         <p class="st-text" style="font-size: 62px;">{{ table_data.property.title }}</p>
       </div>
-      {{ table_data.property.banner }}
       <div id="date">
-        <p class="st-text">----/--/--</p>
+<!--        <SummaryTableTextContent :content="table_data.property.update_time"/>-->
+        <p class="st-text" v-html="formatText(table_data.property.update_time)"></p>
       </div>
       <div id="about">
-        <p class="st-text">{{ table_data.property.about }}aa</p>
+        <div class="st-text" v-html="formatText(table_data.property.little_about)"></div>
       </div>
     </div>
-    <div id="main-body">
-      <div v-for="row in table_data.content">
-  <!--      <div v-if="row.type === 'SubTitle'" style="color: red;">-->
-        <div v-if="row.type === 'SubTitle'">
-  <!--        {{ row }}-->
-          <div class="sub-title">
-            <p>
-              <img class="title-ele-icon" :src="'/assets/worldflipper/icon/' + row.data['element'] + '.png'" alt=""/>{{ row.data['content'] }}
-            </p>
+    <div :style="table_data.property.background">
+      <div id="main-body">
+        <div v-for="row in table_data.content">
+          <!--      <div v-if="row.type === 'SubTitle'" style="color: red;">-->
+          <div v-if="row.type === 'SubTitle'">
+            <!--        {{ row }}-->
+            <div class="sub-title">
+              <p>
+                <img class="title-ele-icon" :src="'/assets/worldflipper/icon/' + row.data['element'] + '.png'" alt=""/>{{ row.data['content'] }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="row.type === 'Row'" style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
-          <div v-for="ele in row.data.elements">
-            <div v-if="ele.type === 'TextRegion'" class="st-text" style="margin: 8px; padding: 6px;" :style="{width: ele.data['full'] ? '988px' : '480px'}">
-              <p
-                  v-if="ele.data['content']"
-                  v-for="t in ele.data['content'].split('\n')"
-                  v-html="formatText(t)"
+          <div v-if="row.type === 'Row'" style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
+            <div v-for="ele in row.data.elements">
+              <SummaryTableTextContent
+                  v-if="ele.type === 'TextRegion' && ele.data['content']"
+                  class="st-text"
+                  style="margin: 8px; padding: 6px; width: 480px;"
+                  :style="{
+                    width: ele.data['full'] ? '988px' : '492px',
+                    font: ele.data['little_title'] ? '32px 黑体' : '',
+                    'margin-bottom': ele.data['little_title'] ? '0' : '',
+                    'padding-bottom': ele.data['little_title'] ? '0' : '',
+                  }"
+                  :content="ele.data['content']"
               />
+              <div class="st-party">
+                <PartyCardEliya v-if="ele.type === 'Party'" style="margin: 8px;" :party="ele.data['party']"/>
+              </div>
+              <div v-if="ele.type === 'Origin'" v-html="ele.data.content"/>
             </div>
-            <div class="st-party">
-              <PartyCardEliya v-if="ele.type === 'Party'" style="margin: 8px;" :party="ele.data['party']"/>
-            </div>
-<!--            <div v-else>-->
-<!--              {{ ele }}-->
-<!--            </div>-->
           </div>
-<!--          {{ JSON.stringify(row) }}-->
         </div>
       </div>
     </div>
-  </div>
-  <div>
+    <div id="footer" v-html="formatText(table_data.property.footer)">
+    </div>
   </div>
 </template>
 
 <script>
-
-
 </script>
 <style>
 .wfo-optional {
@@ -166,6 +180,9 @@ onBeforeUpdate(() => {
 /*.sub-title{*/
 /*  background-color: rgba(96, 3, 14, 0.75);*/
 /*}*/
+#footer:deep(p) {
+  margin-bottom: 10px;
+}
 #st-body {
   width: 1036px;
   /*margin: 0 auto;*/
@@ -226,7 +243,7 @@ onBeforeUpdate(() => {
   -webkit-text-fill-color: #fff;
   -webkit-text-stroke:0.14em transparent;
 }
-.st-text div, .st-text span, .st-text p{
+.st-text:deep(div), .st-text:deep(span), .st-text:deep(p), .st-text:deep(b) {
   /*padding: 0.025em 0.075em;*/
   padding: 0 0.075em;
 
@@ -241,7 +258,7 @@ onBeforeUpdate(() => {
   -webkit-background-clip: text;
   -webkit-text-fill-color: #fff;
   -webkit-text-stroke:0.14em transparent;
-  margin-bottom: 8px;
+  /*margin-bottom: 8px;*/
 }
 .sub-title {
   box-shadow: black 0 0 8px;

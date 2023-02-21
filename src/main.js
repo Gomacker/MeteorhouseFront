@@ -29,6 +29,7 @@ const ResourceManagerEvent = () => import("@/components/resource_manager/Resourc
 const ResourceManagerNickname = () => import("@/components/resource_manager/ResourceManagerNickname.vue")
 const TestPlace = () => import("@/components/TestPlace.vue")
 const ObjFilter = () => import("@/components/ObjFilter.vue")
+const PlayerInfo = () => import("@/components/PlayerInfo.vue")
 // import VueRouter from "vue-router";
 
 const routes = [
@@ -58,8 +59,8 @@ const routes_pure = [
 ]
 const routes_card = [
     {path: '/card/unit', component: UnitWikiCard},
+    {path: '/card/player', component: PlayerInfo},
     {path: '/card/party_searcher', component: PartySearcherPure},
-    {path: '/card/test_place', component: TestPlace},
     // {path: '/test_place', component: TestPlace},
 ]
 

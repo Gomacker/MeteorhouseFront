@@ -4,7 +4,8 @@
   <div style="box-shadow: black 0 0 4px; position: sticky; width: 100%; top: 0; padding: 16px; z-index: 20; background: white;">
     <el-form>
       <span><el-button @click="open_alert">注意事项</el-button></span>
-      <span v-if="loaded_table_id"> 预览页：<a :href="'/api/summary_table/' + loaded_table_id" target="_blank">/api/summary_table/{{ loaded_table_id }}</a></span>
+      <span v-if="loaded_table_id"> 预览页：<a :href="'/summary_table/' + loaded_table_id" target="_blank">/summary_table/{{ loaded_table_id }}</a></span>
+      <span v-if="loaded_table_id"> 旧版：<a :href="'/api/summary_table/' + loaded_table_id" target="_blank">/api/summary_table/{{ loaded_table_id }}</a></span>
 
       <el-form-item label="一图ID">
         <el-select filterable v-model="table_id">
@@ -88,12 +89,12 @@ export default {
     save_table,
     open_alert() {
       ElMessageBox.alert(
-          '      <p style="color: deepskyblue;">输出方法: 在预览页链接后加上?no_header=1，然后按F12呼出DevTool，Ctrl+Shift+P呼出command，搜索screenshot，选择截取完整尺寸屏幕</p>\n' +
+          '      <p style="color: deepskyblue;">输出方法: 在预览页按F12呼出DevTool，Ctrl+Shift+P呼出command，搜索screenshot，选择截取完整尺寸屏幕</p>\n' +
           '      <p style="color: deepskyblue;">tip: 最好把窗口宽度拉到小于一图流宽度，这样不用裁剪</p>\n' +
           '      <p>有关注之类的水印后处理自己整咯（</p>\n' +
           '      <p> 旧一图会有旧版本读取问题，可以把abs作参考</p>\n' +
           '      <p>背景和主题修改在群里@我（</p>',
-          'aa',
+          'Mua💙~',
           {dangerouslyUseHTMLString: true}
       )
     }

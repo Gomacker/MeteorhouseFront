@@ -10,6 +10,8 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "@popperjs/core": "^2.11.6",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vue/runtime-dom": "^3.2.47",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "clipboard": "^2.0.11",

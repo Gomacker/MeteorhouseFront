@@ -109,7 +109,7 @@ export default {
                 <el-icon><Search /></el-icon>
                 查盘器
               </el-menu-item>
-              <el-menu-item disabled index="menu-summary-table" @click="$router.push('/summary_table_list')">
+              <el-menu-item index="menu-summary-table" @click="$router.push('/summary_table_list')">
                 <el-icon><Management /></el-icon>
                 一图流(维护中)
               </el-menu-item>

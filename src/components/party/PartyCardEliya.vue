@@ -13,58 +13,87 @@ import {ref} from "vue";
 const props = defineProps({
   party: Object
 })
-const party = ref(JSON.parse(JSON.stringify(props.party)))
-const party_debug = ref(JSON.stringify(props.party))
+// const party = ref(JSON.parse(JSON.stringify(props.party)))
+// const party_debug = ref(JSON.stringify(props.party))
 const allow_mb2_lv = [0,1,2,3,4,5]
-if (props.party.hasOwnProperty('replacements')) {
+const replacement_size = '36px'
 
+function getParamReplacements(p, union, pos) {
+  let rps = p['params']['replacements']
+  if (union in rps) {
+    rps = rps[union]
+    if ('main' in rps || 'armament' in rps || 'unison' in rps || 'core' in rps) {
+      console.log(rps)
+      pos = {0: 'main', 1: 'armament', 2: 'unison', 3: 'core'}[pos]
+      return pos in rps ? rps[pos] : []
+
+    }
+    else if (pos in rps) {
+      return rps[pos]
+    } else return []
+  }
+  else return []
 }
 
 </script>
 <template>
-<!--{{ party['params'] }}-->
-<!--  <el-input style="font-family: Consolas, serif;" type="textarea" :rows="4" v-model="party_debug"/>-->
-<!--  <el-button type="primary" @click="party = JSON.parse(party_debug)">Test</el-button>-->
 <div class="party" style="display: flex;">
-  <div class="union">
+  <div class="union" v-for="union in ['union1', 'union2', 'union3']">
     <div class="wfo-slot main"
-         :class="[unit_data.hasOwnProperty(party['party']['union1'][0]) ? 'ele-' + getElementCss(unit_data[party['party']['union1'][0]]['element']) : '']">
-      <img :src="getUnitPicUrl(unit_data[party['party']['union1'][0]])" alt="" loading="lazy" @dragstart.prevent/>
+         :class="[unit_data.hasOwnProperty(party['party'][union][0]) ? 'ele-' + getElementCss(unit_data[party['party'][union][0]]['element']) : '']">
+      <div style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
+        <img
+            v-for="rpm in getParamReplacements(party, union, 0)"
+            style="z-index: 15;"
+            :style="{width: replacement_size, height: replacement_size}"
+            :src="getUnitPicUrl(unit_data[rpm])"
+            alt=""
+        />
+      </div>
+      <img :src="getUnitPicUrl(unit_data[party['party'][union][0]])" alt="" loading="lazy" @dragstart.prevent/>
       <div>
-<!--        {{ party['params']['manaboard2'] }}-->
-<!--        {{ party['params']['manaboard2']['union1'] }}-->
-<!--        {{ (typeof party['params']['manaboard2']['union1']) === 'object' }}-->
         <div
             style="text-align: center; padding-top: 2px;"
             v-if="
               party &&
               party['params'] &&
               party['params']['manaboard2'] &&
-              party['params']['manaboard2']['union1'] &&
-              (typeof party['params']['manaboard2']['union1'][0]) === 'object' &&
+              party['params']['manaboard2'][union] &&
+              (typeof party['params']['manaboard2'][union][0]) === 'object' &&
               (
-                  allow_mb2_lv.includes(party['params']['manaboard2']['union1'][0][0]) ||
-                  allow_mb2_lv.includes(party['params']['manaboard2']['union1'][0][1]) ||
-                  allow_mb2_lv.includes(party['params']['manaboard2']['union1'][0][2])
+                  allow_mb2_lv.includes(party['params']['manaboard2'][union][0][0]) ||
+                  allow_mb2_lv.includes(party['params']['manaboard2'][union][0][1]) ||
+                  allow_mb2_lv.includes(party['params']['manaboard2'][union][0][2])
               )
             "
         >
-          {{ allow_mb2_lv.includes(party['params']['manaboard2']['union1'][0][0]) ? party['params']['manaboard2']['union1'][0][0] : '-' }}
+          {{ allow_mb2_lv.includes(party['params']['manaboard2'][union][0][0]) ? party['params']['manaboard2'][union][0][0] : '-' }}
            /
-          {{ allow_mb2_lv.includes(party['params']['manaboard2']['union1'][0][1]) ? party['params']['manaboard2']['union1'][0][1] : '-' }}
+          {{ allow_mb2_lv.includes(party['params']['manaboard2'][union][0][1]) ? party['params']['manaboard2'][union][0][1] : '-' }}
            /
-          {{ allow_mb2_lv.includes(party['params']['manaboard2']['union1'][0][2]) ? party['params']['manaboard2']['union1'][0][2] : '-' }}
+          {{ allow_mb2_lv.includes(party['params']['manaboard2'][union][0][2]) ? party['params']['manaboard2'][union][0][2] : '-' }}
         </div>
-        <div v-else style="text-align: center;">队长</div>
+        <div v-else style="text-align: center;">
+          {{ union === 'union1' ? '队长' : '主要角色' }}
+        </div>
       </div>
     </div>
     <div class="wfo-slot armament">
-      <img :src="getArmamentPicUrl(armament_data[party['party']['union1'][2]])" alt="" loading="lazy" @dragstart.prevent/>
+      <div style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
+        <img
+            v-for="rpm in getParamReplacements(party, union, 2)"
+            style="z-index: 15;"
+            :style="{width: replacement_size, height: replacement_size}"
+            :src="getArmamentPicUrl(armament_data[rpm])"
+            alt=""
+        />
+      </div>
+      <img :src="getArmamentPicUrl(armament_data[party['party'][union][2]])" alt="" loading="lazy" @dragstart.prevent/>
       <div style="text-align: center;">装备</div>
     </div>
     <div class="wfo-slot unison"
-         :class="[unit_data.hasOwnProperty(party['party']['union1'][1]) ? 'ele-' + getElementCss(unit_data[party['party']['union1'][1]]['element']) : '']">
-      <img :src="getUnitPicUrl(unit_data[party['party']['union1'][1]])" alt="" loading="lazy" @dragstart.prevent/>
+         :class="[unit_data.hasOwnProperty(party['party'][union][1]) ? 'ele-' + getElementCss(unit_data[party['party'][union][1]]['element']) : '']">
+      <img :src="getUnitPicUrl(unit_data[party['party'][union][1]])" alt="" loading="lazy" @dragstart.prevent/>
 
       <div
           style="text-align: center; padding-top: 2px;"
@@ -72,154 +101,45 @@ if (props.party.hasOwnProperty('replacements')) {
             party &&
             party['params'] &&
             party['params']['manaboard2'] &&
-            party['params']['manaboard2']['union1'] &&
-            (typeof party['params']['manaboard2']['union1'][1]) === 'object' &&
+            party['params']['manaboard2'][union] &&
+            (typeof party['params']['manaboard2'][union][1]) === 'object' &&
             (
-                allow_mb2_lv.includes(party['params']['manaboard2']['union1'][1][0]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union1'][1][1]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union1'][1][2])
+                allow_mb2_lv.includes(party['params']['manaboard2'][union][1][0]) ||
+                allow_mb2_lv.includes(party['params']['manaboard2'][union][1][1]) ||
+                allow_mb2_lv.includes(party['params']['manaboard2'][union][1][2])
             )
           "
       >
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union1'][1][0]) ? party['params']['manaboard2']['union1'][1][0] : '-' }}
+        {{ allow_mb2_lv.includes(party['params']['manaboard2'][union][1][0]) ? party['params']['manaboard2'][union][1][0] : '-' }}
         /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union1'][1][1]) ? party['params']['manaboard2']['union1'][1][1] : '-' }}
+        {{ allow_mb2_lv.includes(party['params']['manaboard2'][union][1][1]) ? party['params']['manaboard2'][union][1][1] : '-' }}
         /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union1'][1][2]) ? party['params']['manaboard2']['union1'][1][2] : '-' }}
+        {{ allow_mb2_lv.includes(party['params']['manaboard2'][union][1][2]) ? party['params']['manaboard2'][union][1][2] : '-' }}
       </div>
       <div v-else style="text-align: center;">辅助角色</div>
+
+      <div style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ' / 2)', left: 'calc( -' + replacement_size + ' / 2)'}">
+        <img
+            v-for="rpm in getParamReplacements(party, union, 1)"
+            style="z-index: 15;"
+            :style="{width: replacement_size, height: replacement_size}"
+            :src="getUnitPicUrl(unit_data[rpm])"
+            alt=""
+        />
+      </div>
     </div>
     <div class="wfo-slot core">
-      <img :src="getArmamentCorePicUrl(armament_data[party['party']['union1'][3]])" alt="" loading="lazy" @dragstart.prevent/>
+      <img :src="getArmamentCorePicUrl(armament_data[party['party'][union][3]])" alt="" loading="lazy" @dragstart.prevent/>
       <div style="text-align: center;">魂珠</div>
-    </div>
-  </div>
-  <div class="union">
-    <div class="wfo-slot main"
-         :class="[unit_data.hasOwnProperty(party['party']['union2'][0]) ? 'ele-' + getElementCss(unit_data[party['party']['union2'][0]]['element']) : '']">
-      <img :src="getUnitPicUrl(unit_data[party['party']['union2'][0]])" alt="" loading="lazy" @dragstart.prevent/>
-
-      <div
-          style="text-align: center; padding-top: 2px;"
-          v-if="
-            party &&
-            party['params'] &&
-            party['params']['manaboard2'] &&
-            party['params']['manaboard2']['union2'] &&
-            (typeof party['params']['manaboard2']['union2'][0]) === 'object' &&
-            (
-                allow_mb2_lv.includes(party['params']['manaboard2']['union2'][0][0]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union2'][0][1]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union2'][0][2])
-            )
-          "
-      >
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union2'][0][0]) ? party['params']['manaboard2']['union2'][0][0] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union2'][0][1]) ? party['params']['manaboard2']['union2'][0][1] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union2'][0][2]) ? party['params']['manaboard2']['union2'][0][2] : '-' }}
+      <div style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
+        <img
+            v-for="rpm in getParamReplacements(party, union, 3)"
+            style="z-index: 15;"
+            :style="{width: replacement_size, height: replacement_size}"
+            :src="getArmamentCorePicUrl(armament_data[rpm])"
+            alt=""
+        />
       </div>
-      <div v-else style="text-align: center;">主要角色</div>
-    </div>
-    <div class="wfo-slot armament">
-      <img :src="getArmamentPicUrl(armament_data[party['party']['union2'][2]])" alt="" loading="lazy" @dragstart.prevent/>
-      <div style="text-align: center;">装备</div>
-    </div>
-    <div class="wfo-slot unison"
-         :class="[unit_data.hasOwnProperty(party['party']['union2'][1]) ? 'ele-' + getElementCss(unit_data[party['party']['union2'][1]]['element']) : '']">
-      <img :src="getUnitPicUrl(unit_data[party['party']['union2'][1]])" alt="" loading="lazy" @dragstart.prevent/>
-
-      <div
-          style="text-align: center; padding-top: 2px;"
-          v-if="
-            party &&
-            party['params'] &&
-            party['params']['manaboard2'] &&
-            party['params']['manaboard2']['union2'] &&
-            (typeof party['params']['manaboard2']['union2'][1]) === 'object' &&
-            (
-                allow_mb2_lv.includes(party['params']['manaboard2']['union2'][1][0]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union2'][1][1]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union2'][1][2])
-            )
-          "
-      >
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union2'][1][0]) ? party['params']['manaboard2']['union2'][1][0] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union2'][1][1]) ? party['params']['manaboard2']['union2'][1][1] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union2'][1][2]) ? party['params']['manaboard2']['union2'][1][2] : '-' }}
-      </div>
-      <div v-else style="text-align: center;">辅助角色</div>
-    </div>
-    <div class="wfo-slot core">
-      <img :src="getArmamentCorePicUrl(armament_data[party['party']['union2'][3]])" alt="" loading="lazy" @dragstart.prevent/>
-      <div style="text-align: center;">魂珠</div>
-    </div>
-  </div>
-  <div class="union">
-    <div class="wfo-slot main"
-         :class="[unit_data.hasOwnProperty(party['party']['union3'][0]) ? 'ele-' + getElementCss(unit_data[party['party']['union3'][0]]['element']) : '']">
-      <img :src="getUnitPicUrl(unit_data[party['party']['union3'][0]])" alt="" loading="lazy" @dragstart.prevent/>
-
-      <div
-          style="text-align: center; padding-top: 2px;"
-          v-if="
-            party &&
-            party['params'] &&
-            party['params']['manaboard2'] &&
-            party['params']['manaboard2']['union3'] &&
-            (typeof party['params']['manaboard2']['union3'][0]) === 'object' &&
-            (
-                allow_mb2_lv.includes(party['params']['manaboard2']['union3'][0][0]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union3'][0][1]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union3'][0][2])
-            )
-          "
-      >
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union3'][0][0]) ? party['params']['manaboard2']['union3'][0][0] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union3'][0][1]) ? party['params']['manaboard2']['union3'][0][1] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union3'][0][2]) ? party['params']['manaboard2']['union3'][0][2] : '-' }}
-      </div>
-      <div v-else style="text-align: center;">主要角色</div>
-    </div>
-    <div class="wfo-slot armament">
-      <img :src="getArmamentPicUrl(armament_data[party['party']['union3'][2]])" alt="" loading="lazy" @dragstart.prevent/>
-      <div style="text-align: center;">装备</div>
-    </div>
-    <div class="wfo-slot unison"
-         :class="[unit_data.hasOwnProperty(party['party']['union3'][1]) ? 'ele-' + getElementCss(unit_data[party['party']['union3'][1]]['element']) : '']">
-      <img :src="getUnitPicUrl(unit_data[party['party']['union3'][1]])" alt="" loading="lazy" @dragstart.prevent/>
-
-      <div
-          style="text-align: center; padding-top: 2px;"
-          v-if="
-            party &&
-            party['params'] &&
-            party['params']['manaboard2'] &&
-            party['params']['manaboard2']['union3'] &&
-            (typeof party['params']['manaboard2']['union3'][1]) === 'object' &&
-            (
-                allow_mb2_lv.includes(party['params']['manaboard2']['union3'][1][0]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union3'][1][1]) ||
-                allow_mb2_lv.includes(party['params']['manaboard2']['union3'][1][2])
-            )
-          "
-      >
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union3'][1][0]) ? party['params']['manaboard2']['union3'][1][0] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union3'][1][1]) ? party['params']['manaboard2']['union3'][1][1] : '-' }}
-        /
-        {{ allow_mb2_lv.includes(party['params']['manaboard2']['union3'][1][2]) ? party['params']['manaboard2']['union3'][1][2] : '-' }}
-      </div>
-      <div v-else style="text-align: center;">辅助角色</div>
-    </div>
-    <div class="wfo-slot core">
-      <img :src="getArmamentCorePicUrl(armament_data[party['party']['union3'][3]])" alt="" loading="lazy" @dragstart.prevent/>
-      <div style="text-align: center;">魂珠</div>
     </div>
   </div>
 </div>

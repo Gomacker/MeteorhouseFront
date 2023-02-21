@@ -78,7 +78,7 @@ defineProps({
     background: 'url(/assets/worldflipper/unit/full_resized/awakened/' + unit.extraction_id + '.png) no-repeat',
     // 'background-position': '130% 50%'
     }"
-    style="background-position: 150% 80%; background-size: 720px; image-rendering: initial;"
+    style="border-radius: 16px; background-position: 150% 80%; background-size: 720px; image-rendering: initial;"
   >
 <!--    <img style="position: absolute; left: 125%;" :src="'/assets/worldflipper/unit/full_resized/awakened/' + unit.extraction_id + '.png'"/>-->
     <div
@@ -95,17 +95,6 @@ defineProps({
       {
         background: (() => {
           let sty = 'linear-gradient(135deg, '
-          // if (unit['rarity'] === 5) {
-          //   sty += ele2color[getElementCss(unit['element'])] + ' 20px,'
-          //   sty += 'rgba(239,255,95, 0.85) 20px,'
-          //   sty += 'rgba(239,255,95, 0.85) 28px,'
-          //   sty += ele2color[getElementCss(unit['element'])] + ' 28px,'
-          //   sty += ele2color[getElementCss(unit['element'])] + ' 34px,'
-          //   sty += 'rgba(239,255,95, 0.85) 34px,'
-          //   sty += 'rgba(239,255,95, 0.85) 38px,'
-          //   sty += ele2color[getElementCss(unit['element'])] + ' 38px,'
-          //   // sty += 'rgba(181,244,245, 0.85) 64px,'
-          // }
           sty += ele2color[getElementCss(unit['element'])] + ' 130px, rgba(248,248,248, 0.85) 130px,'
           sty += ' rgba(248,248,248, 0.85) calc(100% - 32px), rgba(40,0,115, 0.85) calc(100% - 32px), rgba(0,0,0, 0.85))'
           return sty

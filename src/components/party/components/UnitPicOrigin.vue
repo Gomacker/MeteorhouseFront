@@ -18,7 +18,7 @@ const ele_size = width * 44 / 240
 
 <template>
 <!--  {{ unit }}-->
-  <div :title="unit['anise_id'] + ': ' + unit['extraction_id'] + ': ' + unit['wf_id']">
+  <div style="width: fit-content; display: inline-block;" :title="unit['anise_id'] + ': ' + unit['extraction_id'] + ': ' + unit['wf_id']">
     <svg v-if="unit" style="display: block;" :width="width" :height="height" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g>
         <image

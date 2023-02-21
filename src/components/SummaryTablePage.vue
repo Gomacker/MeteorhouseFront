@@ -9,10 +9,14 @@ import SummaryTable from "@/components/SummaryTable.vue";
 
 </script>
 <template>
+<!--  <div style="width: 100%; height: 100%;">-->
   <div>
-    <p>{{ $route.params['st_id'] }}</p>
-    <p>{{ table_data }}</p>
-    <SummaryTable :table_data="table_data"/>
+<!--    <p>{{ $route.params['st_id'] }}</p>-->
+<!--    <p>{{ table_data }}</p>-->
+<!--    <el-scrollbar>-->
+
+      <SummaryTable :table_data="table_data"/>
+<!--    </el-scrollbar>-->
 
   </div>
 </template>
@@ -51,84 +55,4 @@ export default {
 </script>
 
 <style>
-/*:root{*/
-/*  --main-color: v-bind('colors.main_color');*/
-/*  !*--main-color: rgb(96, 3, 14);*!*/
-/*  --sub-color: v-bind('colors.sub_color');*/
-/*  !*--sub-color: rgb(247, 99, 1);*!*/
-/*  --little-about-color: rgba(96, 3, 14, 0.625);*/
-/*}*/
-/*#main-body{*/
-/*  background-color: rgba(247, 99, 1, 0.5);*/
-/*}*/
-/*.sub-title{*/
-/*  background-color: rgba(96, 3, 14, 0.75);*/
-/*}*/
-/*.wfo-optional {*/
-/*  border: none;*/
-/*}*/
-/*.highlight {*/
-/*  color: rgb(255 173 73);*/
-/*}*/
-/*.novice {*/
-/*  color: rgb(88,255,183);*/
-/*}*/
-/*#st-body {*/
-/*  width: 1036px;*/
-/*  margin: 0 auto;*/
-/*  font: 24px 黑体;*/
-/*  line-height: normal;*/
-/*  color: white;*/
-/*  overflow: hidden;*/
-/*  box-shadow: 0 0 128px v-bind('colors.main_color');*/
-/*}*/
-/*#banner{*/
-/*  position: relative;*/
-/*  height: 570px;*/
-/*}*/
-/*#banner-title{*/
-/*  font-weight: bold;*/
-/*  text-align: center;*/
-/*  font-size: 62px;*/
-/*  padding: 12px;*/
-/*  !*background-color: var(--sub-color);*!*/
-/*  background-color: v-bind('colors.sub_color');*/
-/*  box-shadow: 0 0 8px black;*/
-/*}*/
-/*#date{*/
-/*  position: absolute;*/
-/*  font-weight: bold;*/
-/*  height: auto;*/
-/*  left: 0;*/
-/*  bottom: 0;*/
-/*  font-size: 36px;*/
-/*  padding: 4px 12px;*/
-/*  !*background: linear-gradient(to right, var(--sub-color), transparent);*!*/
-/*  background: linear-gradient(to right, v-bind('colors.sub_color'), transparent);*/
-/*}*/
-/*#about{*/
-/*  position:absolute;*/
-/*  right: 0;*/
-/*  bottom: 0;*/
-/*  font-size: 36px;*/
-/*  padding: 12px;*/
-/*  background-color: var(--little-about-color);*/
-/*}*/
-/*#about p{*/
-/*  font-weight: bold;*/
-/*  margin-bottom: 0;*/
-/*}*/
-/*.st-text {*/
-/*  padding: 0.025em 0.075em;*/
-/*  !*background: v-bind('colors.main_color');*!*/
-/*  !*background: v-bind('colors.main_color');*!*/
-/*  background: v-bind('colors.main_color');*/
-/*  !*background-clip: text;*!*/
-/*  !*-webkit-text-fill-color: white;*!*/
-/*  !*-webkit-text-stroke: 16px;*!*/
-/*  !*font-size: 62px;*!*/
-/*  -webkit-background-clip: text;*/
-/*  -webkit-text-fill-color: #fff;*/
-/*  -webkit-text-stroke:0.14em transparent;*/
-/*}*/
 </style>
