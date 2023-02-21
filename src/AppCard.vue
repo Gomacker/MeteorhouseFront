@@ -68,7 +68,7 @@ export default {
 <!--      <el-container>-->
 <!--  <el-main :style="{'margin-left': 0}" style="transition: margin-left 0.4s ease;">-->
 <!--  <img class="bg-magic-circle" src="@/assets/bg_magic_circle.png" alt="" @dragstart.prevent/>-->
-  <router-view style="padding: 16px; width: fit-content"></router-view>
+  <router-view></router-view>
 <!--  </el-main>-->
 <!--      </el-container>-->
 <!--    </el-container>-->

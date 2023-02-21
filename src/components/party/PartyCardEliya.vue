@@ -19,6 +19,7 @@ const allow_mb2_lv = [0,1,2,3,4,5]
 const replacement_size = '36px'
 
 function getParamReplacements(p, union, pos) {
+  if (!('params' in p) || !('replacements' in p['params'])) return []
   let rps = p['params']['replacements']
   if (union in rps) {
     rps = rps[union]
@@ -38,7 +39,7 @@ function getParamReplacements(p, union, pos) {
 </script>
 <template>
 <div class="party" style="display: flex;">
-  <div class="union" v-for="union in ['union1', 'union2', 'union3']">
+  <div v-if="party" class="union" v-for="union in ['union1', 'union2', 'union3']">
     <div class="wfo-slot main"
          :class="[unit_data.hasOwnProperty(party['party'][union][0]) ? 'ele-' + getElementCss(unit_data[party['party'][union][0]]['element']) : '']">
       <div style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">

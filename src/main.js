@@ -60,6 +60,7 @@ const routes_pure = [
 const routes_card = [
     {path: '/card/unit', component: UnitWikiCard},
     {path: '/card/player', component: PlayerInfo},
+    {path: '/card/summary_table/:st_id', component: SummaryTablePage},
     {path: '/card/party_searcher', component: PartySearcherPure},
     // {path: '/test_place', component: TestPlace},
 ]
@@ -103,7 +104,11 @@ if (pure_paths.includes(location.pathname) || pure_paths.includes(location.pathn
     app.use(router)
     app.use(ElementPlus, {locale: zhCn})
     app.mount('#app')
-} else if (card_paths.includes(location.pathname) || card_paths.includes(location.pathname.substring(0, location.pathname.length - 1))) {
+} else if (
+    card_paths.includes(location.pathname) ||
+    card_paths.includes(location.pathname.substring(0, location.pathname.length - 1)) ||
+    location.pathname.includes('/card/summary_table/')
+) {
     const app = createApp(AppCard)
     app.use(router)
     app.use(ElementPlus, {locale: zhCn})

@@ -4,8 +4,9 @@
   <div style="box-shadow: black 0 0 4px; position: sticky; width: 100%; top: 0; padding: 16px; z-index: 20; background: white;">
     <el-form>
       <span><el-button @click="open_alert">注意事项</el-button></span>
-      <span v-if="loaded_table_id"> 预览页：<a :href="'/summary_table/' + loaded_table_id" target="_blank">/summary_table/{{ loaded_table_id }}</a></span>
-      <span v-if="loaded_table_id"> 旧版：<a :href="'/api/summary_table/' + loaded_table_id" target="_blank">/api/summary_table/{{ loaded_table_id }}</a></span>
+      <span v-if="loaded_table_id"> 预览页：<a :href="'/summary_table/' + loaded_table_id" target="_blank">预览页</a></span>
+      <span v-if="loaded_table_id"> Card：<a :href="'/card/summary_table/' + loaded_table_id" target="_blank">Card</a></span>
+      <span v-if="loaded_table_id"> 旧版：<a :href="'/api/summary_table/' + loaded_table_id" target="_blank">旧版</a></span>
 
       <el-form-item label="一图ID">
         <el-select filterable v-model="table_id">

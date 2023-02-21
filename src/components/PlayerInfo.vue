@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="padding: 16px; width: fit-content;">
   <div
       style="
         width: 720px;

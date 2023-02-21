@@ -1,12 +1,9 @@
 <script setup>
 import UnitWikiCardBody from '@/components/party/components/UnitWikiCardBody.vue'
-// import {unit_data} from "@/components/party_manager";
-// import axios from "axios";
-// import {onMounted, ref} from "vue";
 
 </script>
 <template>
-<div style="width: 100%; margin: 0 auto;">
+<div style="padding: 16px; width: fit-content; margin: 0 auto;">
 <!--  aba{{ unit }}-->
   <UnitWikiCardBody v-if="unit" :unit="unit"></UnitWikiCardBody>
 </div>

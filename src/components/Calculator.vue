@@ -323,7 +323,12 @@ export default {
               }
             )">输出</el-button>
               <el-button @click="calculate_party = JSON.parse(calculate_party_output).party">读取</el-button>
-              <el-button type="danger" @click="calculate_party = {'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]}">重置</el-button>
+              <el-button type="danger" @click="() => {
+                calculate_party = {'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]};
+                party_replacements = {'union1': [[], [], [], []], 'union2': [[], [], [], []], 'union3': [[], [], [], []]}
+                party_manaboard2 = {'union1': [[-1, -1, -1], [-1, -1, -1]], 'union2': [[-1, -1, -1], [-1, -1, -1]], 'union3': [[-1, -1, -1], [-1, -1, -1]]}
+
+              }">重置</el-button>
             </div>
             <el-input type="textarea" rows="4" style="width: 480px; padding: 16px 0;" v-model="calculate_party_output"></el-input>
           </div>
