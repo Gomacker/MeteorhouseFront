@@ -11,12 +11,18 @@ import '@/assets/summary_table.css'
 import {ref} from "vue";
 
 const props = defineProps({
-  party: Object
+  party: Object,
+  hidden_replacement: {
+    type: Boolean,
+    require: false,
+    default: true
+  }
 })
 // const party = ref(JSON.parse(JSON.stringify(props.party)))
 // const party_debug = ref(JSON.stringify(props.party))
 const allow_mb2_lv = [0,1,2,3,4,5]
 const replacement_size = '36px'
+const show_replacements = ref(false)
 
 function getParamReplacements(p, union, pos) {
   if (!('params' in p) || !('replacements' in p['params'])) return []
@@ -24,8 +30,8 @@ function getParamReplacements(p, union, pos) {
   if (union in rps) {
     rps = rps[union]
     if ('main' in rps || 'armament' in rps || 'unison' in rps || 'core' in rps) {
-      console.log(rps)
-      pos = {0: 'main', 1: 'armament', 2: 'unison', 3: 'core'}[pos]
+      // console.log(rps)
+      pos = {0: 'main', 1: 'unison', 2: 'armament', 3: 'core'}[pos]
       return pos in rps ? rps[pos] : []
 
     }
@@ -38,11 +44,14 @@ function getParamReplacements(p, union, pos) {
 
 </script>
 <template>
-<div class="party" style="display: flex;">
+<div class="party" style="display: flex;"
+     @mouseenter="show_replacements = true" @mouseleave="show_replacements = false">
+
+<!--  {{ show_replacements }}-->
   <div v-if="party" class="union" v-for="union in ['union1', 'union2', 'union3']">
     <div class="wfo-slot main"
          :class="[unit_data.hasOwnProperty(party['party'][union][0]) ? 'ele-' + getElementCss(unit_data[party['party'][union][0]]['element']) : '']">
-      <div style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
+      <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 0)"
             style="z-index: 15;"
@@ -50,6 +59,19 @@ function getParamReplacements(p, union, pos) {
             :src="getUnitPicUrl(unit_data[rpm])"
             alt=""
         />
+      </div>
+      <div
+          style="
+            position: absolute;
+            z-index: 2;
+            background-color: coral;
+            width: 16px;
+            text-align: center;
+            color: white;
+          "
+          v-if="hidden_replacement && getParamReplacements(party, union, 0).length > 0"
+      >
+        R
       </div>
       <img :src="getUnitPicUrl(unit_data[party['party'][union][0]])" alt="" loading="lazy" @dragstart.prevent/>
       <div>
@@ -80,7 +102,7 @@ function getParamReplacements(p, union, pos) {
       </div>
     </div>
     <div class="wfo-slot armament">
-      <div style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
+      <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 2)"
             style="z-index: 15;"
@@ -89,11 +111,38 @@ function getParamReplacements(p, union, pos) {
             alt=""
         />
       </div>
+      <div
+          style="
+            position: absolute;
+            z-index: 2;
+            background-color: coral;
+            width: 16px;
+            text-align: center;
+            color: white;
+          "
+          v-if="hidden_replacement && getParamReplacements(party, union, 2).length > 0"
+      >
+        R
+      </div>
       <img :src="getArmamentPicUrl(armament_data[party['party'][union][2]])" alt="" loading="lazy" @dragstart.prevent/>
       <div style="text-align: center;">装备</div>
     </div>
     <div class="wfo-slot unison"
          :class="[unit_data.hasOwnProperty(party['party'][union][1]) ? 'ele-' + getElementCss(unit_data[party['party'][union][1]]['element']) : '']">
+
+      <div
+          style="
+            position: absolute;
+            z-index: 2;
+            background-color: coral;
+            width: 16px;
+            text-align: center;
+            color: white;
+          "
+          v-if="hidden_replacement && getParamReplacements(party, union, 1).length > 0"
+      >
+        R
+      </div>
       <img :src="getUnitPicUrl(unit_data[party['party'][union][1]])" alt="" loading="lazy" @dragstart.prevent/>
 
       <div
@@ -119,7 +168,7 @@ function getParamReplacements(p, union, pos) {
       </div>
       <div v-else style="text-align: center;">辅助角色</div>
 
-      <div style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ' / 2)', left: 'calc( -' + replacement_size + ' / 2)'}">
+      <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ' / 2)', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 1)"
             style="z-index: 15;"
@@ -130,9 +179,22 @@ function getParamReplacements(p, union, pos) {
       </div>
     </div>
     <div class="wfo-slot core">
+      <div
+          style="
+            position: absolute;
+            z-index: 2;
+            background-color: coral;
+            width: 16px;
+            text-align: center;
+            color: white;
+          "
+          v-if="hidden_replacement && getParamReplacements(party, union, 3).length > 0"
+      >
+        R
+      </div>
       <img :src="getArmamentCorePicUrl(armament_data[party['party'][union][3]])" alt="" loading="lazy" @dragstart.prevent/>
       <div style="text-align: center;">魂珠</div>
-      <div style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
+      <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 3)"
             style="z-index: 15;"

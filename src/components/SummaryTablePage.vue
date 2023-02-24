@@ -1,7 +1,7 @@
 <script setup>
 
 // import axios from "axios";
-import {onMounted, ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import tab from "bootstrap/js/src/tab";
 import SummaryTable from "@/components/SummaryTable.vue";
 // import "@/assets/summary_table.css";
@@ -9,14 +9,8 @@ import SummaryTable from "@/components/SummaryTable.vue";
 
 </script>
 <template>
-<!--  <div style="width: 100%; height: 100%;">-->
   <div>
-<!--    <p>{{ $route.params['st_id'] }}</p>-->
-<!--    <p>{{ table_data }}</p>-->
-<!--    <el-scrollbar>-->
-
-      <SummaryTable :table_data="table_data"/>
-<!--    </el-scrollbar>-->
+      <SummaryTable :table_data="table_data" :hidden_replacements="hidden_replacements"/>
 
   </div>
 </template>
@@ -29,16 +23,13 @@ import axios from "axios";
 import {ref} from "vue";
 
 let table_data = ref({})
-// let colors = ref({
-//   main_color: 'rgba(255, 255, 255, 1)',
-//   sub_color: 'rgba(255, 255, 255, 1)',
-// })
 
 export default {
   name: "SummaryTablePage",
   data() {
     return {
       table_data: table_data,
+      hidden_replacements: this.$route['query'].hidden_replacements ? this.$route['query'].hidden_replacements.toLowerCase() === 'true' : true
       // colors: colors
     }
   },
@@ -50,6 +41,9 @@ export default {
       // colors.value.main_color = r.data.property['main_color']
       // colors.value.sub_color = r.data.property['sub_color']
     })
+  },
+  unmounted() {
+    table_data.value = {}
   }
 }
 </script>

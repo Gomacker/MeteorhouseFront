@@ -1,7 +1,6 @@
 <script setup>
 import UnitPicInfo from "@/components/party/components/UnitPicInfo.vue";
 import {unit_data} from "@/components/party_manager";
-import PartyCardEliya from "@/components/party/PartyCardEliya.vue";
 
 const up_data_fire = [
   {

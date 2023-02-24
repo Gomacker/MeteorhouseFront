@@ -27,6 +27,8 @@ import {ElMessage} from "element-plus";
 const selected_unit = ref(0)
 const selected = ref(null)
 const sel_arma_list = ref(false)
+const loaded_party_id = ref('')
+const party_id_input = ref('')
 const party_title = ref('')
 const calculate_party = ref({'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]})
 const party_replacements = ref({'union1': [[], [], [], []], 'union2': [[], [], [], []], 'union3': [[], [], [], []]})
@@ -45,6 +47,13 @@ function get_pos(sel) {
 
   return [union, pos]
 }
+
+function clear_party() {
+  calculate_party.value = {'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]};
+  party_replacements.value = {'union1': [[], [], [], []], 'union2': [[], [], [], []], 'union3': [[], [], [], []]}
+  party_manaboard2.value = {'union1': [[-1, -1, -1], [-1, -1, -1]], 'union2': [[-1, -1, -1], [-1, -1, -1]], 'union3': [[-1, -1, -1], [-1, -1, -1]]}
+  party_title.value = ''
+}
 export default {
   data() {
     return {
@@ -54,7 +63,9 @@ export default {
       party_manaboard2: party_manaboard2,
       party_title: party_title,
       calculate_party_output: calculate_party_output,
-      edit_module: edit_module
+      edit_module: edit_module,
+      party_id_input: party_id_input,
+      loaded_party_id: loaded_party_id
     }
   },
   methods: {
@@ -151,21 +162,27 @@ export default {
       return selected.value === i
     },
     upload() {
+      const data = {
+        title: party_title.value,
+        party: calculate_party.value,
+        params: {
+          replacements: party_replacements.value,
+          manaboard2: party_manaboard2.value,
+        }
+      }
+      if (loaded_party_id.value) data.release_id = loaded_party_id.value;
       axios.post(
           '/api/update_party/',
-          {
-            title: party_title.value,
-            party: calculate_party.value,
-            params: {
-              replacements: party_replacements.value,
-              manaboard2: party_manaboard2.value,
-            }
-          }
+          data
       ).then(
           r => {
             console.log(r.data)
             if (r.data['result'] === 'success') {
               ElMessage.success('上传成功')
+              if (loaded_party_id.value) {
+                loaded_party_id.value = ''
+                clear_party();
+              }
             }else {
               ElMessage.error('上传失败')
             }
@@ -175,7 +192,30 @@ export default {
             ElMessage.error('上传失败(连接失败)')
           }
       )
-    }
+    },
+    load_party() {
+      axios.post(
+          '/api/prd/',
+          {
+            release_id: party_id_input.value
+          }
+      ).then(
+          r => {
+            console.log(r.data)
+            if (r.data.result === 'success') {
+              ElMessage.success('导入成功')
+              calculate_party.value = r.data.party.party
+              party_title.value = r.data.party.title
+              loaded_party_id.value = r.data.party.id
+              party_manaboard2.value = r.data.party.params.manaboard2
+            }else {
+
+              ElMessage.error('导入失败')
+            }
+          }
+      )
+    },
+    clear_party
   }
 }
 </script>
@@ -190,12 +230,27 @@ export default {
       </div>
       <div id="calculator-updater" style="display: flex; flex-direction: column; margin: 16px;">
         <div v-if="is_login" style="width: 480px;">
-          <span style="margin: 0 8px;">标题</span>
-          <el-input v-model="party_title" :style="{width: is_login ? '300px' : '200px'}" style="margin: 0 8px;" :maxlength="20" show-word-limit placeholder="title"/>
-          <el-button style="margin: 0 8px;" :disabled="!is_login" @click="upload">
-            上传队伍
-            <p v-if="!is_login" style="color: red;">&lt;需要登录&gt;</p>
-          </el-button>
+          <div style="margin-bottom: 12px;">
+            <span style="margin: 0 8px;">要修改的盘子ID</span>
+            <el-input v-model="party_id_input" style="width: 182px; margin: 0 8px;" :maxlength="8" placeholder="ID"/>
+            <el-button style="margin: 0 8px;" type="primary" @click="load_party">
+              读取
+            </el-button>
+            <el-button style="margin: 0 8px;" type="danger" v-if="false">
+              删除
+            </el-button>
+
+          </div>
+          <div>
+            <span style="margin: 0 8px;">标题</span>
+            <el-input v-model="party_title" :style="{width: is_login ? '300px' : '200px'}" style="margin: 0 8px;" :maxlength="20" show-word-limit placeholder="title"/>
+            <el-button v-if="!loaded_party_id" style="margin: 0 8px;" :disabled="!is_login" @click="upload">
+              上传队伍
+            </el-button>
+            <el-button v-else style="border: 2px #00bd7e solid; margin: 0 8px;" :disabled="!is_login" @click="upload">
+              修改队伍
+            </el-button>
+          </div>
 
         </div>
       </div>
@@ -323,12 +378,7 @@ export default {
               }
             )">输出</el-button>
               <el-button @click="calculate_party = JSON.parse(calculate_party_output).party">读取</el-button>
-              <el-button type="danger" @click="() => {
-                calculate_party = {'union1': [0, 0, 0, 0], 'union2': [0, 0, 0, 0], 'union3': [0, 0, 0, 0]};
-                party_replacements = {'union1': [[], [], [], []], 'union2': [[], [], [], []], 'union3': [[], [], [], []]}
-                party_manaboard2 = {'union1': [[-1, -1, -1], [-1, -1, -1]], 'union2': [[-1, -1, -1], [-1, -1, -1]], 'union3': [[-1, -1, -1], [-1, -1, -1]]}
-
-              }">重置</el-button>
+              <el-button type="danger" @click="clear_party()">重置</el-button>
             </div>
             <el-input type="textarea" rows="4" style="width: 480px; padding: 16px 0;" v-model="calculate_party_output"></el-input>
           </div>

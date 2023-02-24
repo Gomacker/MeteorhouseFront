@@ -8,7 +8,7 @@ import {ref} from "vue";
 import axios from "axios";
 import {is_login, user_name, user_avatar, permissions} from '@/components/user'
 
-const sidebar_hidden = ref(false)
+const sidebar_hidden = ref(true)
 
 export default {
   data() {
@@ -179,11 +179,8 @@ export default {
           padding: 2px;
         "
       >
-        <a style="color:#222" target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">津ICP备2022008496号-1</a>
-<!--        Author: @Kranca / Gomacker-->
-<!--        <a href="https://space.bilibili.com/11466987" target="_blank">-->
-<!--          <img style="display: inline-block; width: 16px; vertical-align: bottom;" src="https://www.bilibili.com/favicon.ico" alt="">-->
-<!--        </a>-->
+        <a style="color:#222" target="_blank" rel="noopener" href="http://beian.miit.gov.cn/">津ICP备2022008496号-1</a> /
+        <a style="color:#222" target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12010402001740">津公网安备 12010402001740号</a>
       </el-footer>
     </el-container>
   </div>

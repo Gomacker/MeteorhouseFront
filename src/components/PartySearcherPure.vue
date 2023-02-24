@@ -164,6 +164,6 @@ export default {
 
 <style scoped>
 .party-card:hover{
-  box-shadow: 0 0 8px;
+  box-shadow: 0 0 12px;
 }
 </style>

@@ -28,7 +28,7 @@
       <p>
         <el-button type="warning" @click="$router.push('/login')">后台登录</el-button>
       </p>
-      <div style="display:none;">
+      <div v-show="false">
         攻略/内容协力感谢：
         <div class="thanks-list">
           <p>
@@ -45,6 +45,11 @@
           </p>
         </div>
       </div>
+    </div>
+    <div>
+      <p>
+        部分图像资源来自 <a href="https://worldflipper.leiting.com/" target="_blank">世界弹射物语</a>、<a href="http://worldflipper.jp/">弹射世界官网</a> ，与本站无直接联系
+      </p>
     </div>
     <div style="display: flex; justify-content: space-evenly">
       <div>

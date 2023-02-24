@@ -5,12 +5,6 @@ import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
 <template>
   <div style="display: flex; height: 100%; flex-direction: column;">
     <div style="display: flex; flex-direction: column; padding: 8px;">
-<!--      <div>-->
-<!--        {{ current_page }}-->
-<!--        <el-button @click="get_data">-->
-<!--          [debug] 获取数据-->
-<!--        </el-button>-->
-<!--      </div>-->
       <div style="display: flex; justify-content: center; align-items: center;">
         <div style="padding: 0 8px;">
           搜索
@@ -191,6 +185,6 @@ export default {
 
 <style scoped>
 .party-card:hover{
-  box-shadow: 0 0 8px;
+  box-shadow: 0 0 12px;
 }
 </style>

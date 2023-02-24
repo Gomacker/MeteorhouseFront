@@ -27,7 +27,7 @@ function transColor(color, s) {
 }
 
 function formatText(t) {
-  console.log(t)
+  // console.log(t)
   t = t.replaceAll('', '')
   // t = '<p>' + t + '</p>'
   t = t.replaceAll('\n', '</p><p>')
@@ -46,7 +46,12 @@ function rgbToHex(rgb) {
 }
 
 const props = defineProps({
-  table_data: Object
+  table_data: Object,
+  hidden_replacements: {
+    type: Boolean,
+    required: false,
+    default: true
+  }
 })
 const colors = ref({
   main_color: 'rgba(255, 255, 255, 1)',
@@ -90,14 +95,20 @@ onBeforeUpdate(() => {
 
       </div>
       <div id="banner-title">
-        <p class="st-text" style="font-size: 62px;">{{ table_data.property.title }}</p>
+<!--        <p class="st-text" style="font-size: 62px;">{{ table_data.property.title }}</p>-->
+        <SummaryTableTextContent class="st-text" style="font-size: 62px;" :content="table_data.property.title"></SummaryTableTextContent>
       </div>
       <div id="date">
 <!--        <SummaryTableTextContent :content="table_data.property.update_time"/>-->
-        <p class="st-text" v-html="formatText(table_data.property.update_time)"></p>
+<!--        <p class="st-text" v-html="formatText(table_data.property.update_time)"></p>-->
+        <SummaryTableTextContent class="st-text" :content="table_data.property.update_time"></SummaryTableTextContent>
       </div>
       <div id="about">
-        <div class="st-text" v-html="formatText(table_data.property.little_about)"></div>
+<!--        <div class="st-text" v-html="formatText(table_data.property.little_about)"></div>-->
+<!--        {{ little_abouts = table_data.property.little_about.split('\n') }}-->
+        <SummaryTableTextContent style="font-weight: 900;" class="st-text" :content="table_data.property.little_about.split('\n')[0]"></SummaryTableTextContent>
+        <SummaryTableTextContent style="font-size: 22px;" class="st-text" :content="table_data.property.little_about.split('\n').slice(1).join('\n')"></SummaryTableTextContent>
+<!--        <SummaryTableTextContent class="st-text" :content="little_abouts"></SummaryTableTextContent>-->
       </div>
     </div>
     <div :style="table_data.property.background">
@@ -121,13 +132,14 @@ onBeforeUpdate(() => {
                   :style="{
                     width: ele.data['full'] ? '988px' : '492px',
                     font: ele.data['little_title'] ? '32px 黑体' : '',
+                    'font-weight': ele.data['little_title'] ? '900' : '',
                     'margin-bottom': ele.data['little_title'] ? '0' : '',
                     'padding-bottom': ele.data['little_title'] ? '0' : '',
                   }"
                   :content="ele.data['content']"
               />
               <div class="st-party">
-                <PartyCardEliya v-if="ele.type === 'Party'" style="margin: 8px;" :party="ele.data['party']"/>
+                <PartyCardEliya :hidden_replacement="hidden_replacements" v-if="ele.type === 'Party'" style="margin: 8px;" :party="ele.data['party']"/>
               </div>
               <div v-if="ele.type === 'Origin'" v-html="ele.data.content"/>
             </div>
