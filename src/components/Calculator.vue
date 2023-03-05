@@ -243,7 +243,7 @@ export default {
           </div>
           <div>
             <span style="margin: 0 8px;">标题</span>
-            <el-input v-model="party_title" :style="{width: is_login ? '300px' : '200px'}" style="margin: 0 8px;" :maxlength="20" show-word-limit placeholder="title"/>
+            <el-input v-model="party_title" :style="{width: is_login ? '300px' : '200px'}" style="margin: 0 8px;" :maxlength="40" show-word-limit placeholder="title"/>
             <el-button v-if="!loaded_party_id" style="margin: 0 8px;" :disabled="!is_login" @click="upload">
               上传队伍
             </el-button>
@@ -251,7 +251,7 @@ export default {
               修改队伍
             </el-button>
           </div>
-
+          
         </div>
       </div>
       <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: flex-start;">

@@ -9,11 +9,10 @@ import {createRouter, createWebHistory} from "vue-router";
 import AppPure from "@/AppPure.vue";
 import AppCard from "@/AppCard.vue";
 const UnitWikiCard = () => import("@/components/party/UnitWikiCard.vue")
+const ArmamentWikiCard = () => import("@/components/party/ArmamentWikiCard.vue")
 
 const Calculator = () => import("@/components/Calculator.vue")
-// import Calculator from "@/components/Calculator.vue";
 const MainPage = () => import("@/components/MainPage.vue")
-// import MainPage from "@/components/MainPage.vue";
 const PartySearcher = () => import("@/components/PartySearcher.vue")
 const PartySearcherPure = () => import("@/components/PartySearcherPure.vue")
 const SummaryTablePage = () => import("@/components/SummaryTablePage.vue")
@@ -28,6 +27,8 @@ const ResourceManagerArmament = () => import("@/components/resource_manager/Reso
 const ResourceManagerEvent = () => import("@/components/resource_manager/ResourceManagerEvent.vue")
 const ResourceManagerNickname = () => import("@/components/resource_manager/ResourceManagerNickname.vue")
 const TestPlace = () => import("@/components/TestPlace.vue")
+const TestPlace2 = () => import("@/components/TestPlace2.vue")
+const TestPlace3 = () => import("@/components/TestPlace3.vue")
 const ObjFilter = () => import("@/components/ObjFilter.vue")
 const PlayerInfo = () => import("@/components/PlayerInfo.vue")
 // import VueRouter from "vue-router";
@@ -49,6 +50,8 @@ const routes = [
     {path: '/resource_manager/event', component: ResourceManagerEvent},
     {path: '/resource_manager/nickname', component: ResourceManagerNickname},
     {path: '/test_place', component: TestPlace},
+    {path: '/test_place2', component: TestPlace2},
+    {path: '/test_place3', component: TestPlace3},
     // {path: '/test_place_pure', component: TestPlace},
 ]
 const routes_pure = [
@@ -59,6 +62,7 @@ const routes_pure = [
 ]
 const routes_card = [
     {path: '/card/unit', component: UnitWikiCard},
+    {path: '/card/armament', component: ArmamentWikiCard},
     {path: '/card/player', component: PlayerInfo},
     {path: '/card/summary_table/:st_id', component: SummaryTablePage},
     {path: '/card/party_searcher', component: PartySearcherPure},

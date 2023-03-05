@@ -26,12 +26,17 @@ export class Unit {
 
 export class PartyRelease {
     constructor(data) {
-        this.party = new Party(data.party)
-        this.replacements = {
-            union1: [],
-            union2: [],
-            union3: [],
-        }
+        this.id = data.id
+        // this.party = new Party(data.party)
+        this.party = data.party
+        // this.params = {}
+        // this.params.replacements = {
+        //     union1: [[], [], [], []],
+        //     union2: [[], [], [], []],
+        //     union3: [[], [], [], []],
+        // }
+        this.tags = data.hasOwnProperty('tags') ? data.tags : []
+        this.title = data.hasOwnProperty('title') ? data.title : 'Invalid Title'
     }
     set_party(pos, id) {
         this.party[pos[0]][pos[1]] = id

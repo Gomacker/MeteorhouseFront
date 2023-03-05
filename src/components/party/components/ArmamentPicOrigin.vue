@@ -19,7 +19,7 @@ const frame_width = width * 14 / 240
 <template>
 
 <!--      {{ armament }}-->
-  <div style="width: fit-content; display: inline-block;" :title="armament['anise_id'] + ': ' + armament['WfExId'] + ': ' + armament['wf_id']">
+  <div style="width: fit-content; display: inline-block;" :title="armament['anise_id'] + ': ' + armament['extraction_id'] + ': ' + armament['wf_id']">
     <svg v-if="armament" style="display: block;" :width="width" :height="height" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g>
 <!--        <image-->
@@ -30,7 +30,7 @@ const frame_width = width * 14 / 240
 <!--            :y="frame_width" :x="frame_width"-->
 <!--        />-->
         <image
-            v-if="armament['WfExId']"
+            v-if="armament['extraction_id']"
             :href="getArmamentPicUrl(armament)"
             id="armament_pic"
             :height="width - frame_width * 2"
@@ -44,13 +44,6 @@ const frame_width = width * 14 / 240
             :width="height"
             y="0" x="0"
         />
-<!--        <image-->
-<!--            :href="'/assets/worldflipper/icon/' + getElementCss(armament.element) + '.png'"-->
-<!--            id="element_icon"-->
-<!--            :height="ele_size"-->
-<!--            :width="ele_size"-->
-<!--            :y="frame_width" :x="width - frame_width - ele_size"-->
-<!--        />-->
         <image
             v-if="armament.rarity"
             :href="'/assets/worldflipper/ui/star_in_frame/star' + armament.rarity + 'inf.png'"

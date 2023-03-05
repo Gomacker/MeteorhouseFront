@@ -213,7 +213,7 @@ onBeforeUpdate(() => {
   font-weight: bold;
   text-align: center;
   font-size: 62px;
-  padding: 12px;
+  padding: 6px 12px;
   background-color: var(--sub-color);
   /*background-color: v-bind('colors.sub_color');*/
   box-shadow: 0 0 8px black;

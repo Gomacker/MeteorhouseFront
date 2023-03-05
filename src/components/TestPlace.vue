@@ -2385,17 +2385,6 @@ function format_content(content) {
 </script>
 
 <template>
-<!--  <div>{{ JSON.stringify({-->
-<!--  fire: up_data_fire,-->
-<!--  water: up_data_water,-->
-<!--  thunder: up_data_thunder,-->
-<!--  wind: up_data_wind,-->
-<!--  light: up_data_light,-->
-<!--  dark: up_data_dark,-->
-<!--  }) }}</div>-->
-<!--  <PartyCardEliya :party="-->
-<!--  {'id':'tvB3jZ9W','title':'火技伤/泽塔佐仓/地狱风/除泽塔 6板满','updater_id':'astaroth','party':{'union1':[281,5,195,99],'union2':[208,238,186,235],'union3':[219,20,235,161]},'params':{'replacements':{},'manaboard1':{},'manaboard2':{},'extension':{}}}-->
-<!--"/>-->
   <div style="
       background: url(/assets/worldflipper/ui/background_cut_official.png);
       background-size: 136px;
@@ -2416,7 +2405,12 @@ function format_content(content) {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        image-rendering: initial;
+        /* background: url(/assets/worldflipper/ui/background_cut_official.png); */
+        /* background-size: 136px; */
+        /* background-position-x: -10px; */
+        /* background-position-y: -10px; */
+        /* image-rendering: pixelated; */
+        align-items: flex-start;
       "
   >
 
@@ -2426,6 +2420,7 @@ function format_content(content) {
           width: 998px;
           margin: 8px;
           display: flex;
+          image-rendering: initial;
           flex-direction: row;
           /*background-color: rgb(234,53,75);*/
           /*padding: 16px;*/

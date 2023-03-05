@@ -1,5 +1,5 @@
 <script setup>
-import {Expand, Calendar, Menu, Search, Management, InfoFilled, PictureFilled, UserFilled, List} from "@element-plus/icons-vue";
+import {Expand, Calendar, Menu, Search, Management, InfoFilled, List} from "@element-plus/icons-vue";
 
 </script>
 <script>
@@ -134,6 +134,14 @@ export default {
                 资源管理
               </el-menu-item>
               <el-menu-item v-if="permissions.resource_manager" index="test-place" @click="$router.push('/test_place')">
+                <el-icon><List /></el-icon>
+                <span style="color: lightseagreen;">（测试用）</span>
+              </el-menu-item>
+              <el-menu-item v-if="permissions.resource_manager" index="test-place2" @click="$router.push('/test_place2')">
+                <el-icon><List /></el-icon>
+                <span style="color: lightseagreen;">（测试用）</span>
+              </el-menu-item>
+              <el-menu-item v-if="permissions.resource_manager" index="test-place3" @click="$router.push('/test_place3')">
                 <el-icon><List /></el-icon>
                 <span style="color: lightseagreen;">（测试用）</span>
               </el-menu-item>

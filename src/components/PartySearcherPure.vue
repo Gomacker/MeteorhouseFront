@@ -1,5 +1,7 @@
 <script setup>
 import {Search} from '@element-plus/icons-vue'
+import {PartyRelease} from "@/components/party_manager";
+import PartyReleaseCard from "@/components/PartyReleaseCard.vue";
 </script>
 
 <template>
@@ -34,14 +36,18 @@ import {Search} from '@element-plus/icons-vue'
     <!--    </div>-->
     <div ref="scrollbar_ref" style="z-index: 2;" v-loading="loading">
       <div class="search-body" style="display: flex; flex-wrap: wrap; justify-content: center;">
-        <el-card class="party-card" v-for="(p, id) in party_releases" body-style="padding: 12px 8px 8px;" style="margin: 8px 4px; /* width: fit-content */ width: 498px;">
-          <div style="display: flex; justify-content: space-between;">
-            <div><span style="font-weight: bold; font-size: 18px;">{{ p.title }}</span><span style="color: darkgray;">({{ id }})</span></div>
-            <div><span style="color: gray;">{{ p.updater_id }}</span></div>
-          </div>
-          <!--      <PartyCard :party="{party: p}"></PartyCard>-->
-          <PartyCard :party="p"></PartyCard>
-        </el-card>
+<!--        <el-card class="party-card" v-for="(p, id) in party_releases" body-style="padding: 12px 8px 8px;" style="margin: 8px 4px; /* width: fit-content */ width: 498px;">-->
+<!--          <div style="display: flex; justify-content: space-between;">-->
+<!--            <div><span style="font-weight: bold; font-size: 18px;">{{ p.title }}</span><span style="color: darkgray;">({{ id }})</span></div>-->
+<!--&lt;!&ndash;            <div><span style="color: gray;">{{ p.updater_id }}</span></div>&ndash;&gt;-->
+<!--          </div>-->
+<!--          &lt;!&ndash;      <PartyCard :party="{party: p}"></PartyCard>&ndash;&gt;-->
+<!--          <PartyCard :party="p"></PartyCard>-->
+<!--        </el-card>-->
+        <template v-for="p in party_releases">
+          <PartyReleaseCard v-if="Object.keys(p).length" :p="p" :extra_option="false"/>
+        </template>
+<!--        <PartyReleaseCard v-for="(p, id) in party_releases" :p="new PartyRelease(p)" :extra_option="false"/>-->
       </div>
     </div>
     <div style="display: flex; justify-content: center; padding: 8px 0 0;">

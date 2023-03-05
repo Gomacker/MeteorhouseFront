@@ -16,8 +16,10 @@
     "bootstrap": "^5.2.3",
     "clipboard": "^2.0.11",
     "element-plus": "^2.2.27",
+    "less": "~3.0.4",
     "moment": "^2.29.4",
     "vue": "^3.2.45",
+    "vue-adsense": "^1.0.1",
     "vue-cookies": "^1.8.2",
     "vue-router": "^4.1.6"
   },

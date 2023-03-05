@@ -142,7 +142,7 @@
         </el-button>
       </el-col>
     </el-row>
-    {{ JSON.stringify(table_data, null, 2) }}
+<!--    {{ JSON.stringify(table_data, null, 2) }}-->
   </div>
 </template>
 

@@ -1,5 +1,7 @@
 <script setup>
 import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
+import PartyReleaseCard from "@/components/PartyReleaseCard.vue";
+import {PartyRelease} from "@/components/party_manager.js";
 </script>
 
 <template>
@@ -28,38 +30,43 @@ import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
 <!--    </div>-->
     <el-scrollbar ref="scrollbar_ref" style="z-index: 2;" v-loading="loading">
       <div class="search-body" style="display: flex; flex-wrap: wrap; justify-content: center;">
-        <el-card class="party-card" v-for="(p, id) in party_releases" body-style="padding: 12px 8px 8px;" style="margin: 8px; /* width: fit-content */ width: 498px;">
-          <div style="display: flex; justify-content: space-between;">
-            <div>
-              <span style="font-weight: bold; font-size: 18px;">{{ p.title }}</span>
-              <span style="color: darkgray;">({{ id }})</span>
-            </div>
-            <div><span style="color: gray;">{{ p.updater_id }}</span></div>
-          </div>
-          <!--      <PartyCard :party="{party: p}"></PartyCard>-->
-          <PartyCard :party="p"></PartyCard>
-          <div style="display: flex; justify-content: space-between;">
-            <div/>
-            <div>
-              <el-button-group style="margin: 0 2px;">
-                <!--            <el-button size="default" style="color: deeppink; padding-right: 64px;">-->
-                <el-button disabled size="small" style="color: deeppink;">
-                  <div style="width: 100%; height: 100%; position: absolute;"></div>
-                  <div>❤ 0</div>
-                </el-button>
-                <el-button disabled size="small">
-                  <el-icon><ArrowDownBold /></el-icon>
-                </el-button>
-              </el-button-group>
-              <el-button size="small" type="warning" :data-clipboard-text="JSON.stringify({party: p.party})" :id="'copy-' + p.id" @click="copy_party(p.id)" style="margin: 0 2px;">
-                <el-icon><DocumentCopy /></el-icon>
-              </el-button>
-            </div>
-          </div>
-        </el-card>
+<!--        <el-card class="party-card" v-for="(p, id) in party_releases" body-style="padding: 12px 8px 8px;" style="margin: 8px; /* width: fit-content */ width: 498px;">-->
+<!--          <div style="display: flex; justify-content: space-between;">-->
+<!--            <div>-->
+<!--              <span style="font-weight: bold; font-size: 18px;">{{ p.title }}</span>-->
+<!--              <span style="color: darkgray;">({{ id }})</span>-->
+<!--            </div>-->
+<!--            <div/>-->
+<!--&lt;!&ndash;            <div><span style="color: gray;">{{ p.updater_id }}</span></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div><span style="color: gray;">&#45;&#45; 上传者 &#45;&#45;</span></div>&ndash;&gt;-->
+<!--          </div>-->
+<!--          &lt;!&ndash;      <PartyCard :party="{party: p}"></PartyCard>&ndash;&gt;-->
+<!--          <PartyCard :party="p"></PartyCard>-->
+<!--          <div style="display: flex; justify-content: space-between;">-->
+<!--            <div/>-->
+<!--            <div>-->
+<!--              <el-button-group style="margin: 0 2px;">-->
+<!--                &lt;!&ndash;            <el-button size="default" style="color: deeppink; padding-right: 64px;">&ndash;&gt;-->
+<!--                <el-button disabled size="small" style="color: deeppink;">-->
+<!--                  <div style="width: 100%; height: 100%; position: absolute;"></div>-->
+<!--                  <div>❤ 0</div>-->
+<!--                </el-button>-->
+<!--                <el-button disabled size="small">-->
+<!--                  <el-icon><ArrowDownBold /></el-icon>-->
+<!--                </el-button>-->
+<!--              </el-button-group>-->
+<!--              <el-button size="small" type="warning" :data-clipboard-text="JSON.stringify({party: p.party, params: p.params})" :id="'copy-' + p.id" @click="copy_party(p.id)" style="margin: 0 2px;">-->
+<!--                <el-icon><DocumentCopy /></el-icon>-->
+<!--              </el-button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </el-card>-->
+        <template v-for="p in party_releases">
+          <PartyReleaseCard v-if="Object.keys(p).length" :p="p"/>
+        </template>
       </div>
     </el-scrollbar>
-    <div style="display: flex; justify-content: center; padding: 8px 0 0;">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 8px 0 0;">
       <el-pagination
           v-model:current-page="current_page"
           background
@@ -71,8 +78,23 @@ import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
             scrollbar_ref.setScrollTop(0)
           }"
       />
+
     </div>
+<!--    <div>-->
+<!--      <component is="script" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6137707949266143"-->
+<!--                 crossorigin="anonymous"></component>-->
+<!--      <ins class="adsbygoogle"-->
+<!--           style="display:inline-block;width:728px;height:90px"-->
+<!--           data-ad-client="ca-pub-6137707949266143"-->
+<!--           data-ad-slot="8336190365"></ins>-->
+
+<!--      <component is="script">-->
+<!--        (adsbygoogle = window.adsbygoogle || []).push({});-->
+<!--      </component>-->
+
+<!--    </div>-->
   </div>
+<!--  <template v-html="adsense"></template>-->
 </template>
 
 <script>
