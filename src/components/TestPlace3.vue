@@ -8,6 +8,30 @@ import {ref} from "vue";
 import PartyReleaseCard from "@/components/PartyReleaseCard.vue";
 
 const alpha = 0.85;
+const test_pr = new PartyRelease(
+    {
+      'party':{
+        'union1':[9901,0,0,0],
+        'union2':[0,0,0,0],
+        'union3':[0,0,0,0]
+      },
+      'params':{
+        'replacements':{
+          'union1':[[],[],[],[]],
+          'union2':[[],[],[],[]],
+          'union3':[[],[],[],[]]
+        },
+        'manaboard2':{
+          'union1':[[-1,-1,-1],[-1,-1,-1]],
+          'union2':[[-1,-1,-1],[-1,-1,-1]],
+          'union3':[[-1,-1,-1],[-1,-1,-1]]
+        }
+      },
+      'tags': [
+        'a'
+      ]
+    }
+);
 function format_content(content) {
   let s = '<p>'
   s += content.replaceAll('\n', '</p><p>')
@@ -31,30 +55,7 @@ const bg_sty = ref('linear-gradient(0deg, rgba(255,255,255,0.75), transparent)')
 </script>
 
 <template>
-  <PartyReleaseCard :p="new PartyRelease(
-    {
-      'party':{
-        'union1':[9901,0,0,0],
-        'union2':[0,0,0,0],
-        'union3':[0,0,0,0]
-      },
-      'params':{
-        'replacements':{
-          'union1':[[],[],[],[]],
-          'union2':[[],[],[],[]],
-          'union3':[[],[],[],[]]
-        },
-        'manaboard2':{
-          'union1':[[-1,-1,-1],[-1,-1,-1]],
-          'union2':[[-1,-1,-1],[-1,-1,-1]],
-          'union3':[[-1,-1,-1],[-1,-1,-1]]
-        }
-      },
-      'tags': [
-          'a'
-      ]
-    }
-  )"></PartyReleaseCard>
+  <PartyReleaseCard :p="test_pr"></PartyReleaseCard>
   <div style="margin: 16px;">
     <el-form-item label="内容">
       <el-input v-model="content" type="textarea" :rows="4"></el-input>

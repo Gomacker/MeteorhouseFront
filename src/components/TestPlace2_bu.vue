@@ -63,7 +63,7 @@ const up_datas = {
   'dark': up_data_dark,
 }
 
-const chars = {'fire': [3, 4, 5, 133, 143, 252], 'water': [6, 7, 127, 139, 152, 161, 236], 'thunder': [8, 9, 134, 144, 166, 170], 'wind': [10, 11, 13, 140, 157, 177, 188, 222, 253], 'light': [14, 15, 16, 147, 148, 162, 178, 192, 202, 203], 'dark': [17, 18, 128, 153, 172, 179, 218, 223]}
+const chars = {'fire': [3, 133, 143, 4, 5, 252, 258], 'water': [127, 152, 161, 236, 139, 7, 6], 'thunder': [134, 144, 166, 170, 9, 8, 259], 'wind': [177, 222, 140, 188, 13, 11, 10, 157, 253], 'light': [202, 203, 178, 16, 148, 147, 162, 192, 14, 15], 'dark': [223, 218, 179, 172, 128, 17, 18, 153]}
 
 const alpha = 0.85;
 const ele2color = {
@@ -225,82 +225,83 @@ function format_content(content) {
         image-rendering: pixelated;
         align-items: flex-start;
       "
+      v-for="ind in 6"
   >
-    <div
-      v-if="Object.keys(unit_data).length"
-      style="
-        width: 480px;
-        margin: 8px;
-        display: flex;
-        image-rendering: initial;
-        flex-direction: row;
-        /*background-color: rgb(234,53,75);*/
-        /*padding: 16px;*/
-        /*padding: 3px;*/
-        border-radius: 16px;
-        font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-      "
-      :style="{
-        'background-color': ele2color[ele]
-      }"
-      v-for="(cl, ele) in chars"
-    >
-      <div
-          style="
-            background-color: white;
-            width: 31px;
-            border-top-left-radius: 13px;
-            border-bottom-left-radius: 13px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid;
-            box-sizing: content-box;
-          "
-          :style="
-          {
-            'border-color': ele2border_color[ele],
-            // 'color': element_id === 'light' ? 'rgb(136,136,136)' : 'white'
-          }
-          "
-      >
-        <img style="width: 28px; height: 28px;" :src="'/assets/worldflipper/icon/' + ele + '.png'" alt=""/>
-        <p style="font-size: 24px; width: 24px; line-height: 28px; font-weight: bold; color: black;">
-          {{ ele2name[ele] }}
-        </p>
-      </div>
-      <div
-        style="
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          width: 100%;
-          padding: 18px 28px 18px 16px;
-          /*color: white;*/
-          /*color: black;*/
-          font-weight: 500;
-          flex-wrap: wrap;
-        "
-        :style="
-        {
-          'color': (['light'].includes(ele)) ? 'rgb(50,50,50)' : 'rgb(250,250,250)'
-        }
-        "
-      >
-        <div v-for="i in cl" style="
-          padding: 4px;
-          width: fit-content;
-        "
-        >
-          <UnitPicOrigin :unit="unit_data[i]" :size="90" :awakened="false">
-          </UnitPicOrigin>
-          <div style="font-size:18px; width: 90px; font-weight: 600; text-align: center;">
-            {{ unit_data[i].name[0] }}
+
+
+    <template
+        v-for="(up_data, element_id) in up_datas">
+        <div
+              v-if="Object.keys(unit_data).length && up_data[ind - 1].length !== 0"
+              style="
+                width: 480px;
+                margin: 8px;
+                display: flex;
+                image-rendering: initial;
+                flex-direction: row;
+                /*background-color: rgb(234,53,75);*/
+                /*padding: 16px;*/
+                /*padding: 3px;*/
+                border-radius: 16px;
+                font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+              "
+              :style="{
+                'background-color': ele2color[element_id]
+              }"
+          >
+            <div
+                style="
+                  background-color: white;
+                  width: 31px;
+                  border-top-left-radius: 13px;
+                  border-bottom-left-radius: 13px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  border: 3px solid;
+                  box-sizing: content-box;
+                "
+                :style="
+                {
+                  'border-color': ele2border_color[element_id],
+                  // 'color': element_id === 'light' ? 'rgb(136,136,136)' : 'white'
+                }
+                "
+            >
+              <img style="width: 28px; height: 28px;" :src="'/assets/worldflipper/icon/' + element_id + '.png'" alt=""/>
+              <p style="font-size: 24px; width: 24px; line-height: 28px; font-weight: bold; color: black;">
+                {{ ele2name[element_id] }}
+              </p>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                width: 100%;
+                padding: 18px 28px 18px 16px;
+                /*color: white;*/
+                /*color: black;*/
+                font-weight: 500;
+              "
+              :style="
+              {
+                'color': (['light'].includes(element_id)) ? 'rgb(50,50,50)' : 'rgb(250,250,250)'
+              }
+              "
+            >
+              <div v-for="i in up_data[ind - 1]" style="padding: 4px; width: fit-content;">
+                <UnitPicOrigin :unit="unit_data[i]" :size="90" :awakened="true">
+                  aa
+                </UnitPicOrigin>
+                <div style="font-size:18px; font-weight: 600; text-align: center;">
+                  {{ unit_data[i].name[0] }}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+      </template>
   </div>
 </div>
 </template>

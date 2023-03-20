@@ -19,20 +19,15 @@ const frame_width = width * 14 / 240
 <template>
 
 <!--      {{ armament }}-->
-  <div style="width: fit-content; display: inline-block;" :title="armament['anise_id'] + ': ' + armament['extraction_id'] + ': ' + armament['wf_id']">
+<!--  <div style="width: fit-content; display: inline-block;" :title="armament['anise_id'] + ': ' + armament['WfExId'] + ': ' + armament['wf_id']">-->
+  <div style="width: fit-content; display: inline-block;" :title="armament['WfExId'] + ': ' + armament['RinBotId']">
     <svg v-if="armament" style="display: block;" :width="width" :height="height" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g>
-<!--        <image-->
-<!--            :href="'/assets/worldflipper/ui/armament_background.png'"-->
-<!--            id="background"-->
-<!--            :height="width - frame_width * 2"-->
-<!--            :width="height - frame_width * 2"-->
-<!--            :y="frame_width" :x="frame_width"-->
-<!--        />-->
         <image
-            v-if="armament['extraction_id']"
+            v-if="/*armament['extraction_id']*/ armament['WfExId']"
             :href="getArmamentPicUrl(armament)"
             id="armament_pic"
+            style=""
             :height="width - frame_width * 2"
             :width="height - frame_width * 2"
             :y="frame_width" :x="frame_width"

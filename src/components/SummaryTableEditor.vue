@@ -15,7 +15,11 @@
 <!--              超火-->
 <!--            </div>-->
 <!--          </el-option>-->
-          <el-option v-for="st in table_list" :value="st" @change="table_change"/>
+          <el-option v-for="(tid, table_name) in table_list" :value="tid" :label="`${table_name}: ${tid}`" @change="table_change">
+            <template #default>
+              {{ table_name }}<span style="color: lightgrey;">: {{ tid }}</span>
+            </template>
+          </el-option>
         </el-select>
         &nbsp;&nbsp;
         <el-button type="default" @click="table_change(table_id)">读取</el-button>
@@ -53,7 +57,7 @@ if (loaded_table_id && !table_id) {
   table_id.value = loaded_table_id.value
 }
 
-const table_list = ref([])
+const table_list = ref({})
 
 axios.post(
     '/api/table_list/'

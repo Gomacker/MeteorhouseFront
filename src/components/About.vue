@@ -48,7 +48,7 @@
     </div>
     <div>
       <p>
-        部分图像资源来自 <a href="https://worldflipper.leiting.com/" target="_blank">世界弹射物语</a>、<a href="http://worldflipper.jp/">弹射世界官网</a> ，与本站无直接联系
+        部分图像资源来自 <a href="https://worldflipper.leiting.com/" target="_blank">世界弹射物语</a>、<a href="http://worldflipper.jp/">弹射世界官网</a>
       </p>
     </div>
     <div style="display: flex; justify-content: space-evenly">
@@ -65,6 +65,9 @@
         <p style="color: rgb(0, 255, 0);">❤</p>
         <p>
           <a href="https://nga.178.com/thread.php?fid=693" target="_blank">弹射世界NGA</a>
+        </p>
+        <p>
+          <a href="https://wiki.biligame.com/worldflipper/" target="_blank">世界弹射物语BWiki</a>
         </p>
         <p>
           <a href="https://www.gamer.cn/sjtswy" target="_blank">世界弹射物语磁场</a>

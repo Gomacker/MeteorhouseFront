@@ -5,12 +5,14 @@ import ArmamentPicOrigin from "@/components/party/components/ArmamentPicOrigin.v
 
 function splitByBrackets(str) {
   // str = '<p style="padding-bottom: 2px; padding-top: 2px; width: 100%; min-width: 100%;">' + str + '</p>'
-  str = str.replaceAll('\n', '</p><p style="padding-bottom: 5px;">')
-  str = str.replaceAll('[novice]', '<span class="novice">')
-  str = str.replaceAll('[highlight]', '<span class="highlight">')
+  // str = '</span><span style="padding-bottom: 5px;">' + str
+  str = str.replaceAll('\n', '</span><span style="padding-bottom: 5px;">')
+  str = str.replaceAll('[novice]', '</span><span class="novice" style="padding-bottom: 5px;">')
+  str = str.replaceAll('[highlight]', '</span><span class="highlight" style="padding-bottom: 5px;">')
   str = str.replaceAll('[b]', '<b>')
   str = str.replaceAll('[end]', '</span>')
   str = str.replaceAll('[biliicon]', '<img style="width: 24px; vertical-align: text-bottom; margin: 0 4px;" src="https://www.bilibili.com/favicon.ico" alt=""/>')
+  // str = str + '</span><span style="padding-bottom: 5px;">'
 
   let result = [];
   let bracketed = str.match(/\[.*?]/g) || [];
@@ -33,11 +35,11 @@ defineProps({
         <UnitPicOrigin style="filter: drop-shadow(0 0 2px black)" v-else-if="s.startsWith('[icon:u') && Object.keys(unit_data).length" :size="60" :unit="unit_data[s.substring(7, s.length - 1)]"/>
         <ArmamentPicOrigin style="filter: drop-shadow(0 0 4px black)" v-else-if="s.startsWith('[bigicon:a') && Object.keys(armament_data).length" :size="90" :armament="armament_data[s.substring(10, s.length - 1)]"/>
         <ArmamentPicOrigin style="filter: drop-shadow(0 0 2px black)" v-else-if="s.startsWith('[icon:a') && Object.keys(armament_data).length" :size="60" :armament="armament_data[s.substring(7, s.length - 1)]"/>
-        <template v-else-if="s === '[novice]'"/>
-        <!--      <template style="padding-bottom: 5px;" v-else>{{ s }}</template>-->
-        <div style="display: inline-block;" v-else v-html="s"></div>
-        <!--      双循环 + 按行渲染以修复-->
-        <!--      <span style="padding-bottom: 5px;" v-else v-html="s"></span>-->
+        <div style="display: inline;" v-else>
+          <span style="padding-top: 12px; padding-bottom: 12px;" v-html="s">
+
+          </span>
+        </div>
       </template>
     </div>
   </div>

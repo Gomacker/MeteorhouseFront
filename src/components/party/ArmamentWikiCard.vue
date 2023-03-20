@@ -4,7 +4,7 @@ import ArmamentWikiCardBody from '@/components/party/components/ArmamentWikiCard
 </script>
 <template>
 <div style="padding: 16px; width: fit-content; margin: 0 auto;">
-  aba{{ armament }}
+<!--  aba{{ armament }}-->
 
   <ArmamentWikiCardBody v-if="armament" :armament="armament"></ArmamentWikiCardBody>
 </div>

@@ -3,7 +3,7 @@ import {ref} from "vue";
 import axios from "axios";
 
 
-const table_list = ref([])
+const table_list = ref({})
 
 axios.post(
     '/api/table_list/'
@@ -17,8 +17,8 @@ axios.post(
   <div>
 <!--    {{ table_list }}-->
     <div style="display: flex; flex-wrap: wrap;">
-      <el-card class="table_card" v-for="tid in table_list" @click="$router.push('/summary_table/' + tid)">
-        {{ tid }}
+      <el-card class="table_card" v-for="(tid, table_name) in table_list" @click="$router.push('/summary_table/' + tid)">
+        {{ table_name }}
       </el-card>
     </div>
   </div>

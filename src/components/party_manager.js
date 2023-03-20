@@ -86,7 +86,9 @@ export function getArmamentPicUrl(armament) {
     // console.log(armament, armament.hasOwnProperty('WfExId'))
     if (armament &&
         Object.hasOwn(armament, 'WfExId')) {
+        // Object.hasOwn(armament, 'extraction_id')) {
         return '/assets/worldflipper/generated/armament/normal/' + armament['WfExId'] + '.png'
+        // return '/assets/worldflipper/armament/' + armament['extraction_id'] + '.png'
     }else {
         return '/assets/worldflipper/unit/blank.png'
     }

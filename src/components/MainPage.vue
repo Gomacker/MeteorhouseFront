@@ -95,7 +95,18 @@ const test_uid = ref(1)
         查盘器
       </el-button>
     </p>
-    <p># 一图预览页正在前后端相互搬东西 #</p>
+    <div style="width: 80%; align-self: center;">
+
+      <el-alert style="margin: 8px 0;" type="warning" show-icon :closable="false">
+        测试中
+      </el-alert>
+      <el-alert style="margin: 8px 0;" type="info" show-icon :closable="false">
+        前端重构中
+      </el-alert>
+      <el-alert style="margin: 8px 0;" type="warning" show-icon :closable="false">
+        匿名上传已禁用
+      </el-alert>
+    </div>
   </div>
 <!--  <div style="position: sticky; top: 0; z-index: 10; background-color: white; box-shadow: 0 0 4px black; padding: 8px 16px; border-radius: 8px;">-->
 <!--    <p>Show Awakened <el-switch v-model="show_awakened"/></p>-->

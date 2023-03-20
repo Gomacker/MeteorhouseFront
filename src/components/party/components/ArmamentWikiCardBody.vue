@@ -7,6 +7,7 @@ import ArmamentPicOrigin from "@/components/party/components/ArmamentPicOrigin.v
 
 const alpha = 0.85;
 const ele2color = {
+  'none': 'rgb(105,105,105,' + alpha + ')',
   'fire': 'rgba(234,53,75,' + alpha + ')',
   'water': 'rgba(68,137,255,' + alpha + ')',
   'thunder': 'rgba(244,204,36,' + alpha + ')',
@@ -75,10 +76,6 @@ defineProps({
 >
 <!--  {{ unit }}-->
   <div
-    :style="{
-    background: 'url(/assets/worldflipper/unit/full_resized/awakened/' + armament.extraction_id + '.png) no-repeat',
-    // 'background-position': '130% 50%'
-    }"
     style="border-radius: 16px; background-position: 150% 80%; background-size: 720px; image-rendering: initial;"
   >
 <!--    <img style="position: absolute; left: 125%;" :src="'/assets/worldflipper/unit/full_resized/awakened/' + unit.extraction_id + '.png'"/>-->
@@ -100,39 +97,23 @@ defineProps({
           sty += ' rgba(248,248,248, 0.85) calc(100% - 32px), rgba(40,0,115, 0.85) calc(100% - 32px), rgba(0,0,0, 0.85))'
           return sty
         })(),
-        // background: 'linear-gradient(135deg, ' + ele2color[getElementCss(unit['element'])] + ' 131px, rgba(248,248,248, 0.85) 131px, rgba(248,248,248, 0.85) calc(100% - 32px), rgba(40,0,115, 0.85) calc(100% - 32px), rgba(0,0,0, 0.85))',
         'box-shadow': '0 0 16px rgba(0,0,0,0.65)'
       }
       "
     >
       <div style="display: flex; width: 100%; margin: 16px 16px 0;">
-        <div style="position: absolute; z-index: 1;">
-          <!--        <img-->
-          <el-image
-              style="
-              width: 200%;
-              height: 200%;
-              image-rendering: pixelated;
-              left: calc(120px - 120%);
-              top: calc(75px);
-            "
-              :src="'/assets/worldflipper/unit/pixelart/walk_front/' + armament['extraction_id'] + '.gif'"
-              alt=""
-          />
-        </div>
         <ArmamentPicOrigin :armament="armament" :size="120" :soul="false"/>
         <div style="display: flex; width: 744px; justify-content: space-between;">
           <div style="padding: 8px 16px; font-size: 20px;">
-            <p style="font-size: 20px; font-family: '华文细黑', serif; font-weight: 600;">
-                　
-            </p>
-            <p style="font-size: 34px; font-family: '华文细黑', serif; font-weight: 600;">
-
-              {{ armament['name'] }}
-            </p>
-<!--            <p style="font-size: 18px; font-family: '华文细黑', serif; margin-top: 2px;">-->
-<!--              {{ armament['name'][2] }}-->
+<!--            <p style="font-size: 20px; font-family: '华文细黑', serif; font-weight: 600;">-->
+<!--                　-->
 <!--            </p>-->
+            <p style="font-size: 34px; font-family: '华文细黑', serif; font-weight: 600;">
+              {{ armament['name'][0] }}
+            </p>
+            <p style="font-size: 18px; font-family: '华文细黑', serif; margin-top: 2px;">
+              {{ armament['name'][1] }}
+            </p>
           </div>
           <div>
             <div style="display: flex; font-size: 16px; justify-content: space-evenly; flex-direction: row;">
@@ -140,10 +121,12 @@ defineProps({
                 <div class="span-f">
                   <div class="span-tag">HP</div>
 <!--                  {{ armament['status_data'] }} <span style="color: crimson;">({{ armament['status']['mmhp'] }})</span>-->
+                  {{ JSON.parse(armament['status_data'])[0] }}
                 </div>
                 <div class="span-f">
                   <div class="span-tag">ATK</div>
 <!--                  {{ armament['status_data'] }} <span style="color: crimson;">({{ armament['status']['matk'] }})</span>-->
+                  {{ JSON.parse(armament['status_data'])[1] }}
                 </div>
               </div>
             </div>
@@ -158,66 +141,60 @@ defineProps({
       <div>
         <div style="display: flex; width: 100%; margin: 16px 16px 0;">
           <div class="span-title">
-            队长
-          </div>
-          <div style="display: flex; flex-direction: column;">
-<!--            <div class="span-ability" style="padding-bottom: 4px;">-->
-<!--              <div style="margin: 0 8px; font-weight: 600; font-size: 22px;" v-html="format_content(armament['leader_ability_name'])"/>-->
-<!--            </div>-->
-<!--            <div class="span-ability" style="padding-bottom: 4px;">-->
-<!--              &lt;!&ndash;          <div style="color: rgb(47, 195, 183); font-size: 20px;">❶</div>&ndash;&gt;-->
-<!--              <div style="margin: 0 8px;" v-html="format_content(armament['leader_ability'])"/>-->
-<!--            </div>-->
-          </div>
-        </div>
-        <div style="display: flex; width: 100%; margin: 16px 16px 0;">
-          <div class="span-title">
-            技能
-          </div>
-          <div style="display: flex; flex-direction: column;">
-<!--            <div class="span-ability" style="padding-bottom: 4px;">-->
-<!--              <div style="margin: 0 8px; font-weight: 600; font-size: 22px;" v-html="format_content(armament['skill_name'])"/>-->
-<!--            </div>-->
-<!--            <div class="span-ability" style="padding-bottom: 4px;">-->
-<!--              <div style="margin: 0 8px;" v-html="format_content(armament['skill_description'])"/>-->
-<!--            </div>-->
-<!--            <div class="span-ability" style="padding-bottom: 4px;">-->
-<!--              <div style="margin: 0 8px;">-->
-<!--                技能能量：{{ armament['skill_weight'] }}-->
-<!--              </div>-->
-<!--            </div>-->
-          </div>
-        </div>
-        <div style="display: flex; width: 100%; margin: 16px 16px 0;">
-          <div class="span-title">
             能力
           </div>
           <div style="display: flex; flex-direction: column;">
-<!--            <div class="span-ability">-->
-<!--              <div style="color: rgb(47, 195, 183); font-size: 20px;">❶</div>-->
-<!--              <div style="margin: 0 8px;" v-html="format_content(armament['ability1'])"/>-->
+<!--            <div class="span-ability" style="padding-bottom: 4px;">-->
+<!--              <div style="margin: 0 8px; font-weight: 600; font-size: 22px;" v-html="format_content(armament['ability'])"/>-->
 <!--            </div>-->
-<!--            <div class="span-ability">-->
-<!--              <div style="color: rgb(47, 195, 183); font-size: 20px;">❷</div>-->
-<!--              <div style="margin: 0 8px;" v-html="format_content(armament['ability2'])"/>-->
-<!--            </div>-->
-<!--            <div class="span-ability">-->
-<!--              <div style="color: rgb(47, 195, 183); font-size: 20px;">❸</div>-->
-<!--              <div v-if="armament['ability3']" style="margin: 0 8px;" v-html="format_content(armament['ability3'])"/>-->
-<!--              <div v-else style="margin: 0 8px;">&#45;&#45;</div>-->
-<!--            </div>-->
-<!--            <div v-if="armament.hasOwnProperty('ability4') && armament['ability4']" class="span-ability">-->
-<!--              <div style="color: rgb(47, 195, 183); font-size: 20px;">❹</div>-->
-<!--              <div style="margin: 0 8px; opacity: 0.55;" v-html="format_content(armament['ability4'])"/>-->
-<!--            </div>-->
-<!--            <div v-if="armament.hasOwnProperty('ability5') && armament['ability5']" class="span-ability">-->
-<!--              <div style="color: rgb(47, 195, 183); font-size: 20px;">❺</div>-->
-<!--              <div style="margin: 0 8px; opacity: 0.55;" v-html="format_content(armament['ability5'])"/>-->
-<!--            </div>-->
-<!--            <div v-if="armament.hasOwnProperty('ability6') && armament['ability6']" class="span-ability">-->
-<!--              <div style="color: rgb(47, 195, 183); font-size: 20px;">❻</div>-->
-<!--              <div style="margin: 0 8px; opacity: 0.55;" v-html="format_content(armament['ability6'])"/>-->
-<!--            </div>-->
+            <div class="span-ability" style="padding-bottom: 4px;">
+              <!--          <div style="color: rgb(47, 195, 183); font-size: 20px;">❶</div>-->
+              <div style="margin: 0 8px;" v-html="format_content(armament['ability'])"/>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; width: 100%; margin: 16px 16px 0;">
+          <div class="span-title">
+            魂珠
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <div v-if="armament.hasOwnProperty('ability_soul') && armament['ability_soul']" class="span-ability">
+              <div style="margin: 0 8px; opacity: 0.55;" v-html="format_content(armament['ability_soul'])"/>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; width: 100%; margin: 16px 16px 0;" v-if="armament['ability_awaken3'] || armament['ability_awaken5']">
+          <div class="span-title">
+            觉醒
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <div class="span-ability" v-if="armament['ability_awaken3']">
+              <div style="color: rgb(47, 195, 183); margin: 0 8px; font-size: 20px;">Lv3</div>
+              <div style="margin: 0 8px;" v-html="format_content(armament['ability_awaken3'])"/>
+            </div>
+            <div class="span-ability" v-if="armament['ability_awaken5']">
+              <div style="color: rgb(47, 195, 183); margin: 0 8px; font-size: 20px;">Lv5</div>
+              <div style="margin: 0 8px;" v-html="format_content(armament['ability_awaken5'])"/>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; width: 100%; margin: 16px 16px 0;" v-if="armament['ability_augment1'] || armament['ability_augment70'] || armament['ability_augment100']">
+          <div class="span-title">
+            强化
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <div class="span-ability" v-if="armament['ability_augment1']">
+              <div style="color: rgb(195,52,47); margin: 0 8px; font-size: 20px;">Lv1</div>
+              <div style="margin: 0 8px;" v-html="format_content(armament['ability_augment1'])"/>
+            </div>
+            <div class="span-ability" v-if="armament['ability_augment70']">
+              <div style="color: rgb(195,52,47); margin: 0 8px; font-size: 20px;">Lv70</div>
+              <div style="margin: 0 8px;" v-html="format_content(armament['ability_augment70'])"/>
+            </div>
+            <div class="span-ability" v-if="armament['ability_augment100']">
+              <div style="color: rgb(195,52,47); margin: 0 8px; font-size: 20px;">Lv100</div>
+              <div style="margin: 0 8px;" v-html="format_content(armament['ability_augment100'])"/>
+            </div>
           </div>
         </div>
       </div>
