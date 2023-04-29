@@ -138,6 +138,7 @@
     font: 42px 黑体;
     font-weight: bold;
     padding: 0 16px;
+    /*margin: 4px 0;*/
     box-shadow: 0 0 8px black;
 }
 /* #main-body>.body-row.little-title{

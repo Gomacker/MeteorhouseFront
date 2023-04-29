@@ -61,6 +61,9 @@ export default {
 }
 </script>
 <template>
+  <head>
+    <title>流星屋图书馆 (Alpha)</title>
+  </head>
   <div style="width: 100%; height: 100%">
 <!--    <button @click="count++">Count is: {{ count }}</button>-->
     <el-container style="height: 100%">

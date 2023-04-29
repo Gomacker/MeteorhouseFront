@@ -60,9 +60,9 @@ defineProps({
 <div
     v-if="armament"
     style="
-    width: 960px;
-    max-width: 960px;
-    min-width: 960px;
+    width: 720px;
+    /*max-width: 960px;*/
+    /*min-width: 960px;*/
     /*background-color: greenyellow;*/
     background: url(/assets/worldflipper/ui/background_cut_official.png);
     background-size: 136px;
@@ -139,11 +139,11 @@ defineProps({
       </div>
       <hr style="width: 100%; margin: 12px 12px 8px;"/>
       <div>
-        <div style="display: flex; width: 100%; margin: 16px 16px 0;">
+        <div style="display: flex; width: 100%; margin: 16px 32px 0 16px;">
           <div class="span-title">
             能力
           </div>
-          <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; flex-direction: column; margin-right: 16px;">
 <!--            <div class="span-ability" style="padding-bottom: 4px;">-->
 <!--              <div style="margin: 0 8px; font-weight: 600; font-size: 22px;" v-html="format_content(armament['ability'])"/>-->
 <!--            </div>-->
@@ -153,21 +153,21 @@ defineProps({
             </div>
           </div>
         </div>
-        <div style="display: flex; width: 100%; margin: 16px 16px 0;">
+        <div style="display: flex; width: 100%; margin: 16px 32px 0 16px;">
           <div class="span-title">
             魂珠
           </div>
-          <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; flex-direction: column; margin-right: 16px;">
             <div v-if="armament.hasOwnProperty('ability_soul') && armament['ability_soul']" class="span-ability">
               <div style="margin: 0 8px; opacity: 0.55;" v-html="format_content(armament['ability_soul'])"/>
             </div>
           </div>
         </div>
-        <div style="display: flex; width: 100%; margin: 16px 16px 0;" v-if="armament['ability_awaken3'] || armament['ability_awaken5']">
+        <div style="display: flex; width: 100%; margin: 16px 32px 0 16px;" v-if="armament['ability_awaken3'] || armament['ability_awaken5']">
           <div class="span-title">
             觉醒
           </div>
-          <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; flex-direction: column; /*margin-right: 16px;*/">
             <div class="span-ability" v-if="armament['ability_awaken3']">
               <div style="color: rgb(47, 195, 183); margin: 0 8px; font-size: 20px;">Lv3</div>
               <div style="margin: 0 8px;" v-html="format_content(armament['ability_awaken3'])"/>
@@ -182,7 +182,7 @@ defineProps({
           <div class="span-title">
             强化
           </div>
-          <div style="display: flex; flex-direction: column;">
+          <div style="display: flex; flex-direction: column; margin-right: 16px;">
             <div class="span-ability" v-if="armament['ability_augment1']">
               <div style="color: rgb(195,52,47); margin: 0 8px; font-size: 20px;">Lv1</div>
               <div style="margin: 0 8px;" v-html="format_content(armament['ability_augment1'])"/>

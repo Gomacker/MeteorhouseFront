@@ -35,29 +35,40 @@ const keyword = ref('毒')
 
 function get_real_text(text) {
   text = text.toLowerCase()
-  if (text.match(/down$/)) text = text.substring(0, text.length - 4) + '属性抗性降低'
+  if (text.match(/down$/)) text = '[^(免疫)]' + text.substring(0, text.length - 4) + '属性抗性降低'
   if (text === '贯通') text = '贯穿'
   if (text === '净化') text = '解除'
   if (text === '驱散') text = '消除'
-  return text
+  return new RegExp(text)
 }
 
 const ff = ref((unit, key) => {
   // console.log(unit)
   // console.log(key)
-  let text = keyword.value
-  text = get_real_text(text)
+  let text = get_real_text(keyword.value)
+  // text = text)
   // return unit.element === 1
   // console.log('bruhinubgweg')
   // console.log(unit)
-  return unit.skill_description.toLowerCase().includes(text) ||
-      unit.ability1.toLowerCase().includes(text) ||
-      unit.ability2.toLowerCase().includes(text) ||
-      unit.ability3.toLowerCase().includes(text) ||
-      unit.ability4.toLowerCase().includes(text) ||
-      unit.ability5.toLowerCase().includes(text) ||
-      unit.ability6.toLowerCase().includes(text) ||
-      unit.cv.toLowerCase() === text
+  // const a = /a/
+  return (
+      text.test(unit.skill_description.toLowerCase()) ||
+      text.test(unit.ability1.toLowerCase()) ||
+      text.test(unit.ability2.toLowerCase()) ||
+      text.test(unit.ability3.toLowerCase()) ||
+      text.test(unit.ability4.toLowerCase()) ||
+      text.test(unit.ability5.toLowerCase()) ||
+      text.test(unit.ability6.toLowerCase()) ||
+      (new RegExp(`${text}`)).test(unit.cv.toLowerCase())
+  )
+  // return unit.skill_description.toLowerCase().includes(text) ||
+  //     unit.ability1.toLowerCase().includes(text) ||
+  //     unit.ability2.toLowerCase().includes(text) ||
+  //     unit.ability3.toLowerCase().includes(text) ||
+  //     unit.ability4.toLowerCase().includes(text) ||
+  //     unit.ability5.toLowerCase().includes(text) ||
+  //     unit.ability6.toLowerCase().includes(text) ||
+  //     unit.cv.toLowerCase() === text
 })
 
 function get_objects() {

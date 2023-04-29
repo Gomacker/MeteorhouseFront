@@ -63,6 +63,7 @@ axios.post(
     '/api/table_list/'
 ).then(r => {
       table_list.value = r.data['tables']
+  console.log(r.data)
     }
 )
 

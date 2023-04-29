@@ -2,6 +2,7 @@
 import {ArrowDownBold, DocumentCopy, Search} from '@element-plus/icons-vue'
 import PartyReleaseCard from "@/components/PartyReleaseCard.vue";
 import {PartyRelease} from "@/components/party_manager.js";
+
 </script>
 
 <template>
@@ -80,13 +81,16 @@ import {PartyRelease} from "@/components/party_manager.js";
       />
 
     </div>
+    <div class="gads">
+      <!-- party_searcher_bottom -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:540px;height:90px"
+           data-ad-client="ca-pub-6137707949266143"
+           data-ad-slot="8336190365"></ins>
+    </div>
 <!--    <div>-->
 <!--      <component is="script" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6137707949266143"-->
 <!--                 crossorigin="anonymous"></component>-->
-<!--      <ins class="adsbygoogle"-->
-<!--           style="display:inline-block;width:728px;height:90px"-->
-<!--           data-ad-client="ca-pub-6137707949266143"-->
-<!--           data-ad-slot="8336190365"></ins>-->
 
 <!--      <component is="script">-->
 <!--        (adsbygoogle = window.adsbygoogle || []).push({});-->
@@ -98,7 +102,7 @@ import {PartyRelease} from "@/components/party_manager.js";
 </template>
 
 <script>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from "axios";
 // import PartyCard from "@/components/party/PartyCardAnise.vue";
 import PartyCard from "@/components/party/PartyCardEliya.vue";
@@ -137,6 +141,19 @@ const placeholders = [
 ]
 const search_placeholder = ref(placeholders[Math.floor(Math.random() * placeholders.length)])
 
+window['addAds'] = function () {
+  try {
+    console.log('setup Google Adsense')
+    let childList = document.getElementsByClassName('gads')
+    for (let i = 0; i < childList.length; i++) {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  }
+  catch (e)
+  {
+    console.log('GoogleAds Load Failed')
+  }
+}
 function get_data(page_index, search_content='') {
 
   const params = {
@@ -201,6 +218,24 @@ export default {
       search_content_applied.value = search_content.value
     }
     get_data(current_page.value, search_content_applied.value)
+
+    // let script = document.createElement('script');
+    // script.crossOrigin = 'anonymous'
+    // script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6137707949266143'
+    // script.async = true
+    // const childList = document.getElementsByClassName('gads');
+    // // let ins = <ins className="adsbygoogle"
+    // //                style="display:inline-block;height:90px"
+    // //                data-ad-client="ca-pub-6137707949266143"
+    // //                data-ad-slot="8336190365"></ins>
+    //
+    // //                data-ad-client="ca-pub-6137707949266143"
+    // //                data-ad-slot="8336190365"></ins>
+    // for (let i = 0; i < childList.length; i++) {
+    //   childList[i].appendChild(script)
+    //   // childList[i].appendChild(ins)
+    // }
+    window.addAds();
   }
 }
 </script>

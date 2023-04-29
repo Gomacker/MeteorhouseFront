@@ -54,7 +54,10 @@ function getParamReplacements(p, union, pos) {
       <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 0)"
-            style="z-index: 15;"
+            style="
+            z-index: 15;
+            filter: drop-shadow(0 0 3px black);
+            "
             :style="{width: replacement_size, height: replacement_size}"
             :src="getUnitPicUrl(unit_data[rpm])"
             alt=""
@@ -105,7 +108,8 @@ function getParamReplacements(p, union, pos) {
       <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="position: absolute; display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 2)"
-            style="z-index: 15;"
+            style="z-index: 15;
+            filter: drop-shadow(0 0 3px black);"
             :style="{width: replacement_size, height: replacement_size}"
             :src="getArmamentPicUrl(armament_data[rpm])"
             alt=""
@@ -168,10 +172,11 @@ function getParamReplacements(p, union, pos) {
       </div>
       <div v-else style="text-align: center;">辅助角色</div>
 
-      <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ' / 2)', left: 'calc( -' + replacement_size + ' / 2)'}">
+      <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( 24px -' + replacement_size + ' / 2)', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 1)"
-            style="z-index: 15;"
+            style="z-index: 15;
+            filter: drop-shadow(0 0 3px black);"
             :style="{width: replacement_size, height: replacement_size}"
             :src="getUnitPicUrl(unit_data[rpm])"
             alt=""
@@ -197,7 +202,8 @@ function getParamReplacements(p, union, pos) {
       <div v-if="(!hidden_replacement) || (hidden_replacement && show_replacements)" style="display: flex; flex-wrap: wrap;" :style="{width: 'calc(3 * ' + replacement_size + ')', top: 'calc( -' + replacement_size + ')', left: 'calc( -' + replacement_size + ' / 2)'}">
         <img
             v-for="rpm in getParamReplacements(party, union, 3)"
-            style="z-index: 15;"
+            style="z-index: 15;
+            filter: drop-shadow(0 0 2px black);"
             :style="{width: replacement_size, height: replacement_size}"
             :src="getArmamentCorePicUrl(armament_data[rpm])"
             alt=""

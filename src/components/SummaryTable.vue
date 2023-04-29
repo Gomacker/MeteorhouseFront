@@ -84,9 +84,9 @@ onBeforeUpdate(() => {
       :style="{
         '--main-color': table_data.property.main_color,
         '--sub-color': table_data.property.sub_color,
-        '--sub-title-color': transColor(table_data.property.main_color, 'a5'),
+        '--sub-title-color': transColor(table_data.property.main_color, 'c0'),
         '--main-body-color': transColor(table_data.property.sub_color, '80'),
-        '--little-about-color': transColor(table_data.property.main_color, 'a5'),
+        '--little-about-color': transColor(table_data.property.main_color, 'a0'),
       }"
   >
 <!--    <div id="banner" style="background: green;" :style="() => {if (table_data.property.hasOwnProperty('background')) return {background: table_data.property.backkground}}">-->
@@ -106,7 +106,7 @@ onBeforeUpdate(() => {
       <div id="about">
 <!--        <div class="st-text" v-html="formatText(table_data.property.little_about)"></div>-->
 <!--        {{ little_abouts = table_data.property.little_about.split('\n') }}-->
-        <SummaryTableTextContent style="font-weight: 900;" class="st-text" :content="table_data.property.little_about.split('\n')[0]"></SummaryTableTextContent>
+        <SummaryTableTextContent style="font-weight: 600;" class="st-text" :content="table_data.property.little_about.split('\n')[0]"></SummaryTableTextContent>
         <SummaryTableTextContent style="font-size: 22px;" class="st-text" :content="table_data.property.little_about.split('\n').slice(1).join('\n')"></SummaryTableTextContent>
 <!--        <SummaryTableTextContent class="st-text" :content="little_abouts"></SummaryTableTextContent>-->
       </div>
@@ -115,34 +115,33 @@ onBeforeUpdate(() => {
       <div id="main-body">
         <div v-for="row in table_data.content">
           <!--      <div v-if="row.type === 'SubTitle'" style="color: red;">-->
-          <div v-if="row.type === 'SubTitle'">
+          <template v-if="row.type === 'SubTitle'">
             <!--        {{ row }}-->
             <div class="sub-title">
               <p>
                 <img class="title-ele-icon" :src="'/assets/worldflipper/icon/' + row.data['element'] + '.png'" alt=""/>{{ row.data['content'] }}
               </p>
             </div>
-          </div>
-          <div v-if="row.type === 'Row'" style="display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
-            <div v-for="ele in row.data.elements">
+          </template>
+          <div v-if="row.type === 'Row'" style="padding: 8px 0; display: flex; flex-direction: row; justify-content: center; flex-wrap: wrap;">
+            <template v-for="ele in row.data.elements">
               <SummaryTableTextContent
                   v-if="ele.type === 'TextRegion' && ele.data['content']"
                   class="st-text"
-                  style="margin: 8px; padding: 6px; width: 480px;"
+                  style="margin: 2px 8px -4px; padding: 6px; width: 480px;"
                   :style="{
                     width: ele.data['full'] ? '988px' : '492px',
-                    font: ele.data['little_title'] ? '32px 黑体' : '',
-                    'font-weight': ele.data['little_title'] ? '900' : '',
+                    font: ele.data['little_title'] ? `32px Arial, 黑体` : '',
                     'margin-bottom': ele.data['little_title'] ? '0' : '',
                     'padding-bottom': ele.data['little_title'] ? '0' : '',
                   }"
                   :content="ele.data['content']"
               />
               <div class="st-party">
-                <PartyCardEliya :hidden_replacement="hidden_replacements" v-if="ele.type === 'Party'" style="margin: 8px;" :party="ele.data['party']"/>
+                <PartyCardEliya :hidden_replacement="hidden_replacements" v-if="ele.type === 'Party'" style="margin: 4px 8px;" :party="ele.data['party']"/>
               </div>
               <div v-if="ele.type === 'Origin'" v-html="ele.data.content"/>
-            </div>
+            </template>
           </div>
         </div>
       </div>
@@ -198,7 +197,7 @@ onBeforeUpdate(() => {
 #st-body {
   width: 1036px;
   /*margin: 0 auto;*/
-  font: 24px 黑体;
+  font: 24px Arial, 黑体;
   line-height: normal;
   color: white;
   overflow: hidden;
@@ -248,16 +247,17 @@ onBeforeUpdate(() => {
   background-color: var(--main-body-color);
 }
 .st-text {
-  padding: 0 0.075em;
+  /*padding: 0 -0.075em;*/
 
   background: var(--main-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: #fff;
-  -webkit-text-stroke:0.14em transparent;
+  -webkit-text-stroke:0.12em transparent;
 }
 .st-text:deep(div), .st-text:deep(span), .st-text:deep(p), .st-text:deep(b) {
   /*padding: 0.025em 0.075em;*/
   padding: 0 0.075em;
+  margin: 0 -0.075em;
 
   /*background: v-bind('colors.main_color');*/
   /*background: v-bind('colors.main_color');*/
@@ -269,13 +269,13 @@ onBeforeUpdate(() => {
   /*font-size: 62px;*/
   -webkit-background-clip: text;
   -webkit-text-fill-color: #fff;
-  -webkit-text-stroke:0.14em transparent;
+  -webkit-text-stroke:0.12em transparent;
   /*margin-bottom: 8px;*/
 }
 .sub-title {
   box-shadow: black 0 0 8px;
-  font: bold 42px 黑体;
-  padding: 8px 24px;
+  font: bold 40px Arial, 黑体;
+  padding: 4px 24px;
   background-color: var(--sub-title-color);
 }
 .title-ele-icon {
